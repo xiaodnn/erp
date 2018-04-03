@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWholesaleMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Wholesale" >
+    <id column="ws_id" property="wsId" jdbcType="INTEGER" />
+    <result column="wa_id" property="waId" jdbcType="INTEGER" />
+    <result column="ws_creator" property="wsCreator" jdbcType="VARCHAR" />
+    <result column="ws_date" property="wsDate" jdbcType="DATE" />
+    <result column="cb_id" property="cbId" jdbcType="INTEGER" />
+    <result column="cb_storehouse" property="cbStorehouse" jdbcType="VARCHAR" />
+    <result column="ws_receive_way" property="wsReceiveWay" jdbcType="VARCHAR" />
+    <result column="ws_pay_way" property="wsPayWay" jdbcType="VARCHAR" />
+    <result column="ws_invoice_type" property="wsInvoiceType" jdbcType="VARCHAR" />
+    <result column="p_id" property="pId" jdbcType="INTEGER" />
+    <result column="ws_state" property="wsState" jdbcType="TINYINT" />
+    <result column="sh_id" property="shId" jdbcType="VARCHAR" />
+    <result column="ws_remark" property="wsRemark" jdbcType="VARCHAR" />
+    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+    <collection property="details" ofType="com.erp.orm.entity.WholesaleDetail">
+    	<id column="wsd_id" property="wsdId" jdbcType="INTEGER" />
+	    <result column="ws_id" property="wsId" jdbcType="VARCHAR" />
+	    <result column="w_id" property="wId" jdbcType="VARCHAR" />
+	    <result column="wsd_price" property="wsdPrice" jdbcType="REAL" />
+	    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+	    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />
+	    <result column="sp_code" property="spCode" jdbcType="VARCHAR" />
+	    <result column="wsd_amount" property="wsdAmount" jdbcType="REAL" />
+	    <result column="wsd_money" property="wsdMoney" jdbcType="REAL" />
+	    <result column="sb_id" property="sbId" jdbcType="INTEGER" />
+	    <result column="produce_date" property="produceDate" jdbcType="TIMESTAMP" />
+	    <result column="wsd_index" property="wsdIndex" jdbcType="INTEGER" />
+	    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+	    
+	    <result column="w_traname" property="wTraname" jdbcType="VARCHAR" />
+        <result column="w_standard" property="wStandard" jdbcType="VARCHAR" />
+        <result column="w_unit" property="wUnit" jdbcType="VARCHAR" />
+        <result column="w_business" property="wBusiness" jdbcType="VARCHAR" />
+        <result column="w_place" property="wPlace" jdbcType="VARCHAR" />
+        
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ws_id, wa_id, ws_creator, ws_date, cb_id, cb_storehouse, ws_receive_way, ws_pay_way, 
+    ws_invoice_type, p_id, ws_state, sh_id, ws_remark, intime
+  </sql>
+  <sql id="Base_Column_List_Detail" >
+    w.ws_id,w.wa_id,w.ws_creator,w.ws_date, w.cb_id, w.cb_storehouse, w.ws_receive_way, 
+	w.ws_pay_way, w.ws_invoice_type, w.p_id, w.ws_state, w.sh_id, w.ws_remark, w.intime,
+	d.*,
+	b.w_traname ,b.w_standard ,b.w_unit ,b.w_business ,b.w_place
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List_Detail" />
+    from tb_wholesale w
+    left join tb_wholesale_detail d on w.ws_id = d.ws_id
+    left join tb_wares_base b on d.w_id = b.w_id
+    where w.ws_id = #{wsId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_wholesale
+    where ws_id = #{waId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_wholesale
+    order by ws_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from  tb_wholesale
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_wholesale
+    where ws_id = #{wsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Wholesale" useGeneratedKeys="true" keyProperty="wsId" >
+    insert into tb_wholesale (wa_id, ws_creator,
+      ws_date, cb_id, cb_storehouse, 
+      ws_receive_way, ws_pay_way, ws_invoice_type, 
+      p_id, ws_state, sh_id, 
+      ws_remark, intime)
+    values (#{waId,jdbcType=INTEGER}, #{wsCreator,jdbcType=VARCHAR},
+      #{wsDate,jdbcType=DATE}, #{cbId,jdbcType=INTEGER}, #{cbStorehouse,jdbcType=VARCHAR}, 
+      #{wsReceiveWay,jdbcType=VARCHAR}, #{wsPayWay,jdbcType=VARCHAR}, #{wsInvoiceType,jdbcType=VARCHAR}, 
+      #{pId,jdbcType=INTEGER}, #{wsState,jdbcType=TINYINT}, #{shId,jdbcType=VARCHAR}, 
+      #{wsRemark,jdbcType=VARCHAR},now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Wholesale" useGeneratedKeys="true" keyProperty="wsId" >
+    insert into tb_wholesale
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="waId != null" >
+        wa_id,
+      </if>
+      <if test="wsCreator != null" >
+        ws_creator,
+      </if>
+      <if test="wsDate != null" >
+        ws_date,
+      </if>
+      <if test="cbId != null" >
+        cb_id,
+      </if>
+      <if test="cbStorehouse != null" >
+        cb_storehouse,
+      </if>
+      <if test="wsReceiveWay != null" >
+        ws_receive_way,
+      </if>
+      <if test="wsPayWay != null" >
+        ws_pay_way,
+      </if>
+      <if test="wsInvoiceType != null" >
+        ws_invoice_type,
+      </if>
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="wsState != null" >
+        ws_state,
+      </if>
+      <if test="shId != null" >
+        sh_id,
+      </if>
+      <if test="wsRemark != null" >
+        ws_remark,
+      </if>
+        intime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="waId != null" >
+        #{waId,jdbcType=INTEGER},
+      </if>
+      <if test="wsCreator != null" >
+        #{wsCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="wsDate != null" >
+        #{wsDate,jdbcType=DATE},
+      </if>
+      <if test="cbId != null" >
+        #{cbId,jdbcType=INTEGER},
+      </if>
+      <if test="cbStorehouse != null" >
+        #{cbStorehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="wsReceiveWay != null" >
+        #{wsReceiveWay,jdbcType=VARCHAR},
+      </if>
+      <if test="wsPayWay != null" >
+        #{wsPayWay,jdbcType=VARCHAR},
+      </if>
+      <if test="wsInvoiceType != null" >
+        #{wsInvoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null" >
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="wsState != null" >
+        #{wsState,jdbcType=TINYINT},
+      </if>
+      <if test="shId != null" >
+        #{shId,jdbcType=VARCHAR},
+      </if>
+      <if test="wsRemark != null" >
+        #{wsRemark,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Wholesale" >
+    update tb_wholesale
+    <set >
+      <if test="waId != null" >
+        wa_id = #{waId,jdbcType=INTEGER},
+      </if>
+      <if test="wsCreator != null" >
+        ws_creator = #{wsCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="wsDate != null" >
+        ws_date = #{wsDate,jdbcType=DATE},
+      </if>
+      <if test="cbId != null" >
+        cb_id = #{cbId,jdbcType=INTEGER},
+      </if>
+      <if test="cbStorehouse != null" >
+        cb_storehouse = #{cbStorehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="wsReceiveWay != null" >
+        ws_receive_way = #{wsReceiveWay,jdbcType=VARCHAR},
+      </if>
+      <if test="wsPayWay != null" >
+        ws_pay_way = #{wsPayWay,jdbcType=VARCHAR},
+      </if>
+      <if test="wsInvoiceType != null" >
+        ws_invoice_type = #{wsInvoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null" >
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="wsState != null" >
+        ws_state = #{wsState,jdbcType=TINYINT},
+      </if>
+      <if test="shId != null" >
+        sh_id = #{shId,jdbcType=VARCHAR},
+      </if>
+      <if test="wsRemark != null" >
+        ws_remark = #{wsRemark,jdbcType=VARCHAR},
+      </if>
+        intime = now()
+    </set>
+    where ws_id = #{wsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Wholesale" >
+    update tb_wholesale
+    set wa_id = #{waId,jdbcType=INTEGER},
+      ws_creator = #{wsCreator,jdbcType=VARCHAR},
+      ws_date = #{wsDate,jdbcType=DATE},
+      cb_id = #{cbId,jdbcType=INTEGER},
+      cb_storehouse = #{cbStorehouse,jdbcType=VARCHAR},
+      ws_receive_way = #{wsReceiveWay,jdbcType=VARCHAR},
+      ws_pay_way = #{wsPayWay,jdbcType=VARCHAR},
+      ws_invoice_type = #{wsInvoiceType,jdbcType=VARCHAR},
+      p_id = #{pId,jdbcType=INTEGER},
+      ws_state = #{wsState,jdbcType=TINYINT},
+      sh_id = #{shId,jdbcType=VARCHAR},
+      ws_remark = #{wsRemark,jdbcType=VARCHAR},
+      intime = now()
+    where ws_id = #{wsId,jdbcType=INTEGER}
+  </update>
+</mapper>

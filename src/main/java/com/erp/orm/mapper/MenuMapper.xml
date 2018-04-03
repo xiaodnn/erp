@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IMenuMapper">
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Menu" >
+    <id column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="m_name" property="mName" jdbcType="VARCHAR" />
+    <result column="m_state" property="mState" jdbcType="VARCHAR" />
+    <result column="m_index" property="mIndex" jdbcType="DOUBLE" />
+    <result column="m_creator" property="mCreator" jdbcType="VARCHAR" />
+    <result column="m_intime" property="mIntime" jdbcType="TIMESTAMP" />
+    <collection property="menusub" ofType="com.erp.orm.entity.MenuSub">
+    	 <id column="ms_id" property="msId" jdbcType="INTEGER" />
+	    <result column="ms_name" property="msName" jdbcType="VARCHAR" />
+	    <result column="m_id" property="mId" jdbcType="INTEGER" />
+	    <result column="ms_state" property="msState" jdbcType="VARCHAR" />
+	    <result column="ms_url" property="msUrl" jdbcType="VARCHAR" />
+	    <result column="ms_urlname" property="msUrlname" jdbcType="VARCHAR" />
+	    <result column="ms_intime" property="msIntime" jdbcType="TIMESTAMP" />
+	    <result column="ms_creator" property="msCreator" jdbcType="VARCHAR" />
+	    <result column="ms_index" property="msIndex" jdbcType="DECIMAL" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    m_id, m_name, m_state, m_index, m_creator, m_intime
+  </sql>
+  <sql id="Join_Column_List" >
+    m.m_id, m.m_name,s.ms_id,s.ms_name,s.ms_url,s.ms_urlname 
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tc_memu
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+	select  
+	<include refid="Join_Column_List" />
+	from tc_menu m
+	inner join tc_menu_sub s
+	on m.m_id = s.m_id
+	where s.ms_state =1
+	order by m.m_index ,s.ms_index
+	
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tc_memu
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Menu" useGeneratedKeys="true" keyProperty="mId">
+    insert into tc_memu (m_name, 
+      m_state, m_index, m_creator, 
+      m_intime)
+    values ( #{mName,jdbcType=VARCHAR}, 
+      #{mState,jdbcType=VARCHAR}, #{mIndex,jdbcType=DECIMAL}, #{mCreator,jdbcType=VARCHAR}, 
+      now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Menu" useGeneratedKeys="true" keyProperty="mId">
+    insert into tc_memu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mName != null" >
+        m_name,
+      </if>
+      <if test="mState != null" >
+        m_state,
+      </if>
+      <if test="mIndex != null" >
+        m_index,
+      </if>
+      <if test="mCreator != null" >
+        m_creator,
+      </if>
+        m_intime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mName != null" >
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mState != null" >
+        #{mState,jdbcType=VARCHAR},
+      </if>
+      <if test="mIndex != null" >
+        #{mIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="mCreator != null" >
+        #{mCreator,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Menu" >
+    update tc_memu
+    <set >
+      <if test="mName != null" >
+        m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mState != null" >
+        m_state = #{mState,jdbcType=VARCHAR},
+      </if>
+      <if test="mIndex != null" >
+        m_index = #{mIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="mCreator != null" >
+        m_creator = #{mCreator,jdbcType=VARCHAR},
+      </if>
+        m_intime = now()
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Menu" >
+    update tc_memu
+    set m_name = #{mName,jdbcType=VARCHAR},
+      m_state = #{mState,jdbcType=VARCHAR},
+      m_index = #{mIndex,jdbcType=DECIMAL},
+      m_creator = #{mCreator,jdbcType=VARCHAR},
+      m_intime = now()
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+</mapper>

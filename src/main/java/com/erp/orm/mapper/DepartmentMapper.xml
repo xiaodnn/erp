@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IDepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Department" >
+    <id column="d_id" property="dId" jdbcType="INTEGER" />
+    <result column="d_name" property="dName" jdbcType="VARCHAR" />
+    <result column="d_level" property="dLevel" jdbcType="TINYINT" />
+    <result column="d_state" property="dState" jdbcType="TINYINT" />
+    <result column="d_index" property="dIndex" jdbcType="FLOAT" />
+    <result column="d_intime" property="dIntime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    d_id, d_name, d_level, d_state, d_index, d_intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_department
+    where d_id = #{dId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_department
+    where d_name = #{dName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from ts_department
+    where d_state = 1
+    order by d_level
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ts_department
+    where d_state = 1
+    order by d_level
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from ts_department
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_department
+    where d_id = #{dId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Department" >
+    insert into ts_department (d_id, d_name, d_level, 
+      d_state, d_index, d_intime
+      )
+    values (#{dId,jdbcType=INTEGER}, #{dName,jdbcType=VARCHAR}, #{dLevel,jdbcType=TINYINT}, 
+      #{dState,jdbcType=TINYINT}, #{dIndex,jdbcType=FLOAT}, #{dIntime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Department" >
+    insert into ts_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        d_id,
+      </if>
+      <if test="dName != null" >
+        d_name,
+      </if>
+      <if test="dLevel != null" >
+        d_level,
+      </if>
+      <if test="dState != null" >
+        d_state,
+      </if>
+      <if test="dIndex != null" >
+        d_index,
+      </if>
+      <if test="dIntime != null" >
+        d_intime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="dName != null" >
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dLevel != null" >
+        #{dLevel,jdbcType=TINYINT},
+      </if>
+      <if test="dState != null" >
+        #{dState,jdbcType=TINYINT},
+      </if>
+      <if test="dIndex != null" >
+        #{dIndex,jdbcType=FLOAT},
+      </if>
+      <if test="dIntime != null" >
+        #{dIntime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Department" >
+    update ts_department
+    <set >
+      <if test="dName != null" >
+        d_name = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dLevel != null" >
+        d_level = #{dLevel,jdbcType=TINYINT},
+      </if>
+      <if test="dState != null" >
+        d_state = #{dState,jdbcType=TINYINT},
+      </if>
+      <if test="dIndex != null" >
+        d_index = #{dIndex,jdbcType=FLOAT},
+      </if>
+      <if test="dIntime != null" >
+        d_intime = #{dIntime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Department" >
+    update ts_department
+    set d_name = #{dName,jdbcType=VARCHAR},
+      d_level = #{dLevel,jdbcType=TINYINT},
+      d_state = #{dState,jdbcType=TINYINT},
+      d_index = #{dIndex,jdbcType=FLOAT},
+      d_intime = #{dIntime,jdbcType=TIMESTAMP}
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.PlanMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Plan" >
+    <id column="p_id" property="pId" jdbcType="INTEGER" />
+    <result column="p_initime" property="pInitime" jdbcType="TIMESTAMP" />
+    <result column="o_id" property="oId" jdbcType="VARCHAR" />
+    <result column="p_rid" property="pRid" jdbcType="VARCHAR" />
+    <result column="p_creator" property="pCreator" jdbcType="VARCHAR" />
+    <result column="p_cid" property="pCid" jdbcType="VARCHAR" />
+    <result column="p_state" property="pState" jdbcType="TINYINT" />
+    <result column="p_memo" property="pMemo" jdbcType="VARCHAR" />
+    <result column="p_chktime" property="pChktime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    p_id, p_initime, o_id, p_rid, p_creator, p_cid, p_state, p_memo, p_chktime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_plan
+    where p_id = #{pId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_plan
+    where p_id = #{pId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Plan" >
+    insert into tb_plan (p_id, p_initime, o_id, 
+      p_rid, p_creator, p_cid, 
+      p_state, p_memo, p_chktime
+      )
+    values (#{pId,jdbcType=INTEGER}, #{pInitime,jdbcType=TIMESTAMP}, #{oId,jdbcType=VARCHAR}, 
+      #{pRid,jdbcType=VARCHAR}, #{pCreator,jdbcType=VARCHAR}, #{pCid,jdbcType=VARCHAR}, 
+      #{pState,jdbcType=TINYINT}, #{pMemo,jdbcType=VARCHAR}, #{pChktime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Plan" >
+    insert into tb_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="pInitime != null" >
+        p_initime,
+      </if>
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="pRid != null" >
+        p_rid,
+      </if>
+      <if test="pCreator != null" >
+        p_creator,
+      </if>
+      <if test="pCid != null" >
+        p_cid,
+      </if>
+      <if test="pState != null" >
+        p_state,
+      </if>
+      <if test="pMemo != null" >
+        p_memo,
+      </if>
+      <if test="pChktime != null" >
+        p_chktime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="pInitime != null" >
+        #{pInitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oId != null" >
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="pRid != null" >
+        #{pRid,jdbcType=VARCHAR},
+      </if>
+      <if test="pCreator != null" >
+        #{pCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="pCid != null" >
+        #{pCid,jdbcType=VARCHAR},
+      </if>
+      <if test="pState != null" >
+        #{pState,jdbcType=TINYINT},
+      </if>
+      <if test="pMemo != null" >
+        #{pMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="pChktime != null" >
+        #{pChktime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Plan" >
+    update tb_plan
+    <set >
+      <if test="pInitime != null" >
+        p_initime = #{pInitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oId != null" >
+        o_id = #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="pRid != null" >
+        p_rid = #{pRid,jdbcType=VARCHAR},
+      </if>
+      <if test="pCreator != null" >
+        p_creator = #{pCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="pCid != null" >
+        p_cid = #{pCid,jdbcType=VARCHAR},
+      </if>
+      <if test="pState != null" >
+        p_state = #{pState,jdbcType=TINYINT},
+      </if>
+      <if test="pMemo != null" >
+        p_memo = #{pMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="pChktime != null" >
+        p_chktime = #{pChktime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Plan" >
+    update tb_plan
+    set p_initime = #{pInitime,jdbcType=TIMESTAMP},
+      o_id = #{oId,jdbcType=VARCHAR},
+      p_rid = #{pRid,jdbcType=VARCHAR},
+      p_creator = #{pCreator,jdbcType=VARCHAR},
+      p_cid = #{pCid,jdbcType=VARCHAR},
+      p_state = #{pState,jdbcType=TINYINT},
+      p_memo = #{pMemo,jdbcType=VARCHAR},
+      p_chktime = #{pChktime,jdbcType=TIMESTAMP}
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+</mapper>

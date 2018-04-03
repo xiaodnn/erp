@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IndentMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Indent" >
+    <id column="i_id" property="iId" jdbcType="INTEGER" />
+    <result column="i_initime" property="iInitime" jdbcType="TIMESTAMP" />
+    <result column="o_id" property="oId" jdbcType="INTEGER" />
+    <result column="sh_id" property="shId" jdbcType="INTEGER" />
+    <result column="i_creator" property="iCreator" jdbcType="VARCHAR" />
+    <result column="c_id" property="cId" jdbcType="VARCHAR" />
+    <result column="i_state" property="iState" jdbcType="TINYINT" />
+    <result column="i_memo" property="iMemo" jdbcType="VARCHAR" />
+    <result column="i_chktime" property="iChktime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    i_id, i_initime, o_id, sh_id, i_creator, c_id, i_state, i_memo, i_chktime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_indent
+    where i_id = #{iId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_indent
+    where i_id = #{iId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Indent" >
+    insert into tb_indent (i_id, i_initime, o_id, 
+      sh_id, i_creator, c_id, 
+      i_state, i_memo, i_chktime
+      )
+    values (#{iId,jdbcType=INTEGER}, #{iInitime,jdbcType=TIMESTAMP}, #{oId,jdbcType=INTEGER}, 
+      #{shId,jdbcType=INTEGER}, #{iCreator,jdbcType=VARCHAR}, #{cId,jdbcType=VARCHAR}, 
+      #{iState,jdbcType=TINYINT}, #{iMemo,jdbcType=VARCHAR}, #{iChktime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Indent" >
+    insert into tb_indent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iId != null" >
+        i_id,
+      </if>
+      <if test="iInitime != null" >
+        i_initime,
+      </if>
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="shId != null" >
+        sh_id,
+      </if>
+      <if test="iCreator != null" >
+        i_creator,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="iState != null" >
+        i_state,
+      </if>
+      <if test="iMemo != null" >
+        i_memo,
+      </if>
+      <if test="iChktime != null" >
+        i_chktime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iId != null" >
+        #{iId,jdbcType=INTEGER},
+      </if>
+      <if test="iInitime != null" >
+        #{iInitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oId != null" >
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="shId != null" >
+        #{shId,jdbcType=INTEGER},
+      </if>
+      <if test="iCreator != null" >
+        #{iCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="iState != null" >
+        #{iState,jdbcType=TINYINT},
+      </if>
+      <if test="iMemo != null" >
+        #{iMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="iChktime != null" >
+        #{iChktime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Indent" >
+    update tb_indent
+    <set >
+      <if test="iInitime != null" >
+        i_initime = #{iInitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oId != null" >
+        o_id = #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="shId != null" >
+        sh_id = #{shId,jdbcType=INTEGER},
+      </if>
+      <if test="iCreator != null" >
+        i_creator = #{iCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="iState != null" >
+        i_state = #{iState,jdbcType=TINYINT},
+      </if>
+      <if test="iMemo != null" >
+        i_memo = #{iMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="iChktime != null" >
+        i_chktime = #{iChktime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Indent" >
+    update tb_indent
+    set i_initime = #{iInitime,jdbcType=TIMESTAMP},
+      o_id = #{oId,jdbcType=INTEGER},
+      sh_id = #{shId,jdbcType=INTEGER},
+      i_creator = #{iCreator,jdbcType=VARCHAR},
+      c_id = #{cId,jdbcType=VARCHAR},
+      i_state = #{iState,jdbcType=TINYINT},
+      i_memo = #{iMemo,jdbcType=VARCHAR},
+      i_chktime = #{iChktime,jdbcType=TIMESTAMP}
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+</mapper>

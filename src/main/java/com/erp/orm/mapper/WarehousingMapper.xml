@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWarehousingMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Warehousing" >
+    <id column="wh_id" property="whId" jdbcType="VARCHAR" />
+    <result column="wh_initime" property="whInitime" jdbcType="TIMESTAMP" />
+    <result column="o_id" property="oId" jdbcType="VARCHAR" />
+    <!--<result column="o_name" property="oName" jdbcType="VARCHAR" />-->
+    <result column="sh_id" property="shId" jdbcType="VARCHAR" />
+    <!--<result column="sh_name" property="shName" jdbcType="VARCHAR" />-->
+    <result column="wh_creator" property="whCreator" jdbcType="VARCHAR" />
+    <!--<result column="e_name" property="eName" jdbcType="VARCHAR" />-->
+    <result column="c_id" property="cId" jdbcType="VARCHAR" />
+    <!--<result column="c_name" property="cName" jdbcType="VARCHAR" />-->
+    <result column="wh_state" property="whState" jdbcType="TINYINT" />
+    <result column="state_name" property="stateName" jdbcType="VARCHAR" />
+    <result column="wh_memo" property="whMemo" jdbcType="VARCHAR" />
+    <result column="wh_chtime" property="whChtime" jdbcType="TIMESTAMP" />
+    <collection property="warehousingDetails" ofType="com.erp.orm.entity.WarehousingDetail">
+    	<id column="wd_id" property="wdId" jdbcType="INTEGER" />
+	    <result column="wh_id" property="whId" jdbcType="VARCHAR" />
+	    <result column="w_id" property="wId" jdbcType="VARCHAR" />
+
+        <result column="w_classid" property="wClassid" jdbcType="VARCHAR" />
+        <result column="w_traname" property="wTraname" jdbcType="VARCHAR" />
+        <result column="w_standard" property="wStandard" jdbcType="VARCHAR" />
+        <result column="w_unit" property="wUnit" jdbcType="VARCHAR" />
+        <result column="w_business" property="wBusiness" jdbcType="VARCHAR" />
+        <result column="w_place" property="wPlace" jdbcType="VARCHAR" />
+        <result column="w_approvalno" property="wApprovalno" jdbcType="VARCHAR" />
+
+      <result column="wd_saleprice" property="wdSaleprice" jdbcType="DECIMAL" />
+        <result column="wd_costprice" property="wdCostprice" jdbcType="DECIMAL" />
+	    <result column="wd_amount" property="wdAmount" jdbcType="DECIMAL" />
+	    <result column="wd_discount" property="wdDiscount" jdbcType="DECIMAL" />
+	    <result column="wd_disc_price" property="wdDiscPrice" jdbcType="DECIMAL" />
+	    <result column="wd_batch_no" property="wdBatchNo" jdbcType="VARCHAR" />
+	    <result column="wd_indate" property="wdIndate" jdbcType="TIMESTAMP" />
+	    <result column="wd_date" property="wdDate" jdbcType="TIMESTAMP" />
+	    <result column="wd_allocation" property="wdAllocation" jdbcType="VARCHAR" />
+	    <result column="wd_index" property="wdIndex" jdbcType="INTEGER" />
+	    <result column="wd_initime" property="wdInitime" jdbcType="TIMESTAMP" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wh_id, wh_initime, o_id, sh_id, wh_creator, c_id, wh_state, wh_memo, wh_chtime
+  </sql>
+  <sql id="Base_Column_List_Detail" >
+ 	w.wh_id,w.wh_initime,w.o_id,w.sh_id,w.wh_creator,w.c_id,w.wh_state,w.wh_chtime,w.wh_memo,
+	b.w_classid,b.w_traname,b.w_standard,b.w_unit,b.w_business,b.w_place,b.w_approvalno,p.w_sellprice,
+	d.wd_id,d.wh_id,d.w_id,d.wd_saleprice,d.wd_costprice,d.wd_amount,d.wd_discount,d.wd_disc_price,d.wd_batch_no,d.wd_indate,d.wd_date,d.wd_allocation,d.wd_index,d.wd_initime
+  </sql>
+  <sql id="Base_Column_List_Detail_Name">
+    w.wh_id,w.wh_initime,o.o_name as o_id,s.sh_name as sh_id,e.e_name as wh_creator ,c.c_name as c_id,
+    case w.wh_state
+    when 0 then '未审核'
+    when 1 then '审核中'
+    when 2 then '通过'
+    when 3 then '未通过'
+    when 4 then '作废' end as state_name,
+    w.wh_chtime,w.wh_memo,
+    b.w_classid,b.w_traname,b.w_standard,b.w_unit,b.w_business,b.w_place,b.w_approvalno,p.w_sellprice,
+    d.wd_saleprice,d.wd_costprice,d.wd_amount,
+    d.wd_discount,d.wd_disc_price,d.wd_batch_no,d.wd_indate,d.wd_date,d.wd_allocation,d.wd_index,d.wd_initime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <!--<include refid="Base_Column_List" />-->
+    <include refid="Base_Column_List_Detail" />
+    from tb_warehousing w
+    left join tb_warehousing_detail d
+    on w.wh_id = d.wh_id
+    left join tb_wares_base b
+    on d.w_id = b.w_id
+    left join tb_wares_price p
+    on b.w_id = p.w_id
+    where w.wh_id = #{whId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List_Detail" />
+	from tb_warehousing w
+	left join tb_warehousing_detail d
+	on w.wh_id = d.wh_id
+	left join tb_wares_base b
+	on d.w_id = b.w_id
+	left join tb_wares_price p
+	on b.w_id = p.w_id
+	order by w.wh_initime desc  limit 100 
+  </select>
+  <select id="selectByIdOrTimeOrCreator" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List_Detail" />
+    from tb_warehousing w
+    left join tb_warehousing_detail d
+    on w.wh_id = d.wh_id
+    where w.wh_id = #{whId,jdbcType=VARCHAR}
+    <if test="whCreator != null" >
+      and wh_creator like concat('%',#{whCreator,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="whInitime != null" >
+      and wh_initime = #{whInitime,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List_Detail_Name" />
+    from tb_warehousing w
+    left join ts_organ o on o.o_id = w.o_id
+    left join ts_storehouse s on s.sh_id = w.sh_id
+    left join tb_employee e on e.e_id = w.wh_creator
+    left join tb_company c on c.c_id = w.c_id
+    left join tb_warehousing_detail d     on w.wh_id = d.wh_id
+    left join tb_wares_base b     on d.w_id = b.w_id
+    left join tb_wares_price p     on b.w_id = p.w_id
+    order by wh_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from tb_warehousing
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_warehousing
+    where wh_id = #{whId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Warehousing" >
+    insert into tb_warehousing (wh_id, wh_initime, o_id, 
+      sh_id, wh_creator, c_id, 
+      wh_state, wh_memo, wh_chtime
+      )
+    values (#{whId,jdbcType=VARCHAR}, now(), #{oId,jdbcType=VARCHAR}, 
+      #{shId,jdbcType=VARCHAR}, #{whCreator,jdbcType=VARCHAR}, #{cId,jdbcType=VARCHAR}, 
+      #{whState,jdbcType=TINYINT}, #{whMemo,jdbcType=VARCHAR}, now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Warehousing" >
+    insert into tb_warehousing
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="whId != null" >
+        wh_id,
+      </if>
+        wh_initime,
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="shId != null" >
+        sh_id,
+      </if>
+      <if test="whCreator != null" >
+        wh_creator,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="whState != null" >
+        wh_state,
+      </if>
+      <if test="whMemo != null" >
+        wh_memo,
+      </if>
+        wh_chtime
+      </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="whId != null" >
+        #{whId,jdbcType=VARCHAR},
+      </if>
+        now(),
+      <if test="oId != null" >
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="shId != null" >
+        #{shId,jdbcType=VARCHAR},
+      </if>
+      <if test="whCreator != null" >
+        #{whCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="whState != null" >
+        #{whState,jdbcType=TINYINT},
+      </if>
+      <if test="whMemo != null" >
+        #{whMemo,jdbcType=VARCHAR},
+      </if>
+        now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Warehousing" >
+    update tb_warehousing
+    <set >
+        wh_initime = now(),
+      <if test="oId != null" >
+        o_id = #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="shId != null" >
+        sh_id = #{shId,jdbcType=VARCHAR},
+      </if>
+      <if test="whCreator != null" >
+        wh_creator = #{whCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="whState != null" >
+        wh_state = #{whState,jdbcType=TINYINT},
+      </if>
+      <if test="whMemo != null" >
+        wh_memo = #{whMemo,jdbcType=VARCHAR},
+      </if>
+        wh_chtime = now()
+    </set>
+    where wh_id = #{whId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Warehousing" >
+    update tb_warehousing
+    set wh_initime = now(),
+      o_id = #{oId,jdbcType=VARCHAR},
+      sh_id = #{shId,jdbcType=VARCHAR},
+      wh_creator = #{whCreator,jdbcType=VARCHAR},
+      c_id = #{cId,jdbcType=VARCHAR},
+      wh_state = #{whState,jdbcType=TINYINT},
+      wh_memo = #{whMemo,jdbcType=VARCHAR},
+      wh_chtime = now()
+    where wh_id = #{whId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWholesaleDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.WholesaleDetail" >
+    <id column="wsd_id" property="wsdId" jdbcType="INTEGER" />
+    <result column="ws_id" property="wsId" jdbcType="VARCHAR" />
+    <result column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="wsd_price" property="wsdPrice" jdbcType="REAL" />
+    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />
+    <result column="sp_code" property="spCode" jdbcType="VARCHAR" />
+    <result column="wsd_amount" property="wsdAmount" jdbcType="REAL" />
+    <result column="wsd_money" property="wsdMoney" jdbcType="REAL" />
+    <result column="sb_id" property="sbId" jdbcType="INTEGER" />
+    <result column="produce_date" property="produceDate" jdbcType="TIMESTAMP" />
+    <result column="wsd_index" property="wsdIndex" jdbcType="INTEGER" />
+    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wsd_id, ws_id, w_id, produce_date, wsd_amount, wsd_price, wsd_money, batch_no, sb_id, sp_code, wsd_index,
+    intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_wholesale_detail
+    where wsd_id = #{wsdId,jdbcType=INTEGER}
+  </select>
+
+
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_wholesale_detail
+    where wsd_id = #{waId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_wholesale_detail
+    order by wsd_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from  tb_wholesale_detail
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_wholesale_detail
+    where wsd_id = #{wsdId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByWsId" parameterType="java.lang.Integer" >
+    delete from tb_wholesale_detail
+    where ws_id = #{wsId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByWsIdAndWidAndBatchnoAndSbid" parameterType="java.util.Map"  >
+    delete from tb_wholesale_detail
+    where ws_id = #{wsId,jdbcType=INTEGER} and w_id = #{wId,jdbcType=INTEGER} and batch_no = #{batchNo,jdbcType=INTEGER} and sb_id = #{sbId,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insert" parameterType="com.erp.orm.entity.WholesaleDetail" >
+    insert into tb_wholesale_detail (wsd_id, ws_id, w_id, 
+      wd_saleprice, valid_date, produce_date,
+      wsd_amount, wsd_price,
+      wsd_money, batch_no, sb_id, 
+      sp_code, wsd_index, intime
+      )
+    values (#{wsdId,jdbcType=INTEGER}, #{wsId,jdbcType=VARCHAR}, #{wId,jdbcType=VARCHAR}, 
+       #{validDate,jdbcType=TIMESTAMP}, #{produceDate,jdbcType=TIMESTAMP},
+       #{wsdAmount,jdbcType=REAL}, #{wsdPrice,jdbcType=REAL},
+      #{wsdMoney,jdbcType=REAL}, #{batchNo,jdbcType=VARCHAR}, #{sbId,jdbcType=INTEGER}, 
+      #{spCode,jdbcType=VARCHAR}, #{wsdIndex,jdbcType=INTEGER}, #{intime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.WholesaleDetail" >
+    insert into tb_wholesale_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wsdId != null" >
+        wsd_id,
+      </if>
+      <if test="wsId != null" >
+        ws_id,
+      </if>
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="validDate != null" >
+        valid_date,
+      </if>
+      <if test="produceDate != null" >
+        produce_date,
+      </if>
+      <if test="wsdAmount != null" >
+        wsd_amount,
+      </if>
+      <if test="wsdPrice != null" >
+        wsd_price,
+      </if>
+      <if test="wsdMoney != null" >
+        wsd_money,
+      </if>
+      <if test="batchNo != null" >
+        batch_no,
+      </if>
+      <if test="sbId != null" >
+        sb_id,
+      </if>
+      <if test="spCode != null" >
+        sp_code,
+      </if>
+      <if test="wsdIndex != null" >
+        wsd_index,
+      </if>
+      <if test="intime != null" >
+        intime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wsdId != null" >
+        #{wsdId,jdbcType=INTEGER},
+      </if>
+      <if test="wsId != null" >
+        #{wsId,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="validDate != null" >
+        #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="produceDate != null" >
+        #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wsdAmount != null" >
+        #{wsdAmount,jdbcType=REAL},
+      </if>
+      <if test="wsdPrice != null" >
+        #{wsdPrice,jdbcType=REAL},
+      </if>
+      <if test="wsdMoney != null" >
+        #{wsdMoney,jdbcType=REAL},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sbId != null" >
+        #{sbId,jdbcType=INTEGER},
+      </if>
+      <if test="spCode != null" >
+        #{spCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wsdIndex != null" >
+        #{wsdIndex,jdbcType=INTEGER},
+      </if>
+      <if test="intime != null" >
+        #{intime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.WholesaleDetail" >
+    update tb_wholesale_detail
+    <set >
+      <if test="wsId != null" >
+        ws_id = #{wsId,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        w_id = #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="validDate != null" >
+        valid_date = #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="produceDate != null" >
+        produce_date = #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wsdAmount != null" >
+        wsd_amount = #{wsdAmount,jdbcType=REAL},
+      </if>
+      <if test="wsdPrice != null" >
+        wsd_price = #{wsdPrice,jdbcType=REAL},
+      </if>
+      <if test="wsdMoney != null" >
+        wsd_money = #{wsdMoney,jdbcType=REAL},
+      </if>
+      <if test="batchNo != null" >
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sbId != null" >
+        sb_id = #{sbId,jdbcType=INTEGER},
+      </if>
+      <if test="spCode != null" >
+        sp_code = #{spCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wsdIndex != null" >
+        wsd_index = #{wsdIndex,jdbcType=INTEGER},
+      </if>
+      <if test="intime != null" >
+        intime = #{intime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where wsd_id = #{wsdId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.WholesaleDetail" >
+    update tb_wholesale_detail
+    set ws_id = #{wsId,jdbcType=VARCHAR},
+      w_id = #{wId,jdbcType=VARCHAR},
+      valid_date = #{validDate,jdbcType=TIMESTAMP},
+      produce_date = #{produceDate,jdbcType=TIMESTAMP},
+      wsd_amount = #{wsdAmount,jdbcType=REAL},
+      wsd_price = #{wsdPrice,jdbcType=REAL},
+      wsd_money = #{wsdMoney,jdbcType=REAL},
+      batch_no = #{batchNo,jdbcType=VARCHAR},
+      sb_id = #{sbId,jdbcType=INTEGER},
+      sp_code = #{spCode,jdbcType=VARCHAR},
+      wsd_index = #{wsdIndex,jdbcType=INTEGER},
+      intime = #{intime,jdbcType=TIMESTAMP}
+    where wsd_id = #{wsdId,jdbcType=INTEGER}
+  </update>
+</mapper>

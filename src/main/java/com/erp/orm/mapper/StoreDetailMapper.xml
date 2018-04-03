@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IStoreDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.StoreDetail" >
+    <id column="sd_id" property="sdId" jdbcType="INTEGER" />
+    <result column="s_id" property="sId" jdbcType="INTEGER" />
+    <result column="o_code" property="oCode" jdbcType="VARCHAR" />
+    <result column="sh_code" property="shCode" jdbcType="VARCHAR" />
+    <result column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+    <result column="sp_code" property="spCode" jdbcType="VARCHAR" />
+    <result column="produce_date" property="produceDate" jdbcType="TIMESTAMP" />
+    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />
+    <result column="amount" property="amount" jdbcType="FLOAT" />
+    <result column="p_amount" property="pAmount" jdbcType="FLOAT" />
+    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sd_id,s_id, o_code, sh_code, w_id, batch_no, sp_code, produce_date, valid_date, amount, p_amount,intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_store_detail
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_store_detail
+    where o_code = #{oCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from tb_store_detail
+    order by sd_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from tb_store_detail
+  </select>
+
+  <select id="selectBySid" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from tb_store_detail
+    where s_id = #{sId,jdbcType=INTEGER}
+    order by sd_id
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_store_detail
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.StoreDetail" useGeneratedKeys="true" keyProperty="sdId" >
+    insert into tb_store_detail (s_id, o_code, sh_code,
+      w_id, batch_no, sp_code, 
+      produce_date, valid_date, amount,
+      p_amount)
+    values (#{sId,jdbcType=INTEGER}, #{oCode,jdbcType=VARCHAR}, #{shCode,jdbcType=VARCHAR},
+      #{wId,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{spCode,jdbcType=VARCHAR}, 
+      #{produceDate,jdbcType=TIMESTAMP}, #{validDate,jdbcType=TIMESTAMP}, #{amount,jdbcType=FLOAT},
+      #{pAmount,jdbcType=FLOAT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.StoreDetail" useGeneratedKeys="true" keyProperty="sdId" >
+    insert into tb_store_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        s_id,
+      </if>
+      <if test="oCode != null" >
+        o_code,
+      </if>
+      <if test="shCode != null" >
+        sh_code,
+      </if>
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="batchNo != null" >
+        batch_no,
+      </if>
+      <if test="spCode != null" >
+        sp_code,
+      </if>
+      <if test="produceDate != null" >
+        produce_date,
+      </if>
+      <if test="validDate != null" >
+        valid_date,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="pAmount != null" >
+        p_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="oCode != null" >
+        #{oCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shCode != null" >
+        #{shCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="spCode != null" >
+        #{spCode,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null" >
+        #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validDate != null" >
+        #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=FLOAT},
+      </if>
+      <if test="pAmount != null" >
+        #{pAmount,jdbcType=FLOAT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.StoreDetail" >
+    update tb_store_detail
+    <set >
+      <if test="oCode != null" >
+        o_code = #{oCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shCode != null" >
+        sh_code = #{shCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        w_id = #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null" >
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="spCode != null" >
+        sp_code = #{spCode,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null" >
+        produce_date = #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validDate != null" >
+        valid_date = #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=FLOAT},
+      </if>
+      <if test="pAmount != null" >
+        p_amount = #{pAmount,jdbcType=FLOAT},
+      </if>
+    </set>
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.StoreDetail" >
+    update tb_store_detail
+    set o_code = #{oCode,jdbcType=VARCHAR},
+      sh_code = #{shCode,jdbcType=VARCHAR},
+      w_id = #{wId,jdbcType=VARCHAR},
+      batch_no = #{batchNo,jdbcType=VARCHAR},
+      sp_code = #{spCode,jdbcType=VARCHAR},
+      produce_date = #{produceDate,jdbcType=TIMESTAMP},
+      valid_date = #{validDate,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=FLOAT},
+      p_amount = #{pAmount,jdbcType=FLOAT}
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateAmountById" parameterType="java.util.Map" >
+    update tb_store_detail
+    set amount = amount - #{amount,jdbcType=FLOAT},
+    p_amount = p_amount + #{amount,jdbcType=FLOAT}
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWarehousingDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.WarehousingDetail" >
+    <id column="wd_id" property="wdId" jdbcType="INTEGER" />
+    <result column="wh_id" property="whId" jdbcType="VARCHAR" />
+    <result column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="wd_saleprice" property="wdSaleprice" jdbcType="DECIMAL" />
+    <result column="wd_costprice" property="wdCostprice" jdbcType="DECIMAL" />
+    <result column="wd_amount" property="wdAmount" jdbcType="DECIMAL" />
+    <result column="wd_discount" property="wdDiscount" jdbcType="DECIMAL" />
+    <result column="wd_disc_price" property="wdDiscPrice" jdbcType="DECIMAL" />
+    <result column="wd_batch_no" property="wdBatchNo" jdbcType="VARCHAR" />
+    <result column="wd_indate" property="wdIndate" jdbcType="TIMESTAMP" />
+    <result column="wd_date" property="wdDate" jdbcType="TIMESTAMP" />
+    <result column="wd_allocation" property="wdAllocation" jdbcType="VARCHAR" />
+    <result column="wd_index" property="wdIndex" jdbcType="INTEGER" />
+    <result column="wd_initime" property="wdInitime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wd_id, wh_id, w_id, wd_saleprice,wd_costprice, wd_amount, wd_discount, wd_disc_price, wd_batch_no,
+    wd_indate, wd_date, wd_allocation, wd_index, wd_initime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_warehousing_detail
+    where wd_id = #{wdId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Map" >
+    delete from tb_warehousing_detail
+    where w_id = #{wId,jdbcType=VARCHAR} and wh_id = #{whId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.WarehousingDetail" >
+    insert into tb_warehousing_detail (wd_id, wh_id, w_id,
+      wd_saleprice,wd_costprice, wd_amount, wd_discount,
+      wd_disc_price, wd_batch_no, wd_indate, 
+      wd_date, wd_allocation, wd_index, 
+      wd_initime)
+    values (#{wdId,jdbcType=INTEGER}, #{whId,jdbcType=VARCHAR}, #{wId,jdbcType=VARCHAR},
+      #{wdSaleprice,jdbcType=DECIMAL},#{wdCostprice,jdbcType=DECIMAL}, #{wdAmount,jdbcType=DECIMAL}, #{wdDiscount,jdbcType=DECIMAL},
+      #{wdDiscPrice,jdbcType=DECIMAL}, #{wdBatchNo,jdbcType=VARCHAR}, #{wdIndate,jdbcType=TIMESTAMP}, 
+      #{wdDate,jdbcType=TIMESTAMP}, #{wdAllocation,jdbcType=VARCHAR}, #{wdIndex,jdbcType=INTEGER}, 
+      now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.WarehousingDetail" >
+    insert into tb_warehousing_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wdId != null" >
+        wd_id,
+      </if>
+      <if test="whId != null" >
+        wh_id,
+      </if>
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="wdSaleprice != null" >
+        wd_saleprice,
+      </if>
+      <if test="wdCostprice != null" >
+        wd_costprice,
+      </if>
+      <if test="wdAmount != null" >
+        wd_amount,
+      </if>
+      <if test="wdDiscount != null" >
+        wd_discount,
+      </if>
+      <if test="wdDiscPrice != null" >
+        wd_disc_price,
+      </if>
+      <if test="wdBatchNo != null" >
+        wd_batch_no,
+      </if>
+      <if test="wdIndate != null" >
+        wd_indate,
+      </if>
+      <if test="wdDate != null" >
+        wd_date,
+      </if>
+      <if test="wdAllocation != null" >
+        wd_allocation,
+      </if>
+      <if test="wdIndex != null" >
+        wd_index,
+      </if>
+        wd_initime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wdId != null" >
+        #{wdId,jdbcType=INTEGER},
+      </if>
+      <if test="whId != null" >
+        #{whId,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="wdSaleprice != null" >
+        #{wdSaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wdCostprice != null" >
+        #{wdCostprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wdAmount != null" >
+        #{wdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="wdDiscount != null" >
+        #{wdDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="wdDiscPrice != null" >
+        #{wdDiscPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="wdBatchNo != null" >
+        #{wdBatchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wdIndate != null" >
+        #{wdIndate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wdDate != null" >
+        #{wdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wdAllocation != null" >
+        #{wdAllocation,jdbcType=VARCHAR},
+      </if>
+      <if test="wdIndex != null" >
+        #{wdIndex,jdbcType=INTEGER},
+      </if>
+        now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.WarehousingDetail" >
+    update tb_warehousing_detail
+    <set >
+      <if test="whId != null" >
+        wh_id = #{whId,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        w_id = #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="wdSaleprice != null" >
+        wd_saleprice = #{wdSaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wdCostprice != null" >
+        wd_costprice = #{wdCostprice,jdbcType=DECIMAL}
+      </if>
+      <if test="wdAmount != null" >
+        wd_amount = #{wdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="wdDiscount != null" >
+        wd_discount = #{wdDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="wdDiscPrice != null" >
+        wd_disc_price = #{wdDiscPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="wdBatchNo != null" >
+        wd_batch_no = #{wdBatchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wdIndate != null" >
+        wd_indate = #{wdIndate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wdDate != null" >
+        wd_date = #{wdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wdAllocation != null" >
+        wd_allocation = #{wdAllocation,jdbcType=VARCHAR},
+      </if>
+      <if test="wdIndex != null" >
+        wd_index = #{wdIndex,jdbcType=INTEGER},
+      </if>
+        wd_initime = now()
+    </set>
+    where  w_id = #{wId,jdbcType=VARCHAR} and wh_id = #{wdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.WarehousingDetail" >
+    update tb_warehousing_detail
+    set wh_id = #{whId,jdbcType=VARCHAR},
+      w_id = #{wId,jdbcType=VARCHAR},
+      wd_saleprice = #{wdSaleprice,jdbcType=DECIMAL},
+      wd_costprice = #{wdCostprice,jdbcType=DECIMAL}
+      wd_amount = #{wdAmount,jdbcType=DECIMAL},
+      wd_discount = #{wdDiscount,jdbcType=DECIMAL},
+      wd_disc_price = #{wdDiscPrice,jdbcType=DECIMAL},
+      wd_batch_no = #{wdBatchNo,jdbcType=VARCHAR},
+      wd_indate = #{wdIndate,jdbcType=TIMESTAMP},
+      wd_date = #{wdDate,jdbcType=TIMESTAMP},
+      wd_allocation = #{wdAllocation,jdbcType=VARCHAR},
+      wd_index = #{wdIndex,jdbcType=INTEGER},
+      wd_initime = now()
+    where wd_id = #{wdId,jdbcType=INTEGER}
+  </update>
+</mapper>

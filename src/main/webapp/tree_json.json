@@ -1,0 +1,404 @@
+[
+  {
+    "id": 1,
+    "text": "人力资源",
+    "checked": false,
+    "children": [
+      {
+        "id": 1,
+        "text": "企业新闻",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 2,
+        "text": "电子邮件",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 3,
+        "text": "知识文档",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "权限管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 4,
+        "text": "权限设置",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 5,
+        "text": "员工权限",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "系统设置",
+    "checked": false,
+    "children": [
+      {
+        "id": 6,
+        "text": "机构设置",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 7,
+        "text": "库区设置",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 8,
+        "text": "货位设置",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 9,
+        "text": "参数设置",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "基础信息",
+    "checked": false,
+    "children": [
+      {
+        "id": 10,
+        "text": "员工信息",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 11,
+        "text": "客户信息",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 12,
+        "text": "供应商信息",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 13,
+        "text": "商品信息",
+        "state": "open",
+        "checked": false,
+        "attributes": [
+          {
+            "url": "/erp/wares/index.yy"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "会员管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 14,
+        "text": "会员信息",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 15,
+        "text": "会员兑奖",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 16,
+        "text": "会员换卡",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "text": "报价管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 17,
+        "text": "调进价",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 18,
+        "text": "调销价",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 19,
+        "text": "调售价",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "text": "采购管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 20,
+        "text": "采购计划",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 21,
+        "text": "采购合同",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 22,
+        "text": "采购收货",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 23,
+        "text": "验收申请",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 24,
+        "text": "采购入库",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 25,
+        "text": "采购退货",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "text": "销售管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 26,
+        "text": "批发销售",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 27,
+        "text": "批发退货",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 28,
+        "text": "零售销售",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "text": "配送管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 29,
+        "text": "门店请货",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 30,
+        "text": "门店配送",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 31,
+        "text": "门店退货",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 32,
+        "text": "门店调拨",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "text": "库存管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 33,
+        "text": "货位调整",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 34,
+        "text": "库存查询",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 35,
+        "text": "库存盘点",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 36,
+        "text": "报损报溢",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "text": "财务管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 37,
+        "text": "应付结款",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 38,
+        "text": "应付查询",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 39,
+        "text": "应收结款",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 40,
+        "text": "应收查询",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "text": "质量管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 41,
+        "text": "首营企业",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 42,
+        "text": "首营品种",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 43,
+        "text": "采购记录",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 44,
+        "text": "验收记录",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 45,
+        "text": "销售记录",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "text": "报表管理",
+    "checked": false,
+    "children": [
+      {
+        "id": 46,
+        "text": "进销存分析",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 47,
+        "text": "库存分析",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 48,
+        "text": "批发分析",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 49,
+        "text": "零售分析",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 50,
+        "text": "配送分析",
+        "state": "open",
+        "checked": false
+      },
+      {
+        "id": 51,
+        "text": "会员分析",
+        "state": "open",
+        "checked": false
+      }
+    ]
+  }
+]

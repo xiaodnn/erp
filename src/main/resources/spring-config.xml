@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!--
+	<context:component-scan base-package="com.erp.service" />
+	<context:component-scan base-package="com.erp.dao" />
+	<context:component-scan base-package="com.erp.orm" />
+	-->
+	<!-- 不装配Controller -->
+	<context:component-scan base-package="com.erp">
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+	</context:component-scan>
+
+	<context:property-placeholder location="classpath*:config.properties" />
+	<!-- 允许对静态资源文件的访问   mvc:default-servlet-handler  -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>${db_driver}</value>
+		</property>
+		<property name="url">
+			<value>${db_url}</value>
+		</property>
+		<property name="username">
+			<value>${db_uname}</value>
+		</property>
+		<property name="password">
+			<value>${db_pwd}</value>
+		</property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- <property name="configLocation" value="classpath*:mybatis-config.xml"></property>-->
+		<!-- 所有配置的mapper文件 -->
+		<!-- <property name="mapperLocations" value="classpath*:/mapper/*.xml" /> -->
+		<property name="mapperLocations" value="classpath*:com/erp/orm/mapper/*.xml" />
+	</bean>
+
+	<!--
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.erp.orm.mapper" />
+	</bean>
+	-->
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.erp.orm"/>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+	</bean>
+
+
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!--
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"  />
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"  />
+			<tx:method name="modify*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="del*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception" />
+			-->
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="createTable" propagation="REQUIRED" />
+			
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- tx:annotation-driver标记，是因为这里用的是注解事务，这个开启后spring会在dao,service,model下面所有类中扫描含有@Transactional的标识，
+		并生成相应的代理（默认是基于接口的JDK动态代理），在service层进行事务处理，只在service层添加@Transactional标识-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 只对业务逻辑(service)层实施事务 -->
+	<aop:config>
+		<!-- 只对业务逻辑层实施事务 -->
+		<aop:pointcut id="txPointcut" expression="execution(* com.erp.service.impl.*.*(..))" />
+		<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
+		<aop:advisor pointcut-ref="txPointcut"  advice-ref="txAdvice" />
+	</aop:config>
+	<!--
+	<aop:config expose-proxy="true">
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* com.erp.service.*.*(..))" />
+	</aop:config>
+	-->
+
+
+</beans>

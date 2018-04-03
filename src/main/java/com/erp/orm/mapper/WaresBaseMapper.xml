@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWaresBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.WaresBase" >
+    <id column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="w_classid" property="wClassid" jdbcType="VARCHAR" />
+    <result column="w_type" property="wType" jdbcType="VARCHAR" />
+    <result column="w_genname" property="wGenname" jdbcType="VARCHAR" />
+    <result column="w_traname" property="wTraname" jdbcType="VARCHAR" />
+    <result column="w_zjm" property="wZjm" jdbcType="VARCHAR" />
+    <result column="w_barcode" property="wBarcode" jdbcType="VARCHAR" />
+    <result column="w_approvalno" property="wApprovalno" jdbcType="VARCHAR" />
+    <result column="w_unit" property="wUnit" jdbcType="VARCHAR" />
+    <result column="w_standard" property="wStandard" jdbcType="VARCHAR" />
+    <result column="w_business" property="wBusiness" jdbcType="VARCHAR" />
+    <result column="w_place" property="wPlace" jdbcType="VARCHAR" />
+    <result column="w_max" property="wMax" jdbcType="FLOAT" />
+    <result column="w_maxunit" property="wMaxunit" jdbcType="VARCHAR" />
+    <result column="w_min" property="wMin" jdbcType="FLOAT" />
+    <result column="w_minunit" property="wMinunit" jdbcType="VARCHAR" />
+    <result column="w_mid" property="wMid" jdbcType="FLOAT" />
+    <result column="w_midunit" property="wMidunit" jdbcType="VARCHAR" />
+    <result column="w_status" property="wStatus" jdbcType="TINYINT" />
+    <result column="w_creator" property="wCreator" jdbcType="VARCHAR" />
+    <result column="w_initime" property="wInitime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    w_id, w_classid, w_type, w_genname, w_traname, w_zjm, w_barcode, w_approvalno, w_unit, 
+    w_standard, w_business, w_place, w_max, w_maxunit, w_min, w_minunit, w_mid, w_midunit, 
+    w_status, w_creator, w_initime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_wares_base
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_wares_base
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.WaresBase" >
+    insert into tb_wares_base (w_id, w_classid, w_type, 
+      w_genname, w_traname, w_zjm, 
+      w_barcode, w_approvalno, w_unit, 
+      w_standard, w_business, w_place, 
+      w_max, w_maxunit, w_min, 
+      w_minunit, w_mid, w_midunit, 
+      w_status, w_creator, w_initime
+      )
+    values (#{wId,jdbcType=VARCHAR}, #{wClassid,jdbcType=VARCHAR}, #{wType,jdbcType=VARCHAR}, 
+      #{wGenname,jdbcType=VARCHAR}, #{wTraname,jdbcType=VARCHAR}, #{wZjm,jdbcType=VARCHAR}, 
+      #{wBarcode,jdbcType=VARCHAR}, #{wApprovalno,jdbcType=VARCHAR}, #{wUnit,jdbcType=VARCHAR}, 
+      #{wStandard,jdbcType=VARCHAR}, #{wBusiness,jdbcType=VARCHAR}, #{wPlace,jdbcType=VARCHAR}, 
+      #{wMax,jdbcType=FLOAT}, #{wMaxunit,jdbcType=VARCHAR}, #{wMin,jdbcType=FLOAT}, 
+      #{wMinunit,jdbcType=VARCHAR}, #{wMid,jdbcType=FLOAT}, #{wMidunit,jdbcType=VARCHAR}, 
+      #{wStatus,jdbcType=TINYINT}, #{wCreator,jdbcType=VARCHAR}, #{wInitime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.WaresBase" >
+    insert into tb_wares_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="wClassid != null" >
+        w_classid,
+      </if>
+      <if test="wType != null" >
+        w_type,
+      </if>
+      <if test="wGenname != null" >
+        w_genname,
+      </if>
+      <if test="wTraname != null" >
+        w_traname,
+      </if>
+      <if test="wZjm != null" >
+        w_zjm,
+      </if>
+      <if test="wBarcode != null" >
+        w_barcode,
+      </if>
+      <if test="wApprovalno != null" >
+        w_approvalno,
+      </if>
+      <if test="wUnit != null" >
+        w_unit,
+      </if>
+      <if test="wStandard != null" >
+        w_standard,
+      </if>
+      <if test="wBusiness != null" >
+        w_business,
+      </if>
+      <if test="wPlace != null" >
+        w_place,
+      </if>
+      <if test="wMax != null" >
+        w_max,
+      </if>
+      <if test="wMaxunit != null" >
+        w_maxunit,
+      </if>
+      <if test="wMin != null" >
+        w_min,
+      </if>
+      <if test="wMinunit != null" >
+        w_minunit,
+      </if>
+      <if test="wMid != null" >
+        w_mid,
+      </if>
+      <if test="wMidunit != null" >
+        w_midunit,
+      </if>
+      <if test="wStatus != null" >
+        w_status,
+      </if>
+      <if test="wCreator != null" >
+        w_creator,
+      </if>
+      <if test="wInitime != null" >
+        w_initime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="wClassid != null" >
+        #{wClassid,jdbcType=VARCHAR},
+      </if>
+      <if test="wType != null" >
+        #{wType,jdbcType=VARCHAR},
+      </if>
+      <if test="wGenname != null" >
+        #{wGenname,jdbcType=VARCHAR},
+      </if>
+      <if test="wTraname != null" >
+        #{wTraname,jdbcType=VARCHAR},
+      </if>
+      <if test="wZjm != null" >
+        #{wZjm,jdbcType=VARCHAR},
+      </if>
+      <if test="wBarcode != null" >
+        #{wBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="wApprovalno != null" >
+        #{wApprovalno,jdbcType=VARCHAR},
+      </if>
+      <if test="wUnit != null" >
+        #{wUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="wStandard != null" >
+        #{wStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="wBusiness != null" >
+        #{wBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="wPlace != null" >
+        #{wPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="wMax != null" >
+        #{wMax,jdbcType=FLOAT},
+      </if>
+      <if test="wMaxunit != null" >
+        #{wMaxunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wMin != null" >
+        #{wMin,jdbcType=FLOAT},
+      </if>
+      <if test="wMinunit != null" >
+        #{wMinunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wMid != null" >
+        #{wMid,jdbcType=FLOAT},
+      </if>
+      <if test="wMidunit != null" >
+        #{wMidunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wStatus != null" >
+        #{wStatus,jdbcType=TINYINT},
+      </if>
+      <if test="wCreator != null" >
+        #{wCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="wInitime != null" >
+        #{wInitime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.WaresBase" >
+    update tb_wares_base
+    <set >
+      <if test="wClassid != null" >
+        w_classid = #{wClassid,jdbcType=VARCHAR},
+      </if>
+      <if test="wType != null" >
+        w_type = #{wType,jdbcType=VARCHAR},
+      </if>
+      <if test="wGenname != null" >
+        w_genname = #{wGenname,jdbcType=VARCHAR},
+      </if>
+      <if test="wTraname != null" >
+        w_traname = #{wTraname,jdbcType=VARCHAR},
+      </if>
+      <if test="wZjm != null" >
+        w_zjm = #{wZjm,jdbcType=VARCHAR},
+      </if>
+      <if test="wBarcode != null" >
+        w_barcode = #{wBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="wApprovalno != null" >
+        w_approvalno = #{wApprovalno,jdbcType=VARCHAR},
+      </if>
+      <if test="wUnit != null" >
+        w_unit = #{wUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="wStandard != null" >
+        w_standard = #{wStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="wBusiness != null" >
+        w_business = #{wBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="wPlace != null" >
+        w_place = #{wPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="wMax != null" >
+        w_max = #{wMax,jdbcType=FLOAT},
+      </if>
+      <if test="wMaxunit != null" >
+        w_maxunit = #{wMaxunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wMin != null" >
+        w_min = #{wMin,jdbcType=FLOAT},
+      </if>
+      <if test="wMinunit != null" >
+        w_minunit = #{wMinunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wMid != null" >
+        w_mid = #{wMid,jdbcType=FLOAT},
+      </if>
+      <if test="wMidunit != null" >
+        w_midunit = #{wMidunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wStatus != null" >
+        w_status = #{wStatus,jdbcType=TINYINT},
+      </if>
+      <if test="wCreator != null" >
+        w_creator = #{wCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="wInitime != null" >
+        w_initime = #{wInitime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.WaresBase" >
+    update tb_wares_base
+    set w_classid = #{wClassid,jdbcType=VARCHAR},
+      w_type = #{wType,jdbcType=VARCHAR},
+      w_genname = #{wGenname,jdbcType=VARCHAR},
+      w_traname = #{wTraname,jdbcType=VARCHAR},
+      w_zjm = #{wZjm,jdbcType=VARCHAR},
+      w_barcode = #{wBarcode,jdbcType=VARCHAR},
+      w_approvalno = #{wApprovalno,jdbcType=VARCHAR},
+      w_unit = #{wUnit,jdbcType=VARCHAR},
+      w_standard = #{wStandard,jdbcType=VARCHAR},
+      w_business = #{wBusiness,jdbcType=VARCHAR},
+      w_place = #{wPlace,jdbcType=VARCHAR},
+      w_max = #{wMax,jdbcType=FLOAT},
+      w_maxunit = #{wMaxunit,jdbcType=VARCHAR},
+      w_min = #{wMin,jdbcType=FLOAT},
+      w_minunit = #{wMinunit,jdbcType=VARCHAR},
+      w_mid = #{wMid,jdbcType=FLOAT},
+      w_midunit = #{wMidunit,jdbcType=VARCHAR},
+      w_status = #{wStatus,jdbcType=TINYINT},
+      w_creator = #{wCreator,jdbcType=VARCHAR},
+      w_initime = #{wInitime,jdbcType=TIMESTAMP}
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+</mapper>

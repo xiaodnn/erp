@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IStoreZoneMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.StoreZone" >
+    <id column="sz_id" property="szId" jdbcType="INTEGER" />
+    <result column="sz_code" property="szCode" jdbcType="VARCHAR" />
+    <result column="sh_id" property="shId" jdbcType="INTEGER" />
+    <result column="sz_name" property="szName" jdbcType="VARCHAR" />
+    <result column="sz_intime" property="szIntime" jdbcType="TIMESTAMP" />
+    <result column="sz_creator" property="szCreator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sz_id, sz_code, sh_id, sz_name, sz_intime, sz_creator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_storezone
+    where sz_id = #{szId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_storezone
+    where sz_code = #{szCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from ts_storezone
+    order by sz_code
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from ts_storezone
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_storezone
+    where sz_id = #{szId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.StoreZone" >
+    insert into ts_storezone (sz_id, sz_code, sh_id, 
+      sz_name, sz_intime, sz_creator
+      )
+    values (#{szId,jdbcType=INTEGER}, #{szCode,jdbcType=VARCHAR}, #{shId,jdbcType=INTEGER}, 
+      #{szName,jdbcType=VARCHAR},now(), #{szCreator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.StoreZone" >
+    insert into ts_storezone
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="szId != null" >
+        sz_id,
+      </if>
+      <if test="szCode != null" >
+        sz_code,
+      </if>
+      <if test="shId != null" >
+        sh_id,
+      </if>
+      <if test="szName != null" >
+        sz_name,
+      </if>
+        sz_intime,
+      <if test="szCreator != null" >
+        sz_creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="szId != null" >
+        #{szId,jdbcType=INTEGER},
+      </if>
+      <if test="szCode != null" >
+        #{szCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shId != null" >
+        #{shId,jdbcType=INTEGER},
+      </if>
+      <if test="szName != null" >
+        #{szName,jdbcType=VARCHAR},
+      </if>
+        now(),
+      <if test="szCreator != null" >
+        #{szCreator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.StoreZone" >
+    update ts_storezone
+    <set >
+      <if test="szCode != null" >
+        sz_code = #{szCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shId != null" >
+        sh_id = #{shId,jdbcType=INTEGER},
+      </if>
+      <if test="szName != null" >
+        sz_name = #{szName,jdbcType=VARCHAR},
+      </if>
+        sz_intime = now(),
+      <if test="szCreator != null" >
+        sz_creator = #{szCreator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sz_id = #{szId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.StoreZone" >
+    update ts_storezone
+    set sz_code = #{szCode,jdbcType=VARCHAR},
+      sh_id = #{shId,jdbcType=INTEGER},
+      sz_name = #{szName,jdbcType=VARCHAR},
+      sz_intime = now(),
+      sz_creator = #{szCreator,jdbcType=VARCHAR}
+    where sz_id = #{szId,jdbcType=INTEGER}
+  </update>
+</mapper>

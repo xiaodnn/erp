@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWaresMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Wares" >
+	<id column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="w_classid" property="wClassid" jdbcType="VARCHAR" />
+    <result column="w_type" property="wType" jdbcType="VARCHAR" />
+    <result column="w_genname" property="wGenname" jdbcType="VARCHAR" />
+    <result column="w_traname" property="wTraname" jdbcType="VARCHAR" />
+    <result column="w_zjm" property="wZjm" jdbcType="VARCHAR" />
+    <result column="w_barcode" property="wBarcode" jdbcType="VARCHAR" />
+    <result column="w_approvalno" property="wApprovalno" jdbcType="VARCHAR" />
+    <result column="w_unit" property="wUnit" jdbcType="VARCHAR" />
+    <result column="w_standard" property="wStandard" jdbcType="VARCHAR" />
+    <result column="w_business" property="wBusiness" jdbcType="VARCHAR" />
+    <result column="w_place" property="wPlace" jdbcType="VARCHAR" />
+    <result column="w_max" property="wMax" jdbcType="FLOAT" />
+    <result column="w_maxunit" property="wMaxunit" jdbcType="VARCHAR" />
+    <result column="w_min" property="wMin" jdbcType="FLOAT" />
+    <result column="w_minunit" property="wMinunit" jdbcType="VARCHAR" />
+    <result column="w_mid" property="wMid" jdbcType="FLOAT" />
+    <result column="w_midunit" property="wMidunit" jdbcType="VARCHAR" />
+    <result column="w_status" property="wStatus" jdbcType="TINYINT" />
+    <result column="w_creator" property="wCreator" jdbcType="VARCHAR" />
+    <result column="w_initime" property="wInitime" jdbcType="TIMESTAMP" />
+    
+    <result column="w_storeage" property="wStoreage" jdbcType="VARCHAR" />
+    <result column="w_medical_id" property="wMedicalId" jdbcType="VARCHAR" />
+    <result column="w_medical_name" property="wMedicalName" jdbcType="VARCHAR" />
+    <result column="w_function" property="wFunction" jdbcType="VARCHAR" />
+    <result column="w_reg_id" property="wRegId" jdbcType="VARCHAR" />
+    <result column="w_reg_expdate" property="wRegExpdate" jdbcType="TIMESTAMP" />
+    
+    <result column="w_costprice" property="wCostprice" jdbcType="FLOAT" />
+    <result column="w_saleprice" property="wSaleprice" jdbcType="FLOAT" />
+    <result column="w_vipprice" property="wVipprice" jdbcType="FLOAT" />
+    <result column="w_sellprice" property="wSellprice" jdbcType="FLOAT" />
+    <result column="w_min_saleprice" property="wMinSaleprice" jdbcType="FLOAT" />
+    <result column="w_min_vipprice" property="wMinVipprice" jdbcType="FLOAT" />
+    <result column="w_min_sellprice" property="wMinSellprice" jdbcType="FLOAT" />
+    <result column="w_standard_saleprice" property="wStandardSaleprice" jdbcType="FLOAT" />
+    <result column="w_standard_sellprice" property="wStandardSellprice" jdbcType="FLOAT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+  	*
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select b.* , e.* , p.*
+    from tb_wares_base b
+    left join tb_wares_extend e
+	on b.w_id = e.w_id
+    left join tb_wares_price p
+	on b.w_id = p.w_id
+	where b.w_id = #{wId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select b.*,p.* 
+    from tb_wares_base b
+	left join  tb_wares_price p
+	on b.w_id = p.w_id
+	where b.w_status > 0
+	order by b.w_id
+  </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select b.*,p.* 
+    from tb_wares_base b
+	left join  tb_wares_price p
+	on b.w_id = p.w_id
+	where b.w_traname like concat('%',#{wTraname,jdbcType=VARCHAR},'%')  and b.w_status > 0
+	order by b.w_id
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select b.*,p.*
+    from tb_wares_base b
+	left join  tb_wares_price p
+	on b.w_id = p.w_id
+	where b.w_status > 0
+	order by b.w_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from  tb_wares_base b
+    where b.w_status > 0
+  </select>
+
+
+  <select id="selectByNameOrId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select b.w_id,b.w_classid,b.w_traname,b.w_standard,b.w_unit,b.w_business,b.w_place,b.w_approvalno,p.w_saleprice,p.w_costprice
+    from tb_wares_base b
+	left join  tb_wares_price p
+	on b.w_id = p.w_id
+	where 
+	( b.w_zjm like concat('%',#{s,jdbcType=VARCHAR},'%')
+	or b.w_traname like concat('%',#{s,jdbcType=VARCHAR},'%')
+	or b.w_classid like concat('%',#{s,jdbcType=VARCHAR},'%') )
+	and b.w_status > 0
+	order by b.w_id
+  </select>
+
+  <select id="selectByZjmOrId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select d.sd_id as sdId,d.s_id as sId,
+      w.w_id,w.w_traname,w.w_unit,w.w_standard,w.w_business,w.w_place,
+      b.cost_price as w_costprice,d.batch_no as batchNo,d.valid_date as validDate,d.sp_code as spCode,d.amount as amount,b.sb_id as sbId,d.produce_date as produceDate
+    from tb_wares_base w
+    inner JOIN tb_store_detail d on w.w_id = d.w_id
+    inner JOIN tb_store_batch b on b.s_id = d.s_id
+    where w.w_zjm  like concat('%',#{zjm,jdbcType=VARCHAR},'%')
+    and d.amount > 0
+    order by d.valid_date
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_wares
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Wares" >
+    insert into tb_wares (w_id, w_classid, w_type, 
+      w_genname, w_traname, w_zjm, 
+      w_barcode, w_approvalno, w_unit, 
+      w_standard, w_business, w_place, 
+      w_max, w_maxunit, w_min, 
+      w_minunit, w_mid, w_midunit, 
+      w_costprice, w_saleprice, w_sellprice, 
+      w_status, w_initime, w_creator
+      )
+    values (#{wId,jdbcType=VARCHAR}, #{wClassid,jdbcType=VARCHAR}, #{wType,jdbcType=VARCHAR}, 
+      #{wGenname,jdbcType=VARCHAR}, #{wTraname,jdbcType=VARCHAR}, #{wZjm,jdbcType=VARCHAR}, 
+      #{wBarcode,jdbcType=VARCHAR}, #{wApprovalno,jdbcType=VARCHAR}, #{wUnit,jdbcType=VARCHAR}, 
+      #{wStandard,jdbcType=VARCHAR}, #{wBusiness,jdbcType=VARCHAR}, #{wPlace,jdbcType=VARCHAR}, 
+      #{wMax,jdbcType=FLOAT}, #{wMaxunit,jdbcType=VARCHAR}, #{wMin,jdbcType=FLOAT}, 
+      #{wMinunit,jdbcType=VARCHAR}, #{wMid,jdbcType=FLOAT}, #{wMidunit,jdbcType=VARCHAR}, 
+      #{wCostprice,jdbcType=FLOAT}, #{wSaleprice,jdbcType=FLOAT}, #{wSellprice,jdbcType=FLOAT}, 
+      #{wStatus,jdbcType=TINYINT}, #{wInitime,jdbcType=TIMESTAMP}, #{wCreator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Wares" >
+    insert into tb_wares
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="wClassid != null" >
+        w_classid,
+      </if>
+      <if test="wType != null" >
+        w_type,
+      </if>
+      <if test="wGenname != null" >
+        w_genname,
+      </if>
+      <if test="wTraname != null" >
+        w_traname,
+      </if>
+      <if test="wZjm != null" >
+        w_zjm,
+      </if>
+      <if test="wBarcode != null" >
+        w_barcode,
+      </if>
+      <if test="wApprovalno != null" >
+        w_approvalno,
+      </if>
+      <if test="wUnit != null" >
+        w_unit,
+      </if>
+      <if test="wStandard != null" >
+        w_standard,
+      </if>
+      <if test="wBusiness != null" >
+        w_business,
+      </if>
+      <if test="wPlace != null" >
+        w_place,
+      </if>
+      <if test="wMax != null" >
+        w_max,
+      </if>
+      <if test="wMaxunit != null" >
+        w_maxunit,
+      </if>
+      <if test="wMin != null" >
+        w_min,
+      </if>
+      <if test="wMinunit != null" >
+        w_minunit,
+      </if>
+      <if test="wMid != null" >
+        w_mid,
+      </if>
+      <if test="wMidunit != null" >
+        w_midunit,
+      </if>
+      <if test="wCostprice != null" >
+        w_costprice,
+      </if>
+      <if test="wSaleprice != null" >
+        w_saleprice,
+      </if>
+      <if test="wSellprice != null" >
+        w_sellprice,
+      </if>
+      <if test="wStatus != null" >
+        w_status,
+      </if>
+      <if test="wInitime != null" >
+        w_initime,
+      </if>
+      <if test="wCreator != null" >
+        w_creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="wClassid != null" >
+        #{wClassid,jdbcType=VARCHAR},
+      </if>
+      <if test="wType != null" >
+        #{wType,jdbcType=VARCHAR},
+      </if>
+      <if test="wGenname != null" >
+        #{wGenname,jdbcType=VARCHAR},
+      </if>
+      <if test="wTraname != null" >
+        #{wTraname,jdbcType=VARCHAR},
+      </if>
+      <if test="wZjm != null" >
+        #{wZjm,jdbcType=VARCHAR},
+      </if>
+      <if test="wBarcode != null" >
+        #{wBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="wApprovalno != null" >
+        #{wApprovalno,jdbcType=VARCHAR},
+      </if>
+      <if test="wUnit != null" >
+        #{wUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="wStandard != null" >
+        #{wStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="wBusiness != null" >
+        #{wBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="wPlace != null" >
+        #{wPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="wMax != null" >
+        #{wMax,jdbcType=FLOAT},
+      </if>
+      <if test="wMaxunit != null" >
+        #{wMaxunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wMin != null" >
+        #{wMin,jdbcType=FLOAT},
+      </if>
+      <if test="wMinunit != null" >
+        #{wMinunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wMid != null" >
+        #{wMid,jdbcType=FLOAT},
+      </if>
+      <if test="wMidunit != null" >
+        #{wMidunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wCostprice != null" >
+        #{wCostprice,jdbcType=FLOAT},
+      </if>
+      <if test="wSaleprice != null" >
+        #{wSaleprice,jdbcType=FLOAT},
+      </if>
+      <if test="wSellprice != null" >
+        #{wSellprice,jdbcType=FLOAT},
+      </if>
+      <if test="wStatus != null" >
+        #{wStatus,jdbcType=TINYINT},
+      </if>
+      <if test="wInitime != null" >
+        #{wInitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wCreator != null" >
+        #{wCreator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Wares" >
+    update tb_wares
+    <set >
+      <if test="wClassid != null" >
+        w_classid = #{wClassid,jdbcType=VARCHAR},
+      </if>
+      <if test="wType != null" >
+        w_type = #{wType,jdbcType=VARCHAR},
+      </if>
+      <if test="wGenname != null" >
+        w_genname = #{wGenname,jdbcType=VARCHAR},
+      </if>
+      <if test="wTraname != null" >
+        w_traname = #{wTraname,jdbcType=VARCHAR},
+      </if>
+      <if test="wZjm != null" >
+        w_zjm = #{wZjm,jdbcType=VARCHAR},
+      </if>
+      <if test="wBarcode != null" >
+        w_barcode = #{wBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="wApprovalno != null" >
+        w_approvalno = #{wApprovalno,jdbcType=VARCHAR},
+      </if>
+      <if test="wUnit != null" >
+        w_unit = #{wUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="wStandard != null" >
+        w_standard = #{wStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="wBusiness != null" >
+        w_business = #{wBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="wPlace != null" >
+        w_place = #{wPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="wMax != null" >
+        w_max = #{wMax,jdbcType=FLOAT},
+      </if>
+      <if test="wMaxunit != null" >
+        w_maxunit = #{wMaxunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wMin != null" >
+        w_min = #{wMin,jdbcType=FLOAT},
+      </if>
+      <if test="wMinunit != null" >
+        w_minunit = #{wMinunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wMid != null" >
+        w_mid = #{wMid,jdbcType=FLOAT},
+      </if>
+      <if test="wMidunit != null" >
+        w_midunit = #{wMidunit,jdbcType=VARCHAR},
+      </if>
+      <if test="wCostprice != null" >
+        w_costprice = #{wCostprice,jdbcType=FLOAT},
+      </if>
+      <if test="wSaleprice != null" >
+        w_saleprice = #{wSaleprice,jdbcType=FLOAT},
+      </if>
+      <if test="wSellprice != null" >
+        w_sellprice = #{wSellprice,jdbcType=FLOAT},
+      </if>
+      <if test="wStatus != null" >
+        w_status = #{wStatus,jdbcType=TINYINT},
+      </if>
+      <if test="wInitime != null" >
+        w_initime = #{wInitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wCreator != null" >
+        w_creator = #{wCreator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Wares" >
+    update tb_wares
+    set w_classid = #{wClassid,jdbcType=VARCHAR},
+      w_type = #{wType,jdbcType=VARCHAR},
+      w_genname = #{wGenname,jdbcType=VARCHAR},
+      w_traname = #{wTraname,jdbcType=VARCHAR},
+      w_zjm = #{wZjm,jdbcType=VARCHAR},
+      w_barcode = #{wBarcode,jdbcType=VARCHAR},
+      w_approvalno = #{wApprovalno,jdbcType=VARCHAR},
+      w_unit = #{wUnit,jdbcType=VARCHAR},
+      w_standard = #{wStandard,jdbcType=VARCHAR},
+      w_business = #{wBusiness,jdbcType=VARCHAR},
+      w_place = #{wPlace,jdbcType=VARCHAR},
+      w_max = #{wMax,jdbcType=FLOAT},
+      w_maxunit = #{wMaxunit,jdbcType=VARCHAR},
+      w_min = #{wMin,jdbcType=FLOAT},
+      w_minunit = #{wMinunit,jdbcType=VARCHAR},
+      w_mid = #{wMid,jdbcType=FLOAT},
+      w_midunit = #{wMidunit,jdbcType=VARCHAR},
+      w_costprice = #{wCostprice,jdbcType=FLOAT},
+      w_saleprice = #{wSaleprice,jdbcType=FLOAT},
+      w_sellprice = #{wSellprice,jdbcType=FLOAT},
+      w_status = #{wStatus,jdbcType=TINYINT},
+      w_initime = #{wInitime,jdbcType=TIMESTAMP},
+      w_creator = #{wCreator,jdbcType=VARCHAR}
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+</mapper>

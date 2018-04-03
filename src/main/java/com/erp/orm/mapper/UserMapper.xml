@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IUserMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.User" >
+    <id column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="u_name" property="uName" jdbcType="VARCHAR" />
+    <result column="u_mobile" property="uMobile" jdbcType="VARCHAR" />
+    <result column="u_password" property="uPassword" jdbcType="VARCHAR" />
+    <result column="o_id" property="oId" jdbcType="INTEGER" />
+    <result column="u_idcard" property="uIdcard" jdbcType="VARCHAR" />
+    <result column="u_state" property="uState" jdbcType="TINYINT" />
+    <result column="u_intime" property="uIntime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    u_id, u_name, u_mobile, u_password, o_id, u_idcard, u_state, u_intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where u_id = #{uId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where u_state = 1
+    order by u_id 
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where u_name = #{uname,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_user
+    where u_id = #{uId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.User" >
+    insert into tb_user (u_id, u_name, u_mobile, 
+      u_password, o_id,
+      u_idcard, u_state, u_intime
+      )
+    values (#{uId,jdbcType=INTEGER}, #{uName,jdbcType=VARCHAR}, #{uMobile,jdbcType=VARCHAR}, 
+      #{uPassword,jdbcType=VARCHAR}, #{oId,jdbcType=INTEGER},
+      #{uIdcard,jdbcType=VARCHAR}, #{uState,jdbcType=TINYINT}, #{uIntime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.User" >
+    insert into tb_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="uName != null" >
+        u_name,
+      </if>
+      <if test="uMobile != null" >
+        u_mobile,
+      </if>
+      <if test="uPassword != null" >
+        u_password,
+      </if>
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="uIdcard != null" >
+        u_idcard,
+      </if>
+      <if test="uState != null" >
+        u_state,
+      </if>
+      <if test="uIntime != null" >
+        u_intime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="uName != null" >
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uMobile != null" >
+        #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="oId != null" >
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="uIdcard != null" >
+        #{uIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="uState != null" >
+        #{uState,jdbcType=TINYINT},
+      </if>
+      <if test="uIntime != null" >
+        #{uIntime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.User" >
+    update tb_user
+    <set >
+      <if test="uName != null" >
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uMobile != null" >
+        u_mobile = #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="oId != null" >
+        o_id = #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="uIdcard != null" >
+        u_idcard = #{uIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="uState != null" >
+        u_state = #{uState,jdbcType=TINYINT},
+      </if>
+      <if test="uIntime != null" >
+        u_intime = #{uIntime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.User" >
+    update tb_user
+    set u_name = #{uName,jdbcType=VARCHAR},
+      u_mobile = #{uMobile,jdbcType=VARCHAR},
+      u_password = #{uPassword,jdbcType=VARCHAR},
+      o_id = #{oId,jdbcType=INTEGER},
+      u_idcard = #{uIdcard,jdbcType=VARCHAR},
+      u_state = #{uState,jdbcType=TINYINT},
+      u_intime = #{uIntime,jdbcType=TIMESTAMP}
+    where u_id = #{uId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IStoreBatchMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.StoreBatch" >
+    <id column="sb_id" property="sbId" jdbcType="INTEGER" />
+    <result column="s_id" property="sId" jdbcType="INTEGER" />
+    <result column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="c_id" property="cId" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="FLOAT" />
+    <result column="cost_price" property="costprice" jdbcType="FLOAT" />
+    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+    <result column="produce_date" property="produceDate" jdbcType="TIMESTAMP" />
+    <result column="valid_date" property="validDate" jdbcType="TIMESTAMP" />
+    <result column="buyer" property="buyer" jdbcType="VARCHAR" />
+    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sb_id,s_id, w_id, c_id, amount, cost_price, batch_no,produce_date, valid_date ,buyer,intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_store_batch
+    where sb_id = #{sbId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_store_batch
+    where batch_num = #{batchum,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from tb_store_batch
+    order by batch_num
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from tb_store_batch
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_store_batch
+    where sb_id = #{sbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.StoreBatch" useGeneratedKeys="true" keyProperty="sbId" >
+    insert into tb_store_batch (s_id, w_id, c_id, amount, cost_price,
+    batch_no,produce_date, valid_date ,buyer,intime)
+    values (#{sId,jdbcType=INTEGER}, #{wId,jdbcType=VARCHAR}, #{cId,jdbcType=VARCHAR},
+      #{amount,jdbcType=FLOAT}, #{costprice,jdbcType=FLOAT},
+      #{batchNo,jdbcType=VARCHAR}, #{produceDate,jdbcType=TIMESTAMP}, #{validDate,jdbcType=TIMESTAMP},
+       #{buyer,jdbcType=VARCHAR},#{intime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.StoreBatch" useGeneratedKeys="true" keyProperty="sbId" >
+    insert into tb_store_batch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        s_id,
+      </if>
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="costprice != null" >
+        cost_price,
+      </if>
+      <if test="batchNo != null" >
+        batch_no,
+      </if>
+      <if test="produceDate != null" >
+        produce_date,
+      </if>
+      <if test="validDate != null" >
+        valid_date,
+      </if>
+      <if test="buyer != null" >
+        buyer,
+      </if>
+        intime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="costprice != null" >
+        #{costprice,jdbcType=DECIMAL},
+      </if>
+      <if test="batchNo != null" >
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null" >
+        #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validDate != null" >
+        #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyer != null" >
+        #{buyer,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.StoreBatch" >
+    update tb_store_batch
+    <set >
+      <if test="sId != null" >
+        s_id = #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="wId != null" >
+        w_id = #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=FLOAT},
+      </if>
+      <if test="costprice != null" >
+        cost_price = #{costprice,jdbcType=FLOAT},
+      </if>
+      <if test="batchNo != null" >
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null" >
+        produce_date = #{produceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validDate != null" >
+        valid_date = #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyer != null" >
+        buyer = #{buyer,jdbcType=VARCHAR},
+      </if>
+      <if test="intime != null" >
+        intime = #{intime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sb_id = #{sbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.StoreBatch" >
+    update tb_store_batch
+    set
+      s_id = #{sId,jdbcType=INTEGER},
+      w_id = #{wId,jdbcType=VARCHAR},
+      c_id = #{cId,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=FLOAT},
+      cost_price = #{costprice,jdbcType=FLOAT},
+      batch_no = #{batchNo,jdbcType=VARCHAR},
+      produce_date = #{produceDate,jdbcType=TIMESTAMP},
+      valid_date = #{validDate,jdbcType=TIMESTAMP},
+      buyer = #{buyer,jdbcType=VARCHAR},
+      intime =now()
+    where sb_id = #{sbId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateAmountById" parameterType="java.util.Map" >
+    update tb_store_batch
+    set amount = amount - #{amount,jdbcType=FLOAT}
+    where sb_id = #{sbId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

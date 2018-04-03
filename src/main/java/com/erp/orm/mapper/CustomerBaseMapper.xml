@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.ICustomerBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.CustomerBase" >
+    <id column="cb_id" property="cbId" jdbcType="INTEGER" />
+    <result column="cb_fullname" property="cbFullname" jdbcType="VARCHAR" />
+    <result column="cb_shortname" property="cbShortname" jdbcType="VARCHAR" />
+    <result column="cb_abbrev" property="cbAbbrev" jdbcType="VARCHAR" />
+    <result column="cb_agentname" property="cbAgentname" jdbcType="VARCHAR" />
+    <result column="cb_busname" property="cbBusname" jdbcType="VARCHAR" />
+    <result column="cb_gspname" property="cbGspname" jdbcType="VARCHAR" />
+    <result column="cb_register" property="cbRegister" jdbcType="FLOAT" />
+    <result column="cb_economic" property="cbEconomic" jdbcType="VARCHAR" />
+    <result column="cb_operate" property="cbOperate" jdbcType="VARCHAR" />
+    <result column="cb_address" property="cbAddress" jdbcType="VARCHAR" />
+    <result column="cb_storehouse" property="cbStorehouse" jdbcType="VARCHAR" />
+    <result column="cb_province" property="cbProvince" jdbcType="VARCHAR" />
+    <result column="cb_city" property="cbCity" jdbcType="VARCHAR" />
+    <result column="cb_linkman" property="cbLinkman" jdbcType="VARCHAR" />
+    <result column="cb_phone" property="cbPhone" jdbcType="VARCHAR" />
+    <result column="cb_fax" property="cbFax" jdbcType="VARCHAR" />
+    <result column="cb_email" property="cbEmail" jdbcType="VARCHAR" />
+    <result column="cb_postcode" property="cbPostcode" jdbcType="VARCHAR" />
+    <result column="cb_bankname" property="cbBankname" jdbcType="VARCHAR" />
+    <result column="cb_bankcode" property="cbBankcode" jdbcType="VARCHAR" />
+    <result column="cb_taxcode" property="cbTaxcode" jdbcType="VARCHAR" />
+    <result column="cb_state" property="cbState" jdbcType="TINYINT" />
+    <result column="cb_initime" property="cbInitime" jdbcType="TIMESTAMP" />
+    <result column="cb_creator" property="cbCreator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cb_id, cb_fullname, cb_shortname, cb_abbrev, cb_agentname, cb_busname, cb_gspname, 
+    cb_register, cb_economic, cb_operate, cb_address, cb_storehouse, cb_province, cb_city, 
+    cb_linkman, cb_phone, cb_fax, cb_email, cb_postcode, cb_bankname, cb_bankcode, 
+    cb_taxcode, cb_state, cb_initime, cb_creator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_customer_base
+    where cb_id = #{cbId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_customer_base
+    where cb_state = 1
+    order by cb_id
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_customer_base
+    where cb_id = #{cbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.CustomerBase"  useGeneratedKeys="true" keyProperty="cbId" >
+    insert into tb_customer_base (cb_fullname, cb_shortname, 
+      cb_abbrev, cb_agentname, cb_busname, 
+      cb_gspname, cb_register, cb_economic, 
+      cb_operate, cb_address, cb_storehouse, 
+      cb_province, cb_city, cb_linkman, 
+      cb_phone, cb_fax, cb_email, 
+      cb_postcode, cb_bankname, cb_bankcode, 
+      cb_taxcode, cb_state, cb_initime, 
+      cb_creator)
+    values (#{cbFullname,jdbcType=VARCHAR}, #{cbShortname,jdbcType=VARCHAR}, 
+      #{cbAbbrev,jdbcType=VARCHAR}, #{cbAgentname,jdbcType=VARCHAR}, #{cbBusname,jdbcType=VARCHAR}, 
+      #{cbGspname,jdbcType=VARCHAR}, #{cbRegister,jdbcType=FLOAT}, #{cbEconomic,jdbcType=VARCHAR}, 
+      #{cbOperate,jdbcType=VARCHAR}, #{cbAddress,jdbcType=VARCHAR}, #{cbStorehouse,jdbcType=VARCHAR}, 
+      #{cbProvince,jdbcType=VARCHAR}, #{cbCity,jdbcType=VARCHAR}, #{cbLinkman,jdbcType=VARCHAR}, 
+      #{cbPhone,jdbcType=VARCHAR}, #{cbFax,jdbcType=VARCHAR}, #{cbEmail,jdbcType=VARCHAR}, 
+      #{cbPostcode,jdbcType=VARCHAR}, #{cbBankname,jdbcType=VARCHAR}, #{cbBankcode,jdbcType=VARCHAR}, 
+      #{cbTaxcode,jdbcType=VARCHAR}, #{cbState,jdbcType=TINYINT}, now(), 
+      #{cbCreator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.CustomerBase" useGeneratedKeys="true" keyProperty="cbId" >
+    insert into tb_customer_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cbFullname != null" >
+        cb_fullname,
+      </if>
+      <if test="cbShortname != null" >
+        cb_shortname,
+      </if>
+      <if test="cbAbbrev != null" >
+        cb_abbrev,
+      </if>
+      <if test="cbAgentname != null" >
+        cb_agentname,
+      </if>
+      <if test="cbBusname != null" >
+        cb_busname,
+      </if>
+      <if test="cbGspname != null" >
+        cb_gspname,
+      </if>
+      <if test="cbRegister != null" >
+        cb_register,
+      </if>
+      <if test="cbEconomic != null" >
+        cb_economic,
+      </if>
+      <if test="cbOperate != null" >
+        cb_operate,
+      </if>
+      <if test="cbAddress != null" >
+        cb_address,
+      </if>
+      <if test="cbStorehouse != null" >
+        cb_storehouse,
+      </if>
+      <if test="cbProvince != null" >
+        cb_province,
+      </if>
+      <if test="cbCity != null" >
+        cb_city,
+      </if>
+      <if test="cbLinkman != null" >
+        cb_linkman,
+      </if>
+      <if test="cbPhone != null" >
+        cb_phone,
+      </if>
+      <if test="cbFax != null" >
+        cb_fax,
+      </if>
+      <if test="cbEmail != null" >
+        cb_email,
+      </if>
+      <if test="cbPostcode != null" >
+        cb_postcode,
+      </if>
+      <if test="cbBankname != null" >
+        cb_bankname,
+      </if>
+      <if test="cbBankcode != null" >
+        cb_bankcode,
+      </if>
+      <if test="cbTaxcode != null" >
+        cb_taxcode,
+      </if>
+      <if test="cbState != null" >
+        cb_state,
+      </if>
+        cb_initime,
+      <if test="cbCreator != null" >
+        cb_creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cbFullname != null" >
+        #{cbFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbShortname != null" >
+        #{cbShortname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbAbbrev != null" >
+        #{cbAbbrev,jdbcType=VARCHAR},
+      </if>
+      <if test="cbAgentname != null" >
+        #{cbAgentname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbBusname != null" >
+        #{cbBusname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbGspname != null" >
+        #{cbGspname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbRegister != null" >
+        #{cbRegister,jdbcType=FLOAT},
+      </if>
+      <if test="cbEconomic != null" >
+        #{cbEconomic,jdbcType=VARCHAR},
+      </if>
+      <if test="cbOperate != null" >
+        #{cbOperate,jdbcType=VARCHAR},
+      </if>
+      <if test="cbAddress != null" >
+        #{cbAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cbStorehouse != null" >
+        #{cbStorehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="cbProvince != null" >
+        #{cbProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="cbCity != null" >
+        #{cbCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cbLinkman != null" >
+        #{cbLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="cbPhone != null" >
+        #{cbPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="cbFax != null" >
+        #{cbFax,jdbcType=VARCHAR},
+      </if>
+      <if test="cbEmail != null" >
+        #{cbEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cbPostcode != null" >
+        #{cbPostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cbBankname != null" >
+        #{cbBankname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbBankcode != null" >
+        #{cbBankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cbTaxcode != null" >
+        #{cbTaxcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cbState != null" >
+        #{cbState,jdbcType=TINYINT},
+      </if>
+      now(),
+      <if test="cbCreator != null" >
+        #{cbCreator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.CustomerBase" >
+    update tb_customer_base
+    <set >
+      <if test="cbFullname != null" >
+        cb_fullname = #{cbFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbShortname != null" >
+        cb_shortname = #{cbShortname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbAbbrev != null" >
+        cb_abbrev = #{cbAbbrev,jdbcType=VARCHAR},
+      </if>
+      <if test="cbAgentname != null" >
+        cb_agentname = #{cbAgentname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbBusname != null" >
+        cb_busname = #{cbBusname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbGspname != null" >
+        cb_gspname = #{cbGspname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbRegister != null" >
+        cb_register = #{cbRegister,jdbcType=FLOAT},
+      </if>
+      <if test="cbEconomic != null" >
+        cb_economic = #{cbEconomic,jdbcType=VARCHAR},
+      </if>
+      <if test="cbOperate != null" >
+        cb_operate = #{cbOperate,jdbcType=VARCHAR},
+      </if>
+      <if test="cbAddress != null" >
+        cb_address = #{cbAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cbStorehouse != null" >
+        cb_storehouse = #{cbStorehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="cbProvince != null" >
+        cb_province = #{cbProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="cbCity != null" >
+        cb_city = #{cbCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cbLinkman != null" >
+        cb_linkman = #{cbLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="cbPhone != null" >
+        cb_phone = #{cbPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="cbFax != null" >
+        cb_fax = #{cbFax,jdbcType=VARCHAR},
+      </if>
+      <if test="cbEmail != null" >
+        cb_email = #{cbEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cbPostcode != null" >
+        cb_postcode = #{cbPostcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cbBankname != null" >
+        cb_bankname = #{cbBankname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbBankcode != null" >
+        cb_bankcode = #{cbBankcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cbTaxcode != null" >
+        cb_taxcode = #{cbTaxcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cbState != null" >
+        cb_state = #{cbState,jdbcType=TINYINT},
+      </if>
+        cb_initime = now(),
+      <if test="cbCreator != null" >
+        cb_creator = #{cbCreator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cb_id = #{cbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.CustomerBase" >
+    update tb_customer_base
+    set cb_fullname = #{cbFullname,jdbcType=VARCHAR},
+      cb_shortname = #{cbShortname,jdbcType=VARCHAR},
+      cb_abbrev = #{cbAbbrev,jdbcType=VARCHAR},
+      cb_agentname = #{cbAgentname,jdbcType=VARCHAR},
+      cb_busname = #{cbBusname,jdbcType=VARCHAR},
+      cb_gspname = #{cbGspname,jdbcType=VARCHAR},
+      cb_register = #{cbRegister,jdbcType=FLOAT},
+      cb_economic = #{cbEconomic,jdbcType=VARCHAR},
+      cb_operate = #{cbOperate,jdbcType=VARCHAR},
+      cb_address = #{cbAddress,jdbcType=VARCHAR},
+      cb_storehouse = #{cbStorehouse,jdbcType=VARCHAR},
+      cb_province = #{cbProvince,jdbcType=VARCHAR},
+      cb_city = #{cbCity,jdbcType=VARCHAR},
+      cb_linkman = #{cbLinkman,jdbcType=VARCHAR},
+      cb_phone = #{cbPhone,jdbcType=VARCHAR},
+      cb_fax = #{cbFax,jdbcType=VARCHAR},
+      cb_email = #{cbEmail,jdbcType=VARCHAR},
+      cb_postcode = #{cbPostcode,jdbcType=VARCHAR},
+      cb_bankname = #{cbBankname,jdbcType=VARCHAR},
+      cb_bankcode = #{cbBankcode,jdbcType=VARCHAR},
+      cb_taxcode = #{cbTaxcode,jdbcType=VARCHAR},
+      cb_state = #{cbState,jdbcType=TINYINT},
+      cb_initime = now(),
+      cb_creator = #{cbCreator,jdbcType=VARCHAR}
+    where cb_id = #{cbId,jdbcType=INTEGER}
+  </update>
+</mapper>

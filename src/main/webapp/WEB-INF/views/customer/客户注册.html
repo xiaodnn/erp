@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>客户注册</title>
+<style type="text/css">
+html, body {
+	margin: 0;
+	padding: 0;
+}
+.zt {
+	width: 1348px;
+	height: 350px;
+	padding-top: 30px;
+}
+.zt2 {
+	width: 1348px;
+	height: 660px;
+	padding-top: 50px;
+}
+.zt3 {
+	width: 1348px;
+	height: 400px;
+	text-align:left;
+	padding-top: 30px;
+}
+.hang {
+	width: 1300PX;
+	height: 30px;
+	float: left;
+}
+.wb1 {
+	width: 200px;
+	text-align: right;
+	display:block-inline;
+	float: left;
+}
+.wb2{
+	width:260px;
+	text-align: right;
+	display:block-inline;
+	float: left;
+}
+.wbk {
+	width: 150px;
+	float: left;
+	display:block-inline;
+	text-align: left;
+	margin-right: 10px;
+}
+.wbk1{
+	width:500px;
+	float:left;
+	display:block-inline;
+}
+.wbk2{
+	width: 75px;
+	float: left;
+	display:block-inline;	
+}
+.wbk3{
+width: 40px;
+	float: left;
+	display:block-inline;
+}
+.ts {
+	width: 150px;
+	text-align: left;
+	float: left;
+	display:block-inline;
+}
+.ts2 {
+	width: 225px;
+	text-align: left;
+	float: left;
+	display:block-inline;
+}
+.ts3 {
+	width: 275px;
+	text-align: left;
+	float: left;
+	display:block-inline;
+}
+.ts4 {
+	width: 230px;
+	text-align: left;
+	float: left;
+	display:block-inline;
+}
+</style>
+</head>
+<body>
+	<div class="zt">
+	<fieldset>
+			<legend>基础信息</legend>
+		<div class="hang">
+						<span class="wb1">名称：</span>
+						<span class="wbk"> <input name="text"  type="text"  id="mc" /></span>
+						<span id="wb" class="ts"><font color="red">* </font></span> 
+						<span class="wb1">简称：	</span>
+						<span class="wbk"> <input  type="text"  id="jc" /></span>
+						<span id="wb" class="ts"> <font color="red">* </font></span>
+		</div>
+				<div class="hang">
+					<span class="wb1">法人代表：</span>
+					<span class="wbk"><input name="text2" type="text"  id="frdb" /></span>
+					<span id="wb" class="ts"><font color="red">*</font></span>
+					<span class="wb1">企业负责人：</span>
+					<span class="wbk"><input  type="text" id="jc" /></span> 
+					<span id="wb" class="ts"><font color="red">*</font></span>
+	</div>
+				<div class="hang">
+					<span class="wb1">质量负责人：</span>
+					<span class="wbk"><input  type="text" id="zlfzr" /></span>
+					<span id="wb" class="ts"><font color="red">*</font></span>
+					<span class="wb1">注册资金：</span>
+					<span class="wbk"> <input  type="text" id="zczj" /></span> 
+					<span id="wb" class="ts">（单位：万元）<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span id="wb" class="wb1">经济性质：</span>
+					<span class= "wbk"> <select>
+								<option>有限责任公司</option>
+								<option>股份有限公司</option>
+								<option>私营独资企业</option>
+								<option>私营合资企业</option>
+								<option>国有企业</option>
+								<option>集体企业</option>
+					</select>&nbsp;<font color="red">*</font> </span>
+					<span class = "ts">&nbsp;</span>
+					<span id="wb" class="wb1">经营方式：</span>
+					<span class = "wbk"> <select>
+								<option>批发</option>
+								<option>自产自销</option>
+								<option>零售</option>
+								<option>零售（连锁）</option>
+								<option>诊所</option>
+								<option>医院</option>
+								<option>门诊部</option>
+								<option>医疗机构</option>
+								<option>连锁</option>
+					</select></span>
+				</div>
+				<div class="hang">
+					<span class="wb1">地址：</span>
+					<span class="wbk"><input type="text" id="dz"></span>
+					<span class= "ts">&nbsp;</span>
+					<span id="wb" class="wb1">仓库地址：</span> 
+					<span class  ="wbk"><input type="text" id="ckdz"> </span>
+					<span class="ts"><font color="red">*</font></span>		
+				</div>
+				<div class = "hang">
+					<span id="wb" class="wb1">省份：</span>
+					<span class="wbk"><select >
+							<option value="120">山东</option>
+							<option value="010">10-北京</option>
+							<option value="020">20-上海</option>
+							<option value="030">30-天津</option>
+							<option value="040">40-内蒙古</option>
+							<option value="050">50-山西</option>
+							<option value="060">60-河北</option>
+							<option value="070">70-辽宁</option>
+							<option value="080">80-吉林</option>
+							<option value="090">90-黑龙江</option>
+							<option value="100">江苏</option>
+							<option value="110">安徽</option>
+							<option value="130">浙江</option>
+							<option value="140">江西</option>
+							<option value="150">福建</option>
+							<option value="160">湖南</option>
+							<option value="170">湖北</option>
+							<option value="180">河南</option>
+							<option value="190">广东</option>
+							<option value="200">海南</option>
+							<option value="210">广西</option>
+							<option value="220">贵州</option>
+							<option value="230">四川</option>
+							<option value="240">云南</option>
+							<option value="250">陕西</option>
+							<option value="260">甘肃</option>
+							<option value="270">宁夏</option>
+							<option value="280">青海</option>
+							<option value="290">新疆</option>
+							<option value="300">西藏</option>
+							<option value="310">台湾</option>
+					</select></span>
+					<span class = "ts">&nbsp;</span>
+					<span id="wb" class="wb1">城市：</span> 
+					<span id="wb" class="wbk"><input type="text"></span> 
+				</div>
+				<div class= "hang">
+					<span id="wb" class="wb1">联系人：</span> 
+					<span class="wbk"> <input type="text" id="lxr" ></span>
+					<span class="ts"><font color="red">*</font></span>
+					<span id="wb" class="wb1">联系人电话：</span> 
+					<span class="wbk"><input type="text" id="lxrdh"  maxlength="13">
+					</span> 
+					<span class="ts">（区号-号码）<font color="red">*</font></span>
+	</div>
+			<div class="hang">
+				<span class="wb1" id="dh">电话：</span>
+				<span class="wbk"><input name="text3" type="text" id="dh"></span>
+				<span class="ts"><font color="red">*</font></span>
+				<span class="wb1" id="yx">E-mail：</span>
+				<span class="wbk"><input type="text"  id="yx"></span>
+				<span class="ts">（区号-号码）<font color="red">*</font></span>
+	</div>
+			<div class="hang">
+				<span id="wb" class="wb1">传真号码：</span> 
+				<span id="wb" class="wbk"><input type="text" id="czhm" maxlength="13"></span> 
+				<span class="ts">（区号-号码）<font color="red">*</font></span> 
+				<span id="wb" class="wb1">邮政编码：</span>
+				<span id="wb" class="wbk"><input type="text" id="yzbm" maxlength="6"></span> 
+				<span class="ts"><font color="red">*</font></span>
+			</div>
+			<div class="hang">
+				<span id="wb" class="wb1">税号：</span> 
+				<span id="wb" class="wbk"><input type="text" id="sh"></span>
+				<span class="ts"> <font color="red">*</font></span>
+				<span class="wb1">是否免税客户：</span>
+				<span ><select class="wbk3">
+							<option>是</option>
+							<option>否</option>
+					</select></span>
+					<span class="ts3"> &nbsp;<font color="red">*</font></span>
+			</div>
+			<div class="hang">
+				<span id="wb" class="wb1">送货地址：</span> 
+				<span id="wb" ><input type="text"  > 
+			    </span>
+			   
+			</div>
+	  </fieldset>
+	</div>
+	<div class="zt2">
+		<fieldset>
+			<legend>质量信息</legend>
+				<div class="hang">
+					<span class="wb2"> 客户业务员：</span>
+					<span class="wbk"><input type="text"></span>
+					<span class="ts"><font color="red">*</font></span>
+					<span class="wb2"> 客户业务员：</span>
+					<span class="wbk"><input type="text"></span>
+					<span class="ts"><font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">授权委托书起始日期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts4">若无，请填写1900-01-01<font color="red">*</font></span>
+					<span class="wb2"> 客户业务员：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2"> 客户提货员：</span>
+					<span class="wbk"><input type="text"></span>
+					<span class="ts"><font color="red">*</font></span>
+					<span class="wb2"> 提货员身份证号：</span>
+					<span class="wbk"><input type="text"></span>
+					<span class="ts"><font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">授权委托书起始日期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts4">若无，请填写1900-01-01<font color="red">*</font></span>
+					<span class="wb2"> 授权委托书截止日期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2"> 客户含麻黄碱制剂采购员：</span>
+					<span class="wbk"><input type="text"></span>
+					<span class="ts"><font color="red">*</font></span>
+					<span class="wb2"> 采购员身份证号：</span>
+					<span class="wbk"><input type="text"></span>
+					<span class="ts"><font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">授权委托书起始日期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts4">若无，请填写1900-01-01<font color="red">*</font></span>
+					<span class="wb2">授权委托书截止日期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">组织机构代码证号：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">组织机构代码证效期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">营业执照注册号：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">营业执照效期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">药品经营许可证号：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">药品经营许可证期限：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">药品经营许可证发证机关：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">药品经营许可证发证日期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">医疗器械许可证号：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">医疗器械许可证效期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">食品流通许可证号码：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">食品流通许可证效期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">生产经营许证号码：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">生产经营许可证期限：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">医疗机构执业许可证号：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">医疗机构执业许可证效期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">保健食品证书号码：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">保健食品证书效期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">批次检单打印标志：</span>
+					<span ><span ><select class="wbk3">
+							<option>是</option>
+							<option>否</option>
+					</select></span></span>
+					<span class="ts3">&nbsp; </span>
+					<span class="wb2">保健食品证书效期：</span>
+					<span ><select class="wbk3">
+							<option>是</option>
+							<option>否</option>
+					</select></span>
+					<span class="ts3"></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">GSP证书号：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">GSP证书效期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">GSP发证机关：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+					<span class="wb2">质量保证协议效期：</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">GSP发证日期</span>
+					<span ><input type="text" class="wbk2"></span>
+					<span class="ts2">若无，请填写1900-01-01<font color="red">*</font></span>
+				</div>
+				<div class="hang">
+					<span class="wb2">GSP发证机关：</span>
+					<span ><input type="text" class="wbk"></span>
+					<span class="ts">&nbsp; </span>
+				</div>
+		</fieldset>	
+	</div>
+	<div >
+		<fieldset>
+			<legend>请准备下述资料</legend>
+				<div  style="text-align: center">
+					<span><input type="file"></span>
+					<span><input type="submit" value="添加文件"></span>
+				</div>
+			<div style="width:500px;height:150px;float:left;text-align:right">
+							<br>
+							  <br>
+							文<br>
+							件<br>
+							列<br>
+							表<br>
+					：<br>
+			</div >
+			<div style="width:790px;height:180px;float:left;text-align:left">
+					<textarea rows="10" cols="30"></textarea>
+		</div>
+				<div  style="text-align: center">
+					<span><input type="submit" value="删除文件"></span>
+					<span><input type="submit" value="完成上传"></span>
+				</div>
+				<div  style="text-align: center">
+					<span>温馨提示：1、单张图片最大10M</span>
+				</div>
+				<div  style="text-align: center">
+					<span>2、支持jpg，png，bmp，gif，jpeg格式</span>
+				</div>
+				<div  style="text-align: center">
+					<span>3、请将相关的证件图片上传上来：商品条码、中包装条码、大包装条码、批准文号、</span>
+				</div>
+				<div  style="text-align: center">
+					<span>GMP证书、执行标准、注册商标、产品包装、产品说明书</span>
+				</div>
+		</fieldset>
+</div>
+</body>
+</html>

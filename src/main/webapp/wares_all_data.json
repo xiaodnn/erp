@@ -1,0 +1,21 @@
+[
+    {
+        "wId": "1",
+        "wClassid": "2",
+        "wType": "3",
+        "wGenname": "4",
+        "wTraname": "5",
+        "wZjm": "6",
+        "wBarcode": "7",
+        "wApprovalno": "8",
+        "wUnit": "9",
+        "wStandard": "10",
+        "wBusiness": "11",
+        "wPlace": "12",
+        "wStatus": 19,
+        "wCreator": "20",
+        "wCostprice": 26,
+        "wSaleprice": 27,
+        "wSellprice": 29
+    }
+]

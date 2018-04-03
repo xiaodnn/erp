@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.ICompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Company" >
+    <id column="c_id" property="cId" jdbcType="VARCHAR" />
+    <result column="c_name" property="cName" jdbcType="VARCHAR" />
+    <result column="c_type" property="cType" jdbcType="VARCHAR" />
+    <result column="c_paytype" property="cPaytype" jdbcType="VARCHAR" />
+    <result column="c_manager" property="cManager" jdbcType="VARCHAR" />
+    <result column="c_zone" property="cZone" jdbcType="VARCHAR" />
+    <result column="c_address" property="cAddress" jdbcType="VARCHAR" />
+    <result column="c_order_name" property="cOrderName" jdbcType="VARCHAR" />
+    <result column="c_order_tel" property="cOrderTel" jdbcType="VARCHAR" />
+    <result column="c_order_fax" property="cOrderFax" jdbcType="VARCHAR" />
+    <result column="c_order_mobile" property="cOrderMobile" jdbcType="VARCHAR" />
+    <result column="c_order_email" property="cOrderEmail" jdbcType="VARCHAR" />
+    <result column="c_order_url" property="cOrderUrl" jdbcType="VARCHAR" />
+    <result column="c_status" property="cStatus" jdbcType="TINYINT" />
+    <result column="c_buyer" property="cBuyer" jdbcType="VARCHAR" />
+    <result column="c_bank_id" property="cBankId" jdbcType="VARCHAR" />
+    <result column="c_bank_name" property="cBankName" jdbcType="VARCHAR" />
+    <result column="c_memo" property="cMemo" jdbcType="VARCHAR" />
+    <result column="c_creator" property="cCreator" jdbcType="VARCHAR" />
+    <result column="c_initime" property="cInitime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    c_id, c_name, c_type, c_paytype, c_manager, c_zone, c_address, c_order_name, c_order_tel, 
+    c_order_fax, c_order_mobile, c_order_email, c_order_url, c_status, c_buyer, c_bank_id, 
+    c_bank_name, c_memo, c_creator, c_initime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_company
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_company
+    where c_name like concat('%', #{name,jdbcType=VARCHAR},'%')
+    order by c_id
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from tb_company
+    order by c_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from tb_company
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_company
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Company" >
+    insert into tb_company (c_id, c_name, c_type, 
+      c_paytype, c_manager, c_zone, 
+      c_address, c_order_name, c_order_tel, 
+      c_order_fax, c_order_mobile, c_order_email, 
+      c_order_url, c_status, c_buyer, 
+      c_bank_id, c_bank_name, c_memo, 
+      c_creator, c_initime)
+    values (#{cId,jdbcType=VARCHAR}, #{cName,jdbcType=VARCHAR}, #{cType,jdbcType=VARCHAR}, 
+      #{cPaytype,jdbcType=VARCHAR}, #{cManager,jdbcType=VARCHAR}, #{cZone,jdbcType=VARCHAR}, 
+      #{cAddress,jdbcType=VARCHAR}, #{cOrderName,jdbcType=VARCHAR}, #{cOrderTel,jdbcType=VARCHAR}, 
+      #{cOrderFax,jdbcType=VARCHAR}, #{cOrderMobile,jdbcType=VARCHAR}, #{cOrderEmail,jdbcType=VARCHAR}, 
+      #{cOrderUrl,jdbcType=VARCHAR}, #{cStatus,jdbcType=TINYINT}, #{cBuyer,jdbcType=VARCHAR}, 
+      #{cBankId,jdbcType=VARCHAR}, #{cBankName,jdbcType=VARCHAR}, #{cMemo,jdbcType=VARCHAR}, 
+      #{cCreator,jdbcType=VARCHAR}, #{cInitime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Company" >
+    insert into tb_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="cName != null" >
+        c_name,
+      </if>
+      <if test="cType != null" >
+        c_type,
+      </if>
+      <if test="cPaytype != null" >
+        c_paytype,
+      </if>
+      <if test="cManager != null" >
+        c_manager,
+      </if>
+      <if test="cZone != null" >
+        c_zone,
+      </if>
+      <if test="cAddress != null" >
+        c_address,
+      </if>
+      <if test="cOrderName != null" >
+        c_order_name,
+      </if>
+      <if test="cOrderTel != null" >
+        c_order_tel,
+      </if>
+      <if test="cOrderFax != null" >
+        c_order_fax,
+      </if>
+      <if test="cOrderMobile != null" >
+        c_order_mobile,
+      </if>
+      <if test="cOrderEmail != null" >
+        c_order_email,
+      </if>
+      <if test="cOrderUrl != null" >
+        c_order_url,
+      </if>
+      <if test="cStatus != null" >
+        c_status,
+      </if>
+      <if test="cBuyer != null" >
+        c_buyer,
+      </if>
+      <if test="cBankId != null" >
+        c_bank_id,
+      </if>
+      <if test="cBankName != null" >
+        c_bank_name,
+      </if>
+      <if test="cMemo != null" >
+        c_memo,
+      </if>
+      <if test="cCreator != null" >
+        c_creator,
+      </if>
+      <if test="cInitime != null" >
+        c_initime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="cName != null" >
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cType != null" >
+        #{cType,jdbcType=VARCHAR},
+      </if>
+      <if test="cPaytype != null" >
+        #{cPaytype,jdbcType=VARCHAR},
+      </if>
+      <if test="cManager != null" >
+        #{cManager,jdbcType=VARCHAR},
+      </if>
+      <if test="cZone != null" >
+        #{cZone,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddress != null" >
+        #{cAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderName != null" >
+        #{cOrderName,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderTel != null" >
+        #{cOrderTel,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderFax != null" >
+        #{cOrderFax,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderMobile != null" >
+        #{cOrderMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderEmail != null" >
+        #{cOrderEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderUrl != null" >
+        #{cOrderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cStatus != null" >
+        #{cStatus,jdbcType=TINYINT},
+      </if>
+      <if test="cBuyer != null" >
+        #{cBuyer,jdbcType=VARCHAR},
+      </if>
+      <if test="cBankId != null" >
+        #{cBankId,jdbcType=VARCHAR},
+      </if>
+      <if test="cBankName != null" >
+        #{cBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cMemo != null" >
+        #{cMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="cCreator != null" >
+        #{cCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="cInitime != null" >
+        #{cInitime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Company" >
+    update tb_company
+    <set >
+      <if test="cName != null" >
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cType != null" >
+        c_type = #{cType,jdbcType=VARCHAR},
+      </if>
+      <if test="cPaytype != null" >
+        c_paytype = #{cPaytype,jdbcType=VARCHAR},
+      </if>
+      <if test="cManager != null" >
+        c_manager = #{cManager,jdbcType=VARCHAR},
+      </if>
+      <if test="cZone != null" >
+        c_zone = #{cZone,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddress != null" >
+        c_address = #{cAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderName != null" >
+        c_order_name = #{cOrderName,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderTel != null" >
+        c_order_tel = #{cOrderTel,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderFax != null" >
+        c_order_fax = #{cOrderFax,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderMobile != null" >
+        c_order_mobile = #{cOrderMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderEmail != null" >
+        c_order_email = #{cOrderEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrderUrl != null" >
+        c_order_url = #{cOrderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cStatus != null" >
+        c_status = #{cStatus,jdbcType=TINYINT},
+      </if>
+      <if test="cBuyer != null" >
+        c_buyer = #{cBuyer,jdbcType=VARCHAR},
+      </if>
+      <if test="cBankId != null" >
+        c_bank_id = #{cBankId,jdbcType=VARCHAR},
+      </if>
+      <if test="cBankName != null" >
+        c_bank_name = #{cBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cMemo != null" >
+        c_memo = #{cMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="cCreator != null" >
+        c_creator = #{cCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="cInitime != null" >
+        c_initime = #{cInitime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Company" >
+    update tb_company
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_type = #{cType,jdbcType=VARCHAR},
+      c_paytype = #{cPaytype,jdbcType=VARCHAR},
+      c_manager = #{cManager,jdbcType=VARCHAR},
+      c_zone = #{cZone,jdbcType=VARCHAR},
+      c_address = #{cAddress,jdbcType=VARCHAR},
+      c_order_name = #{cOrderName,jdbcType=VARCHAR},
+      c_order_tel = #{cOrderTel,jdbcType=VARCHAR},
+      c_order_fax = #{cOrderFax,jdbcType=VARCHAR},
+      c_order_mobile = #{cOrderMobile,jdbcType=VARCHAR},
+      c_order_email = #{cOrderEmail,jdbcType=VARCHAR},
+      c_order_url = #{cOrderUrl,jdbcType=VARCHAR},
+      c_status = #{cStatus,jdbcType=TINYINT},
+      c_buyer = #{cBuyer,jdbcType=VARCHAR},
+      c_bank_id = #{cBankId,jdbcType=VARCHAR},
+      c_bank_name = #{cBankName,jdbcType=VARCHAR},
+      c_memo = #{cMemo,jdbcType=VARCHAR},
+      c_creator = #{cCreator,jdbcType=VARCHAR},
+      c_initime = #{cInitime,jdbcType=TIMESTAMP}
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </update>
+</mapper>

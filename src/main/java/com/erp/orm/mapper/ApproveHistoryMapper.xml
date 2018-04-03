@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.orm.inter.IApproveHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.ApproveHistory">
+    <id column="ah_id" jdbcType="INTEGER" property="ahId" />
+    <result column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="r_id" jdbcType="VARCHAR" property="rId" />
+    <result column="e_id" jdbcType="INTEGER" property="eId" />
+    <result column="ah_state" jdbcType="TINYINT" property="ahState" />
+    <result column="ah_remark" jdbcType="VARCHAR" property="ahRemark" />
+    <result column="ah_intime" jdbcType="TIMESTAMP" property="ahIntime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ah_id, m_id, r_id, e_id, ah_state, ah_remark, ah_intime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_approve_history
+    where ah_id = #{ahId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByRid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_approve_history
+    where r_id = #{rId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_approve_history
+    where ah_id = #{ahId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyProperty="ahId" parameterType="com.erp.orm.entity.ApproveHistory" useGeneratedKeys="true">
+    insert into tb_approve_history ( m_id, r_id,
+      e_id, ah_state, ah_remark, 
+      ah_intime)
+    values (#{mId,jdbcType=INTEGER}, #{rId,jdbcType=VARCHAR},
+      #{eId,jdbcType=INTEGER}, #{ahState,jdbcType=TINYINT}, #{ahRemark,jdbcType=VARCHAR}, 
+      now())
+  </insert>
+  <insert id="insertSelective" keyProperty="ahId" parameterType="com.erp.orm.entity.ApproveHistory" useGeneratedKeys="true">
+    insert into tb_approve_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        m_id,
+      </if>
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="eId != null">
+        e_id,
+      </if>
+      <if test="ahState != null">
+        ah_state,
+      </if>
+      <if test="ahRemark != null">
+        ah_remark,
+      </if>
+        ah_intime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="rId != null">
+        #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="eId != null">
+        #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="ahState != null">
+        #{ahState,jdbcType=TINYINT},
+      </if>
+      <if test="ahRemark != null">
+        #{ahRemark,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.ApproveHistory">
+    update tb_approve_history
+    <set>
+      <if test="mId != null">
+        m_id = #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="rId != null">
+        r_id = #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="eId != null">
+        e_id = #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="ahState != null">
+        ah_state = #{ahState,jdbcType=TINYINT},
+      </if>
+      <if test="ahRemark != null">
+        ah_remark = #{ahRemark,jdbcType=VARCHAR},
+      </if>
+        ah_intime = now()
+    </set>
+    where ah_id = #{ahId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.ApproveHistory">
+    update tb_approve_history
+    set m_id = #{mId,jdbcType=INTEGER},
+      r_id = #{rId,jdbcType=VARCHAR},
+      e_id = #{eId,jdbcType=INTEGER},
+      ah_state = #{ahState,jdbcType=TINYINT},
+      ah_remark = #{ahRemark,jdbcType=VARCHAR},
+      ah_intime = now()
+    where ah_id = #{ahId,jdbcType=INTEGER}
+  </update>
+</mapper>

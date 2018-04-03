@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IStoreHouseMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.StoreHouse" >
+    <id column="sh_id" property="shId" jdbcType="INTEGER" />
+    <result column="sh_code" property="shCode" jdbcType="VARCHAR" />
+    <result column="o_id" property="oId" jdbcType="INTEGER" />
+    <result column="sh_name" property="shName" jdbcType="VARCHAR" />
+    <result column="sh_intime" property="shIntime" jdbcType="TIMESTAMP" />
+    <result column="sh_creator" property="shCreator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sh_id, sh_code, o_id, sh_name, sh_intime, sh_creator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_storehouse
+    where sh_id = #{shId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_storehouse
+
+  </select>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_storehouse
+    where sh_code = #{shCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from ts_storehouse
+    order by sh_code
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from ts_storehouse
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_storehouse
+    where sh_id = #{shId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.StoreHouse" >
+    insert into ts_storehouse (sh_id, sh_code, o_id, 
+      sh_name, sh_intime, sh_creator
+      )
+    values (#{shId,jdbcType=INTEGER}, #{shCode,jdbcType=VARCHAR}, #{oId,jdbcType=INTEGER}, 
+      #{shName,jdbcType=VARCHAR}, now(), #{shCreator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.StoreHouse" >
+    insert into ts_storehouse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shId != null" >
+        sh_id,
+      </if>
+      <if test="shCode != null" >
+        sh_code,
+      </if>
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="shName != null" >
+        sh_name,
+      </if>
+        sh_intime,
+      <if test="shCreator != null" >
+        sh_creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shId != null" >
+        #{shId,jdbcType=INTEGER},
+      </if>
+      <if test="shCode != null" >
+        #{shCode,jdbcType=VARCHAR},
+      </if>
+      <if test="oId != null" >
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="shName != null" >
+        #{shName,jdbcType=VARCHAR},
+      </if>
+      now(),
+      <if test="shCreator != null" >
+        #{shCreator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.StoreHouse" >
+    update ts_storehouse
+    <set >
+      <if test="shCode != null" >
+        sh_code = #{shCode,jdbcType=VARCHAR},
+      </if>
+      <if test="oId != null" >
+        o_id = #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="shName != null" >
+        sh_name = #{shName,jdbcType=VARCHAR},
+      </if>
+        sh_intime = now(),
+      <if test="shCreator != null" >
+        sh_creator = #{shCreator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sh_id = #{shId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.StoreHouse" >
+    update ts_storehouse
+    set sh_code = #{shCode,jdbcType=VARCHAR},
+      o_id = #{oId,jdbcType=INTEGER},
+      sh_name = #{shName,jdbcType=VARCHAR},
+      sh_intime = now(),
+      sh_creator = #{shCreator,jdbcType=VARCHAR}
+    where sh_id = #{shId,jdbcType=INTEGER}
+  </update>
+</mapper>

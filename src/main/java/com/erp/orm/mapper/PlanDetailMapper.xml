@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.PlanDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.PlanDetail" >
+    <id column="pd_id" property="pdId" jdbcType="INTEGER" />
+    <result column="p_id" property="pId" jdbcType="INTEGER" />
+    <result column="pd_wid" property="pdWid" jdbcType="VARCHAR" />
+    <result column="pd_price" property="pdPrice" jdbcType="DECIMAL" />
+    <result column="pd_amount" property="pdAmount" jdbcType="DECIMAL" />
+    <result column="pd_memo" property="pdMemo" jdbcType="VARCHAR" />
+    <result column="pd_initime" property="pdInitime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pd_id, p_id, pd_wid, pd_price, pd_amount, pd_memo, pd_initime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_plan_detail
+    where pd_id = #{pdId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_plan_detail
+    where pd_id = #{pdId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.PlanDetail" >
+    insert into tb_plan_detail (pd_id, p_id, pd_wid, 
+      pd_price, pd_amount, pd_memo, 
+      pd_initime)
+    values (#{pdId,jdbcType=INTEGER}, #{pId,jdbcType=INTEGER}, #{pdWid,jdbcType=VARCHAR}, 
+      #{pdPrice,jdbcType=DECIMAL}, #{pdAmount,jdbcType=DECIMAL}, #{pdMemo,jdbcType=VARCHAR}, 
+      #{pdInitime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.PlanDetail" >
+    insert into tb_plan_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pdId != null" >
+        pd_id,
+      </if>
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="pdWid != null" >
+        pd_wid,
+      </if>
+      <if test="pdPrice != null" >
+        pd_price,
+      </if>
+      <if test="pdAmount != null" >
+        pd_amount,
+      </if>
+      <if test="pdMemo != null" >
+        pd_memo,
+      </if>
+      <if test="pdInitime != null" >
+        pd_initime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pdId != null" >
+        #{pdId,jdbcType=INTEGER},
+      </if>
+      <if test="pId != null" >
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="pdWid != null" >
+        #{pdWid,jdbcType=VARCHAR},
+      </if>
+      <if test="pdPrice != null" >
+        #{pdPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="pdAmount != null" >
+        #{pdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="pdMemo != null" >
+        #{pdMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="pdInitime != null" >
+        #{pdInitime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.PlanDetail" >
+    update tb_plan_detail
+    <set >
+      <if test="pId != null" >
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="pdWid != null" >
+        pd_wid = #{pdWid,jdbcType=VARCHAR},
+      </if>
+      <if test="pdPrice != null" >
+        pd_price = #{pdPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="pdAmount != null" >
+        pd_amount = #{pdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="pdMemo != null" >
+        pd_memo = #{pdMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="pdInitime != null" >
+        pd_initime = #{pdInitime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pd_id = #{pdId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.PlanDetail" >
+    update tb_plan_detail
+    set p_id = #{pId,jdbcType=INTEGER},
+      pd_wid = #{pdWid,jdbcType=VARCHAR},
+      pd_price = #{pdPrice,jdbcType=DECIMAL},
+      pd_amount = #{pdAmount,jdbcType=DECIMAL},
+      pd_memo = #{pdMemo,jdbcType=VARCHAR},
+      pd_initime = #{pdInitime,jdbcType=TIMESTAMP}
+    where pd_id = #{pdId,jdbcType=INTEGER}
+  </update>
+</mapper>

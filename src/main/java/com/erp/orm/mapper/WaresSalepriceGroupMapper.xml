@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWaresSalepriceGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.WaresSalepriceGroup" >
+    <id column="spg_id" property="spgId" jdbcType="INTEGER" />
+    <id column="w_id" property="wId" jdbcType="INTEGER" />
+    <result column="w_saleprice" property="wSaleprice" jdbcType="DECIMAL" />
+    <result column="w_vipprice" property="wVipprice" jdbcType="DECIMAL" />
+    <result column="w_promoprice" property="wPromoprice" jdbcType="DECIMAL" />
+    <result column="w_vippromoprice" property="wVippromoprice" jdbcType="DECIMAL" />
+    <result column="w_status" property="wStatus" jdbcType="INTEGER" />
+    <result column="w_begindate" property="wBegindate" jdbcType="TIMESTAMP" />
+    <result column="w_enddate" property="wEnddate" jdbcType="TIMESTAMP" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+    <association property="waresBase" javaType="com.erp.orm.entity.WaresBase">
+	    <id column="w_id" property="wId"></id>
+	    <result column="w_traname" property="wTraname"/>
+	</association>
+    <association property="user" javaType="com.erp.orm.entity.User">
+	    <id column="u_id" property="uId"></id>
+	    <result column="u_name" property="uName"/>
+	</association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    spg_id, w_id, w_saleprice, w_vipprice, w_promoprice, w_vippromoprice, w_status, w_begindate, 
+    w_enddate, u_id, intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.erp.orm.entity.WaresSalepriceGroupKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_wares_saleprice_group
+    where spg_id = #{spgId,jdbcType=INTEGER}
+      and w_id = #{wId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select g.*,b.w_traname,u.u_name
+	from tb_wares_saleprice_group g
+	left JOIN tb_wares_base b on g.w_id = b.w_id
+	left join tb_user u on g.u_id = u.u_id
+	order by g.intime desc
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from tb_wares_saleprice_group
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.erp.orm.entity.WaresSalepriceGroupKey" >
+    delete from tb_wares_saleprice_group
+    where spg_id = #{spgId,jdbcType=INTEGER}
+      and w_id = #{wId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.WaresSalepriceGroup" >
+    insert into tb_wares_saleprice_group (spg_id, w_id, w_saleprice, 
+      w_vipprice, w_promoprice, w_vippromoprice, 
+      w_status, w_begindate, w_enddate, 
+      u_id, intime)
+    values (#{spgId,jdbcType=INTEGER}, #{wId,jdbcType=INTEGER}, #{wSaleprice,jdbcType=DECIMAL}, 
+      #{wVipprice,jdbcType=DECIMAL}, #{wPromoprice,jdbcType=DECIMAL}, #{wVippromoprice,jdbcType=DECIMAL}, 
+      #{wStatus,jdbcType=INTEGER}, #{wBegindate,jdbcType=TIMESTAMP}, #{wEnddate,jdbcType=TIMESTAMP}, 
+      #{uId,jdbcType=INTEGER}, #{intime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.WaresSalepriceGroup" >
+    insert into tb_wares_saleprice_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="spgId != null" >
+        spg_id,
+      </if>
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="wSaleprice != null" >
+        w_saleprice,
+      </if>
+      <if test="wVipprice != null" >
+        w_vipprice,
+      </if>
+      <if test="wPromoprice != null" >
+        w_promoprice,
+      </if>
+      <if test="wVippromoprice != null" >
+        w_vippromoprice,
+      </if>
+      <if test="wStatus != null" >
+        w_status,
+      </if>
+      <if test="wBegindate != null" >
+        w_begindate,
+      </if>
+      <if test="wEnddate != null" >
+        w_enddate,
+      </if>
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="intime != null" >
+        intime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="spgId != null" >
+        #{spgId,jdbcType=INTEGER},
+      </if>
+      <if test="wId != null" >
+        #{wId,jdbcType=INTEGER},
+      </if>
+      <if test="wSaleprice != null" >
+        #{wSaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wVipprice != null" >
+        #{wVipprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wPromoprice != null" >
+        #{wPromoprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wVippromoprice != null" >
+        #{wVippromoprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wStatus != null" >
+        #{wStatus,jdbcType=INTEGER},
+      </if>
+      <if test="wBegindate != null" >
+        #{wBegindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wEnddate != null" >
+        #{wEnddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="intime != null" >
+        #{intime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.WaresSalepriceGroup" >
+    update tb_wares_saleprice_group
+    <set >
+      <if test="wSaleprice != null" >
+        w_saleprice = #{wSaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wVipprice != null" >
+        w_vipprice = #{wVipprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wPromoprice != null" >
+        w_promoprice = #{wPromoprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wVippromoprice != null" >
+        w_vippromoprice = #{wVippromoprice,jdbcType=DECIMAL},
+      </if>
+      <if test="wStatus != null" >
+        w_status = #{wStatus,jdbcType=INTEGER},
+      </if>
+      <if test="wBegindate != null" >
+        w_begindate = #{wBegindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wEnddate != null" >
+        w_enddate = #{wEnddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uId != null" >
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="intime != null" >
+        intime = #{intime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where spg_id = #{spgId,jdbcType=INTEGER}
+      and w_id = #{wId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.WaresSalepriceGroup" >
+    update tb_wares_saleprice_group
+    set w_saleprice = #{wSaleprice,jdbcType=DECIMAL},
+      w_vipprice = #{wVipprice,jdbcType=DECIMAL},
+      w_promoprice = #{wPromoprice,jdbcType=DECIMAL},
+      w_vippromoprice = #{wVippromoprice,jdbcType=DECIMAL},
+      w_status = #{wStatus,jdbcType=INTEGER},
+      w_begindate = #{wBegindate,jdbcType=TIMESTAMP},
+      w_enddate = #{wEnddate,jdbcType=TIMESTAMP},
+      u_id = #{uId,jdbcType=INTEGER},
+      intime = #{intime,jdbcType=TIMESTAMP}
+    where spg_id = #{spgId,jdbcType=INTEGER}
+      and w_id = #{wId,jdbcType=INTEGER}
+  </update>
+</mapper>

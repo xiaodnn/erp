@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IOrganMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Organ" >
+    <id column="o_id" property="oId" jdbcType="INTEGER" />
+    <result column="o_code" property="oCode" jdbcType="VARCHAR" />
+    <result column="o_name" property="oName" jdbcType="VARCHAR" />
+    <result column="o_address" property="oAddress" jdbcType="VARCHAR" />
+    <result column="o_state" property="oState" jdbcType="TINYINT" />
+    <result column="o_intime" property="oIntime" jdbcType="TIMESTAMP" />
+    <result column="o_creator" property="oCreator" jdbcType="VARCHAR" />
+    <result column="o_manager" property="oManager" jdbcType="VARCHAR" />
+    <result column="o_saleprice" property="oSaleprice" jdbcType="VARCHAR" />
+    <result column="o_sellprice" property="oSellprice" jdbcType="VARCHAR" />
+<!--
+    <collection column="total" ofType="java.lang.Integer" property="recodecount" resultSet="recodecount">
+        <result column="total" property="recodecount"/>
+    </collection>
+    -->
+  </resultMap>
+  <resultMap id="RecordCount" type="java.lang.Integer">
+    <association property="recodecount" column="total" javaType="java.lang.Integer" select="select_count" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    o_id, o_code, o_name, o_address, o_state, o_intime, o_creator, o_manager, o_saleprice, 
+    o_sellprice
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_organ
+    where o_id = #{oId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_organ
+    where o_name like concat('%', #{oName,jdbcType=VARCHAR},'%') and o_state = 1
+    order by o_id
+  </select>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_organ
+    where o_code = #{oCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map" resultSets="BaseResultMap" >
+    select SQL_CALC_FOUND_ROWS
+    <include refid="Base_Column_List" />
+    from ts_organ
+    order by o_code
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+   <!-- SELECT FOUND_ROWS() as total ;-->
+  </select>
+
+  <select id="select_count" resultType="java.lang.Integer">
+    SELECT FOUND_ROWS() as total ;
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total from ts_organ
+    <!-- SELECT FOUND_ROWS() as total -->
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_organ
+    where o_id = #{oId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Organ"  useGeneratedKeys="true" keyProperty="oId" >
+    insert into ts_organ (o_code, o_name,
+    o_address, o_state, o_intime,
+    o_creator, o_manager, o_saleprice,
+    o_sellprice)
+    values (#{oCode,jdbcType=VARCHAR}, #{oName,jdbcType=VARCHAR},
+    #{oAddress,jdbcType=VARCHAR}, #{oState,jdbcType=TINYINT},now(),
+    #{oCreator,jdbcType=VARCHAR}, #{oManager,jdbcType=VARCHAR}, #{oSaleprice,jdbcType=VARCHAR},
+    #{oSellprice,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Organ"  useGeneratedKeys="true" keyProperty="oId" >
+    insert into ts_organ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="oCode != null" >
+        o_code,
+      </if>
+      <if test="oName != null" >
+        o_name,
+      </if>
+      <if test="oAddress != null" >
+        o_address,
+      </if>
+      <if test="oState != null" >
+        o_state,
+      </if>
+      o_intime,
+      <if test="oCreator != null" >
+        o_creator,
+      </if>
+      <if test="oManager != null" >
+        o_manager,
+      </if>
+      <if test="oSaleprice != null" >
+        o_saleprice,
+      </if>
+      <if test="oSellprice != null" >
+        o_sellprice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oId != null" >
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="oCode != null" >
+        #{oCode,jdbcType=VARCHAR},
+      </if>
+      <if test="oName != null" >
+        #{oName,jdbcType=VARCHAR},
+      </if>
+      <if test="oAddress != null" >
+        #{oAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oState != null" >
+        #{oState,jdbcType=TINYINT},
+      </if>
+      now(),
+      <if test="oCreator != null" >
+        #{oCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="oManager != null" >
+        #{oManager,jdbcType=VARCHAR},
+      </if>
+      <if test="oSaleprice != null" >
+        #{oSaleprice,jdbcType=VARCHAR},
+      </if>
+      <if test="oSellprice != null" >
+        #{oSellprice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Organ" >
+    update ts_organ
+    <set >
+      <if test="oCode != null" >
+        o_code = #{oCode,jdbcType=VARCHAR},
+      </if>
+      <if test="oName != null" >
+        o_name = #{oName,jdbcType=VARCHAR},
+      </if>
+      <if test="oAddress != null" >
+        o_address = #{oAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oState != null" >
+        o_state = #{oState,jdbcType=TINYINT},
+      </if>
+      <if test="oIntime != null" >
+        o_intime = #{oIntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oCreator != null" >
+        o_creator = #{oCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="oManager != null" >
+        o_manager = #{oManager,jdbcType=VARCHAR},
+      </if>
+      <if test="oSaleprice != null" >
+        o_saleprice = #{oSaleprice,jdbcType=VARCHAR},
+      </if>
+      <if test="oSellprice != null" >
+        o_sellprice = #{oSellprice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Organ" >
+    update ts_organ
+    set o_code = #{oCode,jdbcType=VARCHAR},
+      o_name = #{oName,jdbcType=VARCHAR},
+      o_address = #{oAddress,jdbcType=VARCHAR},
+      o_state = #{oState,jdbcType=TINYINT},
+      o_intime = #{oIntime,jdbcType=TIMESTAMP},
+      o_creator = #{oCreator,jdbcType=VARCHAR},
+      o_manager = #{oManager,jdbcType=VARCHAR},
+      o_saleprice = #{oSaleprice,jdbcType=VARCHAR},
+      o_sellprice = #{oSellprice,jdbcType=VARCHAR}
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+</mapper>

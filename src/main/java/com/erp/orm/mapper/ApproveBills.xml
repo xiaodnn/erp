@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IApproveBillsMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.ApproveBills" >
+    <result column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="r_id" property="rId" jdbcType="VARCHAR" />
+    <result column="m_name" property="mName" jdbcType="VARCHAR" />
+    <result column="m_url" property="mUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.m_id,r.r_id,m.m_name,m.m_url
+  </sql>
+
+  <select id="selectByEid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_approve a
+    INNER JOIN tb_map_approve_record r on a.m_id = r.m_id
+    INNER JOIN ts_module m on m.m_id = r.m_id
+    where (a.a_level_uid1 = #{eId,jdbcType=INTEGER}
+    or a.a_level_uid2 = #{eId,jdbcType=INTEGER}
+    or a.a_level_uid3 = #{eId,jdbcType=INTEGER}
+    or a.a_level_uid4 = #{eId,jdbcType=INTEGER}
+    or a.a_level_uid5 = #{eId,jdbcType=INTEGER}
+    or a.a_level_uid6 = #{eId,jdbcType=INTEGER} )
+    and (
+    case #{eId,jdbcType=INTEGER}
+    when a.a_level_uid1 then (r.mar_uid1 is NULL )
+    when a.a_level_uid2 then ((r.mar_uid2 is NULL) and (r.mar_uid1 is not NULL))
+    when a.a_level_uid3 then ((r.mar_uid3 is NULL) and (r.mar_uid2 is not NULL) and (r.mar_uid1 is not NULL))
+    when a.a_level_uid4 then ((r.mar_uid4 is NULL) and (r.mar_uid3 is not NULL) and (r.mar_uid2 is not NULL) and (r.mar_uid1 is not NULL))
+    when a.a_level_uid5 then ((r.mar_uid5 is NULL) and (r.mar_uid4 is not NULL) and (r.mar_uid3 is not NULL) and (r.mar_uid2 is not NULL) and (r.mar_uid1 is not NULL))
+    when a.a_level_uid6 then ((r.mar_uid6 is NULL) and (r.mar_uid5 is not NULL) and (r.mar_uid4 is not NULL) and (r.mar_uid3 is not NULL) and (r.mar_uid2 is not NULL) and (r.mar_uid1 is not NULL))
+    end )
+  </select>
+
+</mapper>

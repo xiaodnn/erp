@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.ISalepriceGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.SalepriceGroup" >
+    <id column="spg_id" property="spgId" jdbcType="INTEGER" />
+    <result column="spg_name" property="spgName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    spg_id, spg_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_saleprice_group
+    where spg_id = #{spgId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+	 <include refid="Base_Column_List" />
+    from ts_saleprice_group 
+	where wpg_name like concat('%',#{name,jdbcType=VARCHAR},'%')
+	order by spg_id
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+	 <include refid="Base_Column_List" />
+    from ts_saleprice_group
+	order by spg_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from ts_saleprice_group
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_saleprice_group
+    where spg_id = #{spgId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.SalepriceGroup" >
+    insert into ts_saleprice_group (spg_id, spg_name)
+    values (#{spgId,jdbcType=INTEGER}, #{spgName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.SalepriceGroup" >
+    insert into ts_saleprice_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="spgId != null" >
+        spg_id,
+      </if>
+      <if test="spgName != null" >
+        spg_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="spgId != null" >
+        #{spgId,jdbcType=INTEGER},
+      </if>
+      <if test="spgName != null" >
+        #{spgName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.SalepriceGroup" >
+    update ts_saleprice_group
+    <set >
+      <if test="spgName != null" >
+        spg_name = #{spgName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where spg_id = #{spgId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.SalepriceGroup" >
+    update ts_saleprice_group
+    set spg_name = #{spgName,jdbcType=VARCHAR}
+    where spg_id = #{spgId,jdbcType=INTEGER}
+  </update>
+</mapper>

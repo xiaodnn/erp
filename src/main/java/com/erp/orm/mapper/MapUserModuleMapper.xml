@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IMapUserModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.MapUserModule" >
+    <id column="mum_id" property="mumId" jdbcType="INTEGER" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="mum_state" property="mumState" jdbcType="TINYINT" />
+    <result column="mum_intime" property="mumIntime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mum_id, u_id, m_id, mum_state, mum_intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_map_user_module
+    where mum_id = #{mumId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_map_user_module
+    where mum_id = #{mumId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.MapUserModule" useGeneratedKeys="true" keyProperty="mumId"  >
+    insert into ts_map_user_module (u_id, m_id,
+      mum_state, mum_intime)
+    values ( #{uId,jdbcType=INTEGER}, #{mId,jdbcType=INTEGER},
+      #{mumState,jdbcType=TINYINT},now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.MapUserModule" useGeneratedKeys="true" keyProperty="mumId" >
+    insert into ts_map_user_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="mId != null" >
+        m_id,
+      </if>
+      <if test="mumState != null" >
+        mum_state,
+      </if>
+        mum_intime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null" >
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="mumState != null" >
+        #{mumState,jdbcType=TINYINT},
+      </if>
+       now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.MapUserModule" >
+    update ts_map_user_module
+    <set >
+      <if test="uId != null" >
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null" >
+        m_id = #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="mumState != null" >
+        mum_state = #{mumState,jdbcType=TINYINT},
+      </if>
+      <if test="mumIntime != null" >
+        mum_intime = #{mumIntime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where mum_id = #{mumId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.MapUserModule" >
+    update ts_map_user_module
+    set u_id = #{uId,jdbcType=INTEGER},
+      m_id = #{mId,jdbcType=INTEGER},
+      mum_state = #{mumState,jdbcType=TINYINT},
+      mum_intime = #{mumIntime,jdbcType=TIMESTAMP}
+    where mum_id = #{mumId,jdbcType=INTEGER}
+  </update>
+</mapper>

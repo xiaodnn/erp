@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWaresExtendMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.WaresExtend" >
+    <id column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="w_storeage" property="wStoreage" jdbcType="VARCHAR" />
+    <result column="w_medical_id" property="wMedicalId" jdbcType="VARCHAR" />
+    <result column="w_medical_name" property="wMedicalName" jdbcType="VARCHAR" />
+    <result column="w_function" property="wFunction" jdbcType="VARCHAR" />
+    <result column="w_reg_id" property="wRegId" jdbcType="VARCHAR" />
+    <result column="w_reg_expdate" property="wRegExpdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    w_id, w_storeage, w_medical_id, w_medical_name, w_function, w_reg_id, w_reg_expdate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_wares_extend
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_wares_extend
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.WaresExtend" >
+    insert into tb_wares_extend (w_id, w_storeage, w_medical_id, 
+      w_medical_name, w_function, w_reg_id, 
+      w_reg_expdate)
+    values (#{wId,jdbcType=VARCHAR}, #{wStoreage,jdbcType=VARCHAR}, #{wMedicalId,jdbcType=VARCHAR}, 
+      #{wMedicalName,jdbcType=VARCHAR}, #{wFunction,jdbcType=VARCHAR}, #{wRegId,jdbcType=VARCHAR}, 
+      #{wRegExpdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.WaresExtend" >
+    insert into tb_wares_extend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="wStoreage != null" >
+        w_storeage,
+      </if>
+      <if test="wMedicalId != null" >
+        w_medical_id,
+      </if>
+      <if test="wMedicalName != null" >
+        w_medical_name,
+      </if>
+      <if test="wFunction != null" >
+        w_function,
+      </if>
+      <if test="wRegId != null" >
+        w_reg_id,
+      </if>
+      <if test="wRegExpdate != null" >
+        w_reg_expdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="wStoreage != null" >
+        #{wStoreage,jdbcType=VARCHAR},
+      </if>
+      <if test="wMedicalId != null" >
+        #{wMedicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="wMedicalName != null" >
+        #{wMedicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="wFunction != null" >
+        #{wFunction,jdbcType=VARCHAR},
+      </if>
+      <if test="wRegId != null" >
+        #{wRegId,jdbcType=VARCHAR},
+      </if>
+      <if test="wRegExpdate != null" >
+        #{wRegExpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.WaresExtend" >
+    update tb_wares_extend
+    <set >
+      <if test="wStoreage != null" >
+        w_storeage = #{wStoreage,jdbcType=VARCHAR},
+      </if>
+      <if test="wMedicalId != null" >
+        w_medical_id = #{wMedicalId,jdbcType=VARCHAR},
+      </if>
+      <if test="wMedicalName != null" >
+        w_medical_name = #{wMedicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="wFunction != null" >
+        w_function = #{wFunction,jdbcType=VARCHAR},
+      </if>
+      <if test="wRegId != null" >
+        w_reg_id = #{wRegId,jdbcType=VARCHAR},
+      </if>
+      <if test="wRegExpdate != null" >
+        w_reg_expdate = #{wRegExpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.WaresExtend" >
+    update tb_wares_extend
+    set w_storeage = #{wStoreage,jdbcType=VARCHAR},
+      w_medical_id = #{wMedicalId,jdbcType=VARCHAR},
+      w_medical_name = #{wMedicalName,jdbcType=VARCHAR},
+      w_function = #{wFunction,jdbcType=VARCHAR},
+      w_reg_id = #{wRegId,jdbcType=VARCHAR},
+      w_reg_expdate = #{wRegExpdate,jdbcType=TIMESTAMP}
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+</mapper>

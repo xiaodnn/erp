@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWholepriceGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.WholepriceGroup" >
+    <id column="wpg_id" property="wpgId" jdbcType="INTEGER" />
+    <result column="wpg_name" property="wpgName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wpg_id, wpg_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_wholeprice_group
+    where wpg_id = #{wpgId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+	 <include refid="Base_Column_List" />
+    from ts_wholeprice_group 
+	where wpg_name like concat('%',#{name,jdbcType=VARCHAR},'%')
+	order by wpg_id
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+	 <include refid="Base_Column_List" />
+    from ts_wholeprice_group
+	order by wpg_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from ts_wholeprice_group
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_wholeprice_group
+    where wpg_id = #{wpgId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.WholepriceGroup" >
+    insert into ts_wholeprice_group (wpg_id, wpg_name)
+    values (#{wpgId,jdbcType=INTEGER}, #{wpgName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.WholepriceGroup" >
+    insert into ts_wholeprice_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wpgId != null" >
+        wpg_id,
+      </if>
+      <if test="wpgName != null" >
+        wpg_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wpgId != null" >
+        #{wpgId,jdbcType=INTEGER},
+      </if>
+      <if test="wpgName != null" >
+        #{wpgName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.WholepriceGroup" >
+    update ts_wholeprice_group
+    <set >
+      <if test="wpgName != null" >
+        wpg_name = #{wpgName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wpg_id = #{wpgId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.WholepriceGroup" >
+    update ts_wholeprice_group
+    set wpg_name = #{wpgName,jdbcType=VARCHAR}
+    where wpg_id = #{wpgId,jdbcType=INTEGER}
+  </update>
+</mapper>

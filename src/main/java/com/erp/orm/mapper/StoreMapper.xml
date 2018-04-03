@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IStoreMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Store" >
+    <id column="s_id" property="sId" jdbcType="INTEGER" />
+    <result column="o_code" property="oCode" jdbcType="VARCHAR" />
+    <result column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="amount_sum" property="amountSum" jdbcType="FLOAT" />
+    <result column="p_amount_sum" property="pAmountSum" jdbcType="FLOAT" />
+    <result column="cost_price" property="costPrice" jdbcType="FLOAT" />
+    <result column="c_id" property="cId" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    s_id, o_code, w_id, amount_sum, p_amount_sum, cost_price, c_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_store
+    where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_store
+    where o_code = #{oCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from tb_store
+    order by o_code
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from tb_store
+  </select>
+
+  <select id="selectByWid" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from tb_store
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_store
+    where s_id = #{sId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Store" useGeneratedKeys="true" keyProperty="sId">
+    insert into tb_store ( o_code, w_id,
+      amount_sum, p_amount_sum, cost_price, 
+      c_id)
+    values ( #{oCode,jdbcType=VARCHAR}, #{wId,jdbcType=VARCHAR},
+      #{amountSum,jdbcType=FLOAT}, #{pAmountSum,jdbcType=FLOAT}, #{costPrice,jdbcType=FLOAT}, 
+      #{cId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Store" useGeneratedKeys="true" keyProperty="sId" >
+    insert into tb_store
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oCode != null" >
+        o_code,
+      </if>
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="amountSum != null" >
+        amount_sum,
+      </if>
+      <if test="pAmountSum != null" >
+        p_amount_sum,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oCode != null" >
+        #{oCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="amountSum != null" >
+        #{amountSum,jdbcType=FLOAT},
+      </if>
+      <if test="pAmountSum != null" >
+        #{pAmountSum,jdbcType=FLOAT},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=FLOAT},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Store" >
+    update tb_store
+    <set >
+      <if test="oCode != null" >
+        o_code = #{oCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        w_id = #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="amountSum != null" >
+        amount_sum = #{amountSum,jdbcType=FLOAT},
+      </if>
+      <if test="pAmountSum != null" >
+        p_amount_sum = #{pAmountSum,jdbcType=FLOAT},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=FLOAT},
+      </if>
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Store" >
+    update tb_store
+    set o_code = #{oCode,jdbcType=VARCHAR},
+      w_id = #{wId,jdbcType=VARCHAR},
+      amount_sum = #{amountSum,jdbcType=FLOAT},
+      p_amount_sum = #{pAmountSum,jdbcType=FLOAT},
+      cost_price = #{costPrice,jdbcType=FLOAT},
+      c_id = #{cId,jdbcType=VARCHAR}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByWid" parameterType="com.erp.orm.entity.Store" >
+    update tb_store
+      set
+      amount_sum = #{amountSum,jdbcType=FLOAT},
+      cost_price = #{costPrice,jdbcType=FLOAT},
+      c_id = #{cId,jdbcType=VARCHAR}
+      where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateAmountById" parameterType="java.util.Map" >
+    update tb_store
+    set amount_sum = amount_sum - #{amount,jdbcType=FLOAT},
+    p_amount_sum = p_amount_sum + #{amount,jdbcType=FLOAT}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insertOrUpdate" parameterType="com.erp.orm.entity.Store" useGeneratedKeys="true" keyProperty="sId" >
+    <selectKey keyProperty="count" resultType="int" order="BEFORE">
+      SELECT count(*) AS count from tb_store WHERE w_id = #{wId,jdbcType=VARCHAR}
+    </selectKey>
+    <!-- 如果大于0则更新 -->
+    <if test="count>0">
+      update tb_store
+      set 
+      amount_sum = amount_sum + #{amountSum,jdbcType=FLOAT},
+      cost_price = #{costPrice,jdbcType=FLOAT},
+      c_id = #{cId,jdbcType=VARCHAR}
+      where w_id = #{wId,jdbcType=VARCHAR}
+    </if>
+    <!-- 如果等于0则保存 -->
+    <if test="count==0">
+      insert into tb_store
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="oCode != null" >
+          o_code,
+        </if>
+        <if test="wId != null" >
+          w_id,
+        </if>
+        <if test="amountSum != null" >
+          amount_sum,
+        </if>
+        <if test="pAmountSum != null" >
+          p_amount_sum,
+        </if>
+        <if test="costPrice != null" >
+          cost_price,
+        </if>
+        <if test="cId != null" >
+          c_id,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="oCode != null" >
+          #{oCode,jdbcType=VARCHAR},
+        </if>
+        <if test="wId != null" >
+          #{wId,jdbcType=VARCHAR},
+        </if>
+        <if test="amountSum != null" >
+          #{amountSum,jdbcType=FLOAT},
+        </if>
+        <if test="pAmountSum != null" >
+          #{pAmountSum,jdbcType=FLOAT},
+        </if>
+        <if test="costPrice != null" >
+          #{costPrice,jdbcType=FLOAT},
+        </if>
+        <if test="cId != null" >
+          #{cId,jdbcType=VARCHAR},
+        </if>
+      </trim>
+    </if>
+  </insert>
+</mapper>

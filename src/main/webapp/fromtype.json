@@ -1,0 +1,13 @@
+[
+{"tsfFormtype":"easyui-textbox","formtypeName":"文本框"},
+{"tsfFormtype":"easyui-combobox","formtypeName":"下拉列表"},
+{"tsfFormtype":"easyui-datebox","formtypeName":"日期"},
+{"tsfFormtype":"checkbox","formtypeName":"复选框"},
+{"tsfFormtype":"radio","formtypeName":"单选按钮"},
+{"tsfFormtype":"multiline","formtypeName":"多行文本"},
+{"tsfFormtype":"password","formtypeName":"密码框"},
+{"tsfFormtype":"easyui-linkbutton","formtypeName":"链接按钮"},
+{"tsfFormtype":"buttom","formtypeName":"按钮"},
+{"tsfFormtype":"submit","formtypeName":"提交"},
+{"tsfFormtype":"cancel","formtypeName":"取消"}
+]

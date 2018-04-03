@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.orm.inter.IModuleMapper">
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Module">
+    <id column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="m_name" jdbcType="VARCHAR" property="mName" />
+    <result column="m_nikename" jdbcType="VARCHAR" property="mNikename" />
+    <result column="m_url" jdbcType="VARCHAR" property="mUrl" />
+    <result column="m_state" jdbcType="TINYINT" property="mState" />
+    <result column="m_intime" jdbcType="TIMESTAMP" property="mIntime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_id, m_name, m_nikename, m_url, m_state, m_intime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ts_module
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByNikename" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ts_module
+    where m_nikename like concat('%', #{nikename,jdbcType=VARCHAR},'%') and m_state = 1
+    order by m_id
+  </select>
+
+  <select id="selectByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ts_module
+    order by m_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) as total
+    from ts_module
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ts_module
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Module">
+    insert into ts_module (m_id, m_name, m_nikename, m_url,
+      m_state, m_intime)
+    values (#{mId,jdbcType=INTEGER}, #{mName,jdbcType=VARCHAR}, #{mNikename,jdbcType=VARCHAR}, #{mUrl,jdbcType=VARCHAR},
+      #{mState,jdbcType=TINYINT}, #{mIntime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Module">
+    insert into ts_module
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        m_id,
+      </if>
+      <if test="mName != null">
+        m_name,
+      </if>
+      <if test="mNikename != null">
+        m_nikename,
+      </if>
+      <if test="mUrl != null">
+        m_url,
+      </if>
+      <if test="mState != null">
+        m_state,
+      </if>
+      <if test="mIntime != null">
+        m_intime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="mName != null">
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mNikename != null">
+        #{mNikename,jdbcType=VARCHAR},
+      </if>
+      <if test="mUrl != null">
+        #{mUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mState != null">
+        #{mState,jdbcType=TINYINT},
+      </if>
+      <if test="mIntime != null">
+        #{mIntime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Module">
+    update ts_module
+    <set>
+      <if test="mName != null">
+        m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mNikename != null">
+        m_nikename = #{mNikename,jdbcType=VARCHAR},
+      </if>
+      <if test="mUrl != null">
+        m_url = #{mUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mState != null">
+        m_state = #{mState,jdbcType=TINYINT},
+      </if>
+      <if test="mIntime != null">
+        m_intime = #{mIntime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Module">
+    update ts_module
+    set m_name = #{mName,jdbcType=VARCHAR},
+      m_nikename = #{mNikename,jdbcType=VARCHAR},
+       m_url = #{mUrl,jdbcType=VARCHAR},
+      m_state = #{mState,jdbcType=TINYINT},
+      m_intime = #{mIntime,jdbcType=TIMESTAMP}
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+</mapper>

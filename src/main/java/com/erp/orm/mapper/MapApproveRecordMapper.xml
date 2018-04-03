@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IMapApproveRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.MapApproveRecord" >
+    <id column="mar_id" property="marId" jdbcType="INTEGER" />
+    <result column="a_id" property="aId" jdbcType="INTEGER" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="r_id" property="rId" jdbcType="VARCHAR" />
+    <result column="mar_state" property="marState" jdbcType="TINYINT" />
+    <result column="mar_level" property="marLevel" jdbcType="TINYINT" />
+    <result column="mar_did1" property="marDid1" jdbcType="INTEGER" />
+    <result column="mar_uid1" property="marUid1" jdbcType="INTEGER" />
+    <result column="mar_did2" property="marDid2" jdbcType="INTEGER" />
+    <result column="mar_uid2" property="marUid2" jdbcType="INTEGER" />
+    <result column="mar_did3" property="marDid3" jdbcType="INTEGER" />
+    <result column="mar_uid3" property="marUid3" jdbcType="INTEGER" />
+    <result column="mar_did4" property="marDid4" jdbcType="INTEGER" />
+    <result column="mar_uid4" property="marUid4" jdbcType="INTEGER" />
+    <result column="mar_did5" property="marDid5" jdbcType="INTEGER" />
+    <result column="mar_uid5" property="marUid5" jdbcType="INTEGER" />
+    <result column="mar_did6" property="marDid6" jdbcType="INTEGER" />
+    <result column="mar_uid6" property="marUid6" jdbcType="INTEGER" />
+    <result column="mar_intime" property="marIntime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mar_id, a_id, u_id, m_id, r_id, mar_state, mar_level, mar_did1, mar_uid1, mar_did2, 
+    mar_uid2, mar_did3, mar_uid3, mar_did4, mar_uid4, mar_did5, mar_uid5, mar_did6, mar_uid6, 
+    mar_intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_map_approve_record
+    where mar_id = #{marId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByMidAndRid" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_map_approve_record
+    where m_id = #{mId,jdbcType=INTEGER} and r_id = #{rId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_map_approve_record
+    where mar_id = #{marId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.MapApproveRecord" useGeneratedKeys="true" keyProperty="mar_id">
+    insert into tb_map_approve_record (a_id, u_id,
+      m_id, r_id, mar_state, 
+      mar_level, mar_did1, mar_uid1, 
+      mar_did2, mar_uid2, mar_did3, 
+      mar_uid3, mar_did4, mar_uid4, 
+      mar_did5, mar_uid5, mar_did6, 
+      mar_uid6, mar_intime)
+    values ( #{aId,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER},
+      #{mId,jdbcType=INTEGER}, #{rId,jdbcType=VARCHAR}, #{marState,jdbcType=TINYINT},
+      #{marLevel,jdbcType=TINYINT}, #{marDid1,jdbcType=INTEGER}, #{marUid1,jdbcType=INTEGER}, 
+      #{marDid2,jdbcType=INTEGER}, #{marUid2,jdbcType=INTEGER}, #{marDid3,jdbcType=INTEGER}, 
+      #{marUid3,jdbcType=INTEGER}, #{marDid4,jdbcType=INTEGER}, #{marUid4,jdbcType=INTEGER}, 
+      #{marDid5,jdbcType=INTEGER}, #{marUid5,jdbcType=INTEGER}, #{marDid6,jdbcType=INTEGER}, 
+      #{marUid6,jdbcType=INTEGER}, now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.MapApproveRecord" useGeneratedKeys="true" keyProperty="mar_id" >
+    insert into tb_map_approve_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        a_id,
+      </if>
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="mId != null" >
+        m_id,
+      </if>
+      <if test="rId != null" >
+        r_id,
+      </if>
+      <if test="marState != null" >
+        mar_state,
+      </if>
+      <if test="marLevel != null" >
+        mar_level,
+      </if>
+      <if test="marDid1 != null" >
+        mar_did1,
+      </if>
+      <if test="marUid1 != null" >
+        mar_uid1,
+      </if>
+      <if test="marDid2 != null" >
+        mar_did2,
+      </if>
+      <if test="marUid2 != null" >
+        mar_uid2,
+      </if>
+      <if test="marDid3 != null" >
+        mar_did3,
+      </if>
+      <if test="marUid3 != null" >
+        mar_uid3,
+      </if>
+      <if test="marDid4 != null" >
+        mar_did4,
+      </if>
+      <if test="marUid4 != null" >
+        mar_uid4,
+      </if>
+      <if test="marDid5 != null" >
+        mar_did5,
+      </if>
+      <if test="marUid5 != null" >
+        mar_uid5,
+      </if>
+      <if test="marDid6 != null" >
+        mar_did6,
+      </if>
+      <if test="marUid6 != null" >
+        mar_uid6,
+      </if>
+        mar_intime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null" >
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="rId != null" >
+        #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="marState != null" >
+        #{marState,jdbcType=TINYINT},
+      </if>
+      <if test="marLevel != null" >
+        #{marLevel,jdbcType=TINYINT},
+      </if>
+      <if test="marDid1 != null" >
+        #{marDid1,jdbcType=INTEGER},
+      </if>
+      <if test="marUid1 != null" >
+        #{marUid1,jdbcType=INTEGER},
+      </if>
+      <if test="marDid2 != null" >
+        #{marDid2,jdbcType=INTEGER},
+      </if>
+      <if test="marUid2 != null" >
+        #{marUid2,jdbcType=INTEGER},
+      </if>
+      <if test="marDid3 != null" >
+        #{marDid3,jdbcType=INTEGER},
+      </if>
+      <if test="marUid3 != null" >
+        #{marUid3,jdbcType=INTEGER},
+      </if>
+      <if test="marDid4 != null" >
+        #{marDid4,jdbcType=INTEGER},
+      </if>
+      <if test="marUid4 != null" >
+        #{marUid4,jdbcType=INTEGER},
+      </if>
+      <if test="marDid5 != null" >
+        #{marDid5,jdbcType=INTEGER},
+      </if>
+      <if test="marUid5 != null" >
+        #{marUid5,jdbcType=INTEGER},
+      </if>
+      <if test="marDid6 != null" >
+        #{marDid6,jdbcType=INTEGER},
+      </if>
+      <if test="marUid6 != null" >
+        #{marUid6,jdbcType=INTEGER},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.MapApproveRecord" >
+    update tb_map_approve_record
+    <set >
+      <if test="aId != null" >
+        a_id = #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null" >
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null" >
+        m_id = #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="rId != null" >
+        r_id = #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="marState != null" >
+        mar_state = #{marState,jdbcType=TINYINT},
+      </if>
+      <if test="marLevel != null" >
+        mar_level = #{marLevel,jdbcType=TINYINT},
+      </if>
+      <if test="marDid1 != null" >
+        mar_did1 = #{marDid1,jdbcType=INTEGER},
+      </if>
+      <if test="marUid1 != null" >
+        mar_uid1 = #{marUid1,jdbcType=INTEGER},
+      </if>
+      <if test="marDid2 != null" >
+        mar_did2 = #{marDid2,jdbcType=INTEGER},
+      </if>
+      <if test="marUid2 != null" >
+        mar_uid2 = #{marUid2,jdbcType=INTEGER},
+      </if>
+      <if test="marDid3 != null" >
+        mar_did3 = #{marDid3,jdbcType=INTEGER},
+      </if>
+      <if test="marUid3 != null" >
+        mar_uid3 = #{marUid3,jdbcType=INTEGER},
+      </if>
+      <if test="marDid4 != null" >
+        mar_did4 = #{marDid4,jdbcType=INTEGER},
+      </if>
+      <if test="marUid4 != null" >
+        mar_uid4 = #{marUid4,jdbcType=INTEGER},
+      </if>
+      <if test="marDid5 != null" >
+        mar_did5 = #{marDid5,jdbcType=INTEGER},
+      </if>
+      <if test="marUid5 != null" >
+        mar_uid5 = #{marUid5,jdbcType=INTEGER},
+      </if>
+      <if test="marDid6 != null" >
+        mar_did6 = #{marDid6,jdbcType=INTEGER},
+      </if>
+      <if test="marUid6 != null" >
+        mar_uid6 = #{marUid6,jdbcType=INTEGER},
+      </if>
+        mar_intime = now()
+    </set>
+    where mar_id = #{marId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.MapApproveRecord" >
+    update tb_map_approve_record
+    set a_id = #{aId,jdbcType=INTEGER},
+      u_id = #{uId,jdbcType=INTEGER},
+      m_id = #{mId,jdbcType=INTEGER},
+      r_id = #{rId,jdbcType=VARCHAR},
+      mar_state = #{marState,jdbcType=TINYINT},
+      mar_level = #{marLevel,jdbcType=TINYINT},
+      mar_did1 = #{marDid1,jdbcType=INTEGER},
+      mar_uid1 = #{marUid1,jdbcType=INTEGER},
+      mar_did2 = #{marDid2,jdbcType=INTEGER},
+      mar_uid2 = #{marUid2,jdbcType=INTEGER},
+      mar_did3 = #{marDid3,jdbcType=INTEGER},
+      mar_uid3 = #{marUid3,jdbcType=INTEGER},
+      mar_did4 = #{marDid4,jdbcType=INTEGER},
+      mar_uid4 = #{marUid4,jdbcType=INTEGER},
+      mar_did5 = #{marDid5,jdbcType=INTEGER},
+      mar_uid5 = #{marUid5,jdbcType=INTEGER},
+      mar_did6 = #{marDid6,jdbcType=INTEGER},
+      mar_uid6 = #{marUid6,jdbcType=INTEGER},
+      mar_intime =now()
+    where mar_id = #{marId,jdbcType=INTEGER}
+  </update>
+
+  <!-- 修改审批流程-->
+  <update id="updateByApproveInfoToPass" parameterType="java.util.Map" >
+    update tb_map_approve_record
+    set
+    mar_state = #{marState,jdbcType=TINYINT},
+    <if test="n == 1" >
+      mar_did1 = #{eoId,jdbcType=INTEGER},
+      mar_uid1 = #{eId ,jdbcType=INTEGER}
+    </if>
+    <if test="n == 2" >
+      mar_did2 = #{eoId,jdbcType=INTEGER},
+      mar_uid2 = #{eId ,jdbcType=INTEGER}
+    </if>
+    <if test="n == 3" >
+      mar_did3 = #{eoId,jdbcType=INTEGER},
+      mar_uid3 = #{eId ,jdbcType=INTEGER}
+    </if>
+    <if test="n == 4" >
+      mar_did4 = #{eoId,jdbcType=INTEGER},
+      mar_uid4 = #{eId ,jdbcType=INTEGER}
+    </if>
+    <if test="n == 5" >
+      mar_did5 = #{eoId,jdbcType=INTEGER},
+      mar_uid5 = #{eId ,jdbcType=INTEGER}
+    </if>
+    <if test="n == 6" >
+      mar_did6 = #{eoId,jdbcType=INTEGER},
+      mar_uid6 = #{eId ,jdbcType=INTEGER}
+    </if>
+    where m_id = #{mId,jdbcType=INTEGER} and r_id = #{rId,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 修改审批流程撤回-->
+  <update id="updateByApproveInfoToRecall" parameterType="java.util.Map" >
+    update tb_map_approve_record
+    set
+    mar_state = #{marState,jdbcType=TINYINT},
+      mar_did1 = null,
+      mar_uid1 = null,
+      mar_did2 = null,
+      mar_uid2 = null,
+      mar_did3 = null,
+      mar_uid3 = null,
+      mar_did4 = null,
+      mar_uid4 = null,
+      mar_did5 = null,
+      mar_uid5 = null,
+      mar_did6 = null,
+      mar_uid6 = null
+    where m_id = #{mId,jdbcType=INTEGER} and r_id = #{rId,jdbcType=VARCHAR}
+  </update>
+</mapper>

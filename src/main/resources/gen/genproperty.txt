@@ -1,0 +1,9 @@
+classPathEntry=E:\\maven\\repository\\mysql\\mysql-connector-java\\5.1.38\\mysql-connector-java-5.1.38.jar
+driverClass=com.mysql.jdbc.Driver
+connectionURL=jdbc:mysql://127.0.0.1:3306/erp_main?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false
+userId=root
+password=password
+targetProject=D:\\ProgramFiles\\eclipseJava\\workspace\\erp\\src\\main\\java
+model_targetPackage=com.erp.orm.entity
+map_targetPackage=com.erp.orm.mapper
+inter_targetPackage=com.erp.orm.inter

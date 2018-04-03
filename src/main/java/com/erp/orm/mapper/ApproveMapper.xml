@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IApproveMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.Approve" >
+    <id column="a_id" property="aId" jdbcType="INTEGER" />
+    <result column="o_id" property="oId" jdbcType="INTEGER" />
+    <result column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="a_level" property="aLevel" jdbcType="TINYINT" />
+    <result column="a_level_did1" property="aLevelDid1" jdbcType="INTEGER" />
+    <result column="a_level_uid1" property="aLevelUid1" jdbcType="INTEGER" />
+    <result column="a_level_did2" property="aLevelDid2" jdbcType="INTEGER" />
+    <result column="a_level_uid2" property="aLevelUid2" jdbcType="INTEGER" />
+    <result column="a_level_did3" property="aLevelDid3" jdbcType="INTEGER" />
+    <result column="a_level_uid3" property="aLevelUid3" jdbcType="INTEGER" />
+    <result column="a_level_did4" property="aLevelDid4" jdbcType="INTEGER" />
+    <result column="a_level_uid4" property="aLevelUid4" jdbcType="INTEGER" />
+    <result column="a_level_did5" property="aLevelDid5" jdbcType="INTEGER" />
+    <result column="a_level_uid5" property="aLevelUid5" jdbcType="INTEGER" />
+    <result column="a_level_did6" property="aLevelDid6" jdbcType="INTEGER" />
+    <result column="a_level_uid6" property="aLevelUid6" jdbcType="INTEGER" />
+
+    <result column="a_state" property="aState" jdbcType="TINYINT" />
+    <result column="a_intime" property="aIntime" jdbcType="TIMESTAMP" />
+    <result column="a_creator" property="aCreator" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.a_id, a.o_id, a.m_id, a.a_level, a.a_level_did1, a.a_level_uid1, a.a_level_did2, a.a_level_uid2,
+    a_level_did3, a_level_uid3, a_level_did4, a_level_uid4, a_level_did5, a_level_uid5,
+    a_level_did6, a_level_uid6, a_state, a_intime, a_creator
+  </sql>
+  <sql id="join_Column_List" >
+    a.a_id, a.o_id, a.m_id, a.a_level, a.a_level_did1, a.a_level_uid1, a.a_level_did2, a.a_level_uid2,
+    a_level_did3, a_level_uid3, a_level_did4, a_level_uid4, a_level_did5, a_level_uid5,
+    a_level_did6, a_level_uid6, a_state, a_intime, a_creator ,o.o_name as aOrganName ,m.m_name as aModuleName,
+    d1.d_name as dname1 ,e1.e_name as uname1,
+    d2.d_name as dname2 ,e2.e_name as uname2,
+    d3.d_name as dname3 ,e3.e_name as uname3,
+    d4.d_name as dname4 ,e4.e_name as uname4,
+    d5.d_name as dname5 ,e5.e_name as uname5,
+    d6.d_name as dname6 ,e6.e_name as uname6
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_approve a
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+  <!--根据机构ID、模块ID、用户ID 查询-->
+  <select id="selectByOrder" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_approve a
+    where
+    (a.a_level_uid1 = #{uid,jdbcType=INTEGER}
+    or a.a_level_uid2 =  #{uid,jdbcType=INTEGER}
+    or a.a_level_uid3 =  #{uid,jdbcType=INTEGER}
+    or a.a_level_uid4=  #{uid,jdbcType=INTEGER}
+    or a.a_level_uid5 =  #{uid,jdbcType=INTEGER}
+    or a.a_level_uid6 =  #{uid,jdbcType=INTEGER} )
+    and a.o_id =  #{organ,jdbcType=INTEGER}
+    and a.m_id = #{module,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByOgranAndModule" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_approve a
+    where m_id = #{module,jdbcType=INTEGER} and o_id = #{organ,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_approve a
+    where a_state = 1
+    order by o_id
+  </select>
+
+
+  <select id="selectByMid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    a.a_id, a.o_id, a.m_id, a.a_level, a.a_level_did1, a.a_level_uid1, a.a_level_did2, a.a_level_uid2,
+    a_level_did3, a_level_uid3, a_level_did4, a_level_uid4, a_level_did5, a_level_uid5,
+    a_level_did6, a_level_uid6, a_state, a_intime, a_creator ,
+    d1.d_name as dname1 ,e1.e_name as uname1,
+    d2.d_name as dname2 ,e2.e_name as uname2,
+    d3.d_name as dname3 ,e3.e_name as uname3,
+    d4.d_name as dname4 ,e4.e_name as uname4,
+    d5.d_name as dname5 ,e5.e_name as uname5,
+    d6.d_name as dname6 ,e6.e_name as uname6
+    from ts_approve a
+    left join ts_department d1 on a.a_level_did1 = d1.d_id
+    left join ts_department d2 on a.a_level_did2 = d2.d_id
+    left join ts_department d3 on a.a_level_did3 = d3.d_id
+    left join ts_department d4 on a.a_level_did4 = d4.d_id
+    left join ts_department d5 on a.a_level_did5 = d5.d_id
+    left join ts_department d6 on a.a_level_did6 = d6.d_id
+    left join tb_employee e1 on a.a_level_uid1 = e1.e_id
+    left join tb_employee e2 on a.a_level_uid2 = e2.e_id
+    left join tb_employee e3 on a.a_level_uid3 = e3.e_id
+    left join tb_employee e4 on a.a_level_uid4 = e4.e_id
+    left join tb_employee e5 on a.a_level_uid5 = e5.e_id
+    left join tb_employee e6 on a.a_level_uid6 = e6.e_id
+    where a.a_state = 1 and a.m_id = #{mId,jdbcType=INTEGER}
+  </select>
+
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select SQL_CALC_FOUND_ROWS
+    <include refid="join_Column_List" />
+    from ts_approve a
+    left join ts_department d1 on a.a_level_did1 = d1.d_id
+    left join ts_department d2 on a.a_level_did2 = d2.d_id
+    left join ts_department d3 on a.a_level_did3 = d3.d_id
+    left join ts_department d4 on a.a_level_did4 = d4.d_id
+    left join ts_department d5 on a.a_level_did5 = d5.d_id
+    left join ts_department d6 on a.a_level_did6 = d6.d_id
+    left join tb_employee e1 on a.a_level_uid1 = e1.e_id
+    left join tb_employee e2 on a.a_level_uid2 = e2.e_id
+    left join tb_employee e3 on a.a_level_uid3 = e3.e_id
+    left join tb_employee e4 on a.a_level_uid4 = e4.e_id
+    left join tb_employee e5 on a.a_level_uid5 = e5.e_id
+    left join tb_employee e6 on a.a_level_uid6 = e6.e_id
+    left join ts_module m on m.m_id = a.m_id
+    LEFT JOIN ts_organ o on o.o_id = a.o_id
+    where a.a_state = 1
+    order by a.o_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <!--
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select SQL_CALC_FOUND_ROWS
+    <include refid="join_Column_List" />
+    from ts_approve
+    where a_state = 1
+    order by o_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER} ;
+    SELECT FOUND_ROWS() as total ;
+  </select>
+  -->
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from ts_approve a
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_approve
+    where a_id = #{aId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.Approve" useGeneratedKeys="true" keyProperty="aId" >
+    insert into ts_approve ( o_id, m_id,
+      a_level, a_level_did1, a_level_uid1,
+      a_level_did2, a_level_uid2, a_level_did3,
+      a_level_uid3, a_level_did4, a_level_uid4,
+      a_level_did5, a_level_uid5, a_level_did6,
+      a_level_uid6, a_state, a_intime, 
+      a_creator)
+    values ( #{oId,jdbcType=INTEGER}, #{mId,jdbcType=INTEGER},
+      #{aLevel,jdbcType=TINYINT}, #{aLevelDid1,jdbcType=VARCHAR}, #{aLevelUid1,jdbcType=INTEGER},
+      #{aLevelDid2,jdbcType=VARCHAR}, #{aLevelUid2,jdbcType=INTEGER}, #{aLevelDid3,jdbcType=VARCHAR},
+      #{aLevelUid3,jdbcType=INTEGER}, #{aLevelDid4,jdbcType=VARCHAR}, #{aLevelUid4,jdbcType=INTEGER},
+      #{aLevelDid5,jdbcType=VARCHAR}, #{aLevelUid5,jdbcType=INTEGER}, #{aLevelDid6,jdbcType=VARCHAR},
+      #{aLevelUid6,jdbcType=INTEGER}, #{aState,jdbcType=TINYINT}, #{aIntime,jdbcType=TIMESTAMP}, 
+      #{aCreator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.Approve" useGeneratedKeys="true" keyProperty="aId" >
+    insert into ts_approve
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="mId != null" >
+        m_id,
+      </if>
+      <if test="aLevel != null" >
+        a_level,
+      </if>
+      <if test="aLevelDid1 != null" >
+        a_level_did1,
+      </if>
+      <if test="aLevelUid1 != null" >
+        a_level_uid1,
+      </if>
+      <if test="aLevelDid2 != null" >
+        a_level_did2,
+      </if>
+      <if test="aLevelUid2 != null" >
+        a_level_uid2,
+      </if>
+      <if test="aLevelDid3 != null" >
+        a_level_did3,
+      </if>
+      <if test="aLevelUid3 != null" >
+        a_level_uid3,
+      </if>
+      <if test="aLevelDid4 != null" >
+        a_level_did4,
+      </if>
+      <if test="aLevelUid4 != null" >
+        a_level_uid4,
+      </if>
+      <if test="aLevelDid5 != null" >
+        a_level_did5,
+      </if>
+      <if test="aLevelUid5 != null" >
+        a_level_uid5,
+      </if>
+      <if test="aLevelDid6 != null" >
+        a_level_did6,
+      </if>
+      <if test="aLevelUid6 != null" >
+        a_level_uid6,
+      </if>
+      <if test="aState != null" >
+        a_state,
+      </if>
+      <if test="aIntime != null" >
+        a_intime,
+      </if>
+      <if test="aCreator != null" >
+        a_creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oId != null" >
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null" >
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="aLevel != null" >
+        #{aLevel,jdbcType=TINYINT},
+      </if>
+      <if test="aLevelDid1 != null" >
+        #{aLevelDid1,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid1 != null" >
+        #{aLevelUid1,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid2 != null" >
+        #{aLevelDid2,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid2 != null" >
+        #{aLevelUid2,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid3 != null" >
+        #{aLevelDid3,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid3 != null" >
+        #{aLevelUid3,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid4 != null" >
+        #{aLevelDid4,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid4 != null" >
+        #{aLevelUid4,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid5 != null" >
+        #{aLevelDid5,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid5 != null" >
+        #{aLevelUid5,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid6 != null" >
+        #{aLevelDid6,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid6 != null" >
+        #{aLevelUid6,jdbcType=INTEGER},
+      </if>
+      <if test="aState != null" >
+        #{aState,jdbcType=TINYINT},
+      </if>
+      <if test="aIntime != null" >
+        #{aIntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aCreator != null" >
+        #{aCreator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.Approve" >
+    update ts_approve
+    <set >
+      <if test="oId != null" >
+        o_id = #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null" >
+        m_id = #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="aLevel != null" >
+        a_level = #{aLevel,jdbcType=TINYINT},
+      </if>
+      <if test="aLevelDid1 != null" >
+        a_level_did1 = #{aLevelDid1,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid1 != null" >
+        a_level_uid1 = #{aLevelUid1,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid2 != null" >
+        a_level_did2 = #{aLevelDid2,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid2 != null" >
+        a_level_uid2 = #{aLevelUid2,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid3 != null" >
+        a_level_did3 = #{aLevelDid3,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid3 != null" >
+        a_level_uid3 = #{aLevelUid3,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid4 != null" >
+        a_level_did4 = #{aLevelDid4,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid4 != null" >
+        a_level_uid4 = #{aLevelUid4,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid5 != null" >
+        a_level_did5 = #{aLevelDid5,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid5 != null" >
+        a_level_uid5 = #{aLevelUid5,jdbcType=INTEGER},
+      </if>
+      <if test="aLevelDid6 != null" >
+        a_level_did6 = #{aLevelDid6,jdbcType=VARCHAR},
+      </if>
+      <if test="aLevelUid6 != null" >
+        a_level_uid6 = #{aLevelUid6,jdbcType=INTEGER},
+      </if>
+      <if test="aState != null" >
+        a_state = #{aState,jdbcType=TINYINT},
+      </if>
+      <if test="aIntime != null" >
+        a_intime = #{aIntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aCreator != null" >
+        a_creator = #{aCreator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.Approve" >
+    update ts_approve
+    set o_id = #{oId,jdbcType=INTEGER},
+      m_id = #{mId,jdbcType=INTEGER},
+      a_level = #{aLevel,jdbcType=TINYINT},
+      a_level_did1 = #{aLevelDid1,jdbcType=VARCHAR},
+      a_level_uid1 = #{aLevelUid1,jdbcType=INTEGER},
+      a_level_did2 = #{aLevelDid2,jdbcType=VARCHAR},
+      a_level_uid2 = #{aLevelUid2,jdbcType=INTEGER},
+      a_level_did3 = #{aLevelDid3,jdbcType=VARCHAR},
+      a_level_uid3 = #{aLevelUid3,jdbcType=INTEGER},
+      a_level_did4 = #{aLevelDid4,jdbcType=VARCHAR},
+      a_level_uid4 = #{aLevelUid4,jdbcType=INTEGER},
+      a_level_did5 = #{aLevelDid5,jdbcType=VARCHAR},
+      a_level_uid5 = #{aLevelUid5,jdbcType=INTEGER},
+      a_level_did6 = #{aLevelDid6,jdbcType=VARCHAR},
+      a_level_uid6 = #{aLevelUid6,jdbcType=INTEGER},
+      a_state = #{aState,jdbcType=TINYINT},
+      a_intime = #{aIntime,jdbcType=TIMESTAMP},
+      a_creator = #{aCreator,jdbcType=VARCHAR}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+</mapper>

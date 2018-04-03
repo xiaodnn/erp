@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.ITableStructFieldMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.TableStructField" >
+    <id column="tsf_id" property="tsfId" jdbcType="INTEGER" />
+    <result column="ts_id" property="tsId" jdbcType="INTEGER" />
+    <result column="tsf_name" property="tsfName" jdbcType="VARCHAR" />
+    <result column="tsf_nikename" property="tsfNikename" jdbcType="VARCHAR" />
+    <result column="tsf_type" property="tsfType" jdbcType="VARCHAR" />
+    <result column="tsf_len" property="tsfLen" jdbcType="VARCHAR" />
+    <result column="tsf_key" property="tsfKey" jdbcType="VARCHAR" />
+    <result column="tsf_formtype" property="tsfFormtype" jdbcType="VARCHAR" />
+    <result column="tsf_not_null" property="tsfNotNull" jdbcType="TINYINT" />
+    <result column="tsf_defval" property="tsfDefault" jdbcType="VARCHAR" />
+    <result column="tsf_remark" property="tsfRemark" jdbcType="VARCHAR" />
+    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tsf_id, ts_id, tsf_name, tsf_nikename, tsf_type, tsf_len, tsf_key,tsf_formtype,tsf_not_null, tsf_defval, 
+    tsf_remark, intime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_table_struct_field
+    where tsf_id = #{tsfId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_table_struct_field
+    where tsf_name = #{tsfName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_table_struct_field
+    order by tsf_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select count(1) as total
+    from ts_table_struct_field
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_table_struct_field
+    where tsf_id = #{tsfId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.TableStructField" useGeneratedKeys="true" keyProperty="tsfId" >
+    insert into ts_table_struct_field (ts_id, tsf_name, 
+      tsf_nikename, tsf_type, tsf_len, tsf_key,
+      tsf_formtype, tsf_not_null,tsf_defval, tsf_remark, 
+      intime)
+    values (#{tsId,jdbcType=INTEGER}, #{tsfName,jdbcType=VARCHAR}, 
+      #{tsfNikename,jdbcType=VARCHAR}, #{tsfType,jdbcType=VARCHAR}, #{tsfLen,jdbcType=VARCHAR}, #{tsfKey,jdbcType=VARCHAR}, 
+      #{tsfFormtype,jdbcType=VARCHAR},  #{tsfNotNull,jdbcType=TINYINT}, #{tsfDefault,jdbcType=VARCHAR}, #{tsfRemark,jdbcType=VARCHAR}, 
+      #{intime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.TableStructField" useGeneratedKeys="true" keyProperty="tsfId" >
+    insert into ts_table_struct_field
+    <trim prefix="(" suffix=")" suffixOverrides="," >      
+      <if test="tsId != null" >
+        ts_id,
+      </if>
+      <if test="tsfName != null" >
+        tsf_name,
+      </if>
+      <if test="tsfNikename != null" >
+        tsf_nikename,
+      </if>
+      <if test="tsfType != null" >
+        tsf_type,
+      </if>
+      <if test="tsfLen != null" >
+        tsf_len,
+      </if>
+      <if test="tsfKey != null" >
+        tsf_key,
+      </if>
+      <if test="tsfFormtype != null" >
+        tsf_formtype,
+      </if>
+      <if test="tsfNotNull != null" >
+        tsf_not_null,
+      </if>
+      <if test="tsfDefault != null" >
+        tsf_defval,
+      </if>
+      <if test="tsfRemark != null" >
+        tsf_remark,
+      </if>
+      <if test="intime != null" >
+        intime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tsId != null" >
+        #{tsId,jdbcType=INTEGER},
+      </if>
+      <if test="tsfName != null" >
+        #{tsfName,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfNikename != null" >
+        #{tsfNikename,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfType != null" >
+        #{tsfType,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfLen != null" >
+        #{tsfLen,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfKey != null" >
+        #{tsfKey,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfFormtype != null" >
+        #{tsfFormtype,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfNotNull != null" >
+        #{tsfNotNull,jdbcType=TINYINT},
+      </if>
+      <if test="tsfDefault != null" >
+        #{tsfDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfRemark != null" >
+        #{tsfRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="intime != null" >
+        #{intime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.TableStructField" >
+    update ts_table_struct_field
+    <set >
+      <if test="tsId != null" >
+        ts_id = #{tsId,jdbcType=INTEGER},
+      </if>
+      <if test="tsfName != null" >
+        tsf_name = #{tsfName,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfNikename != null" >
+        tsf_nikename = #{tsfNikename,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfType != null" >
+        tsf_type = #{tsfType,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfLen != null" >
+        tsf_len = #{tsfLen,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfKey != null" >
+        tsf_key = #{tsfKey,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfFormtype != null" >
+        tsf_formtype = #{tsfFormtype,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfNotNull != null" >
+        tsf_not_null = #{tsfNotNull,jdbcType=TINYINT},
+      </if>
+      <if test="tsfDefault != null" >
+        tsf_defval = #{tsfDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="tsfRemark != null" >
+        tsf_remark = #{tsfRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="intime != null" >
+        intime = #{intime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tsf_id = #{tsfId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.TableStructField" >
+    update ts_table_struct_field
+    set ts_id = #{tsId,jdbcType=INTEGER},
+      tsf_name = #{tsfName,jdbcType=VARCHAR},
+      tsf_nikename = #{tsfNikename,jdbcType=VARCHAR},
+      tsf_type = #{tsfType,jdbcType=VARCHAR},
+      tsf_len = #{tsfLen,jdbcType=VARCHAR},
+      tsf_key = #{tsfKey,jdbcType=VARCHAR},
+      tsf_formtype = #{tsfFormtype,jdbcType=VARCHAR},
+      tsf_not_null = #{tsfNotNull,jdbcType=TINYINT},
+      tsf_defval = #{tsfDefault,jdbcType=VARCHAR},
+      tsf_remark = #{tsfRemark,jdbcType=VARCHAR},
+      intime = #{intime,jdbcType=TIMESTAMP}
+    where tsf_id = #{tsfId,jdbcType=INTEGER}
+  </update>
+</mapper>

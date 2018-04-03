@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IStorePlaceMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.StorePlace" >
+    <id column="sp_id" property="spId" jdbcType="INTEGER" />
+    <result column="sp_code" property="spCode" jdbcType="VARCHAR" />
+    <result column="sp_name" property="spName" jdbcType="VARCHAR" />
+    <result column="sz_id" property="szId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sp_id, sp_code, sp_name, sz_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_storeplace
+    where sp_id = #{spId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ts_storeplace
+    where sp_code = #{spCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from ts_storeplace
+    order by sp_code
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from ts_storeplace
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_storeplace
+    where sp_id = #{spId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.StorePlace" >
+    insert into ts_storeplace (sp_id, sp_code, sp_name, 
+      sz_id)
+    values (#{spId,jdbcType=INTEGER}, #{spCode,jdbcType=VARCHAR}, #{spName,jdbcType=VARCHAR}, 
+      #{szId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.StorePlace" >
+    insert into ts_storeplace
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="spId != null" >
+        sp_id,
+      </if>
+      <if test="spCode != null" >
+        sp_code,
+      </if>
+      <if test="spName != null" >
+        sp_name,
+      </if>
+      <if test="szId != null" >
+        sz_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="spId != null" >
+        #{spId,jdbcType=INTEGER},
+      </if>
+      <if test="spCode != null" >
+        #{spCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spName != null" >
+        #{spName,jdbcType=VARCHAR},
+      </if>
+      <if test="szId != null" >
+        #{szId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.StorePlace" >
+    update ts_storeplace
+    <set >
+      <if test="spCode != null" >
+        sp_code = #{spCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spName != null" >
+        sp_name = #{spName,jdbcType=VARCHAR},
+      </if>
+      <if test="szId != null" >
+        sz_id = #{szId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sp_id = #{spId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.StorePlace" >
+    update ts_storeplace
+    set sp_code = #{spCode,jdbcType=VARCHAR},
+      sp_name = #{spName,jdbcType=VARCHAR},
+      sz_id = #{szId,jdbcType=INTEGER}
+    where sp_id = #{spId,jdbcType=INTEGER}
+  </update>
+</mapper>

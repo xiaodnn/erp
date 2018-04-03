@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWaresPriceMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.WaresPrice" >
+    <id column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="w_costprice" property="wCostprice" jdbcType="FLOAT" />
+    <result column="w_saleprice" property="wSaleprice" jdbcType="FLOAT" />
+    <result column="w_vipprice" property="wVipprice" jdbcType="FLOAT" />
+    <result column="w_sellprice" property="wSellprice" jdbcType="FLOAT" />
+    <result column="w_min_saleprice" property="wMinSaleprice" jdbcType="FLOAT" />
+    <result column="w_min_vipprice" property="wMinVipprice" jdbcType="FLOAT" />
+    <result column="w_min_sellprice" property="wMinSellprice" jdbcType="FLOAT" />
+    <result column="w_standard_saleprice" property="wStandardSaleprice" jdbcType="FLOAT" />
+    <result column="w_standard_sellprice" property="wStandardSellprice" jdbcType="FLOAT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    w_id, w_costprice, w_saleprice, w_vipprice, w_sellprice, w_min_saleprice, w_min_vipprice, 
+    w_min_sellprice, w_standard_saleprice, w_standard_sellprice
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_wares_price
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_wares_price
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.WaresPrice" >
+    insert into tb_wares_price (w_id, w_costprice, w_saleprice, 
+      w_vipprice, w_sellprice, w_min_saleprice, 
+      w_min_vipprice, w_min_sellprice, w_standard_saleprice, 
+      w_standard_sellprice)
+    values (#{wId,jdbcType=VARCHAR}, #{wCostprice,jdbcType=FLOAT}, #{wSaleprice,jdbcType=FLOAT}, 
+      #{wVipprice,jdbcType=FLOAT}, #{wSellprice,jdbcType=FLOAT}, #{wMinSaleprice,jdbcType=FLOAT}, 
+      #{wMinVipprice,jdbcType=FLOAT}, #{wMinSellprice,jdbcType=FLOAT}, #{wStandardSaleprice,jdbcType=FLOAT}, 
+      #{wStandardSellprice,jdbcType=FLOAT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.WaresPrice" useGeneratedKeys="true" keyProperty="wId" >
+    insert into tb_wares_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="wCostprice != null" >
+        w_costprice,
+      </if>
+      <if test="wSaleprice != null" >
+        w_saleprice,
+      </if>
+      <if test="wVipprice != null" >
+        w_vipprice,
+      </if>
+      <if test="wSellprice != null" >
+        w_sellprice,
+      </if>
+      <if test="wMinSaleprice != null" >
+        w_min_saleprice,
+      </if>
+      <if test="wMinVipprice != null" >
+        w_min_vipprice,
+      </if>
+      <if test="wMinSellprice != null" >
+        w_min_sellprice,
+      </if>
+      <if test="wStandardSaleprice != null" >
+        w_standard_saleprice,
+      </if>
+      <if test="wStandardSellprice != null" >
+        w_standard_sellprice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="wCostprice != null" >
+        #{wCostprice,jdbcType=FLOAT},
+      </if>
+      <if test="wSaleprice != null" >
+        #{wSaleprice,jdbcType=FLOAT},
+      </if>
+      <if test="wVipprice != null" >
+        #{wVipprice,jdbcType=FLOAT},
+      </if>
+      <if test="wSellprice != null" >
+        #{wSellprice,jdbcType=FLOAT},
+      </if>
+      <if test="wMinSaleprice != null" >
+        #{wMinSaleprice,jdbcType=FLOAT},
+      </if>
+      <if test="wMinVipprice != null" >
+        #{wMinVipprice,jdbcType=FLOAT},
+      </if>
+      <if test="wMinSellprice != null" >
+        #{wMinSellprice,jdbcType=FLOAT},
+      </if>
+      <if test="wStandardSaleprice != null" >
+        #{wStandardSaleprice,jdbcType=FLOAT},
+      </if>
+      <if test="wStandardSellprice != null" >
+        #{wStandardSellprice,jdbcType=FLOAT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.WaresPrice" >
+    update tb_wares_price
+    <set >
+      <if test="wCostprice != null" >
+        w_costprice = #{wCostprice,jdbcType=FLOAT},
+      </if>
+      <if test="wSaleprice != null" >
+        w_saleprice = #{wSaleprice,jdbcType=FLOAT},
+      </if>
+      <if test="wVipprice != null" >
+        w_vipprice = #{wVipprice,jdbcType=FLOAT},
+      </if>
+      <if test="wSellprice != null" >
+        w_sellprice = #{wSellprice,jdbcType=FLOAT},
+      </if>
+      <if test="wMinSaleprice != null" >
+        w_min_saleprice = #{wMinSaleprice,jdbcType=FLOAT},
+      </if>
+      <if test="wMinVipprice != null" >
+        w_min_vipprice = #{wMinVipprice,jdbcType=FLOAT},
+      </if>
+      <if test="wMinSellprice != null" >
+        w_min_sellprice = #{wMinSellprice,jdbcType=FLOAT},
+      </if>
+      <if test="wStandardSaleprice != null" >
+        w_standard_saleprice = #{wStandardSaleprice,jdbcType=FLOAT},
+      </if>
+      <if test="wStandardSellprice != null" >
+        w_standard_sellprice = #{wStandardSellprice,jdbcType=FLOAT},
+      </if>
+    </set>
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.WaresPrice" >
+    update tb_wares_price
+    set w_costprice = #{wCostprice,jdbcType=FLOAT},
+      w_saleprice = #{wSaleprice,jdbcType=FLOAT},
+      w_vipprice = #{wVipprice,jdbcType=FLOAT},
+      w_sellprice = #{wSellprice,jdbcType=FLOAT},
+      w_min_saleprice = #{wMinSaleprice,jdbcType=FLOAT},
+      w_min_vipprice = #{wMinVipprice,jdbcType=FLOAT},
+      w_min_sellprice = #{wMinSellprice,jdbcType=FLOAT},
+      w_standard_saleprice = #{wStandardSaleprice,jdbcType=FLOAT},
+      w_standard_sellprice = #{wStandardSellprice,jdbcType=FLOAT}
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByWid" parameterType="java.util.Map" >
+    update tb_wares_price
+    set w_costprice = #{wCostprice,jdbcType=FLOAT},
+    w_saleprice = #{wSaleprice,jdbcType=FLOAT}
+    where w_id = #{wId,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="insertOrUpdate" parameterType="com.erp.orm.entity.WaresPrice" useGeneratedKeys="true" keyProperty="wId" >
+    <selectKey keyProperty="count" resultType="int" order="BEFORE">
+      SELECT count(*) AS count from tb_wares_price WHERE w_id = #{wId,jdbcType=VARCHAR}
+    </selectKey>
+    <!-- 如果大于0则更新 -->
+    <if test="count>0">
+      update tb_wares_price
+      <set >
+        <if test="wCostprice != null" >
+          w_costprice = #{wCostprice,jdbcType=FLOAT},
+        </if>
+        <if test="wSaleprice != null" >
+          w_saleprice = #{wSaleprice,jdbcType=FLOAT},
+        </if>
+        <if test="wVipprice != null" >
+          w_vipprice = #{wVipprice,jdbcType=FLOAT},
+        </if>
+        <if test="wSellprice != null" >
+          w_sellprice = #{wSellprice,jdbcType=FLOAT},
+        </if>
+        <if test="wMinSaleprice != null" >
+          w_min_saleprice = #{wMinSaleprice,jdbcType=FLOAT},
+        </if>
+        <if test="wMinVipprice != null" >
+          w_min_vipprice = #{wMinVipprice,jdbcType=FLOAT},
+        </if>
+        <if test="wMinSellprice != null" >
+          w_min_sellprice = #{wMinSellprice,jdbcType=FLOAT},
+        </if>
+        <if test="wStandardSaleprice != null" >
+          w_standard_saleprice = #{wStandardSaleprice,jdbcType=FLOAT},
+        </if>
+        <if test="wStandardSellprice != null" >
+          w_standard_sellprice = #{wStandardSellprice,jdbcType=FLOAT},
+        </if>
+      </set>
+      where w_id = #{wId,jdbcType=VARCHAR}
+    </if>
+    <!-- 如果等于0则保存 -->
+    <if test="count==0">
+      insert into tb_wares_price
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="wId != null" >
+          w_id,
+        </if>
+        <if test="wCostprice != null" >
+          w_costprice,
+        </if>
+        <if test="wSaleprice != null" >
+          w_saleprice,
+        </if>
+        <if test="wVipprice != null" >
+          w_vipprice,
+        </if>
+        <if test="wSellprice != null" >
+          w_sellprice,
+        </if>
+        <if test="wMinSaleprice != null" >
+          w_min_saleprice,
+        </if>
+        <if test="wMinVipprice != null" >
+          w_min_vipprice,
+        </if>
+        <if test="wMinSellprice != null" >
+          w_min_sellprice,
+        </if>
+        <if test="wStandardSaleprice != null" >
+          w_standard_saleprice,
+        </if>
+        <if test="wStandardSellprice != null" >
+          w_standard_sellprice,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="wId != null" >
+          #{wId,jdbcType=VARCHAR},
+        </if>
+        <if test="wCostprice != null" >
+          #{wCostprice,jdbcType=FLOAT},
+        </if>
+        <if test="wSaleprice != null" >
+          #{wSaleprice,jdbcType=FLOAT},
+        </if>
+        <if test="wVipprice != null" >
+          #{wVipprice,jdbcType=FLOAT},
+        </if>
+        <if test="wSellprice != null" >
+          #{wSellprice,jdbcType=FLOAT},
+        </if>
+        <if test="wMinSaleprice != null" >
+          #{wMinSaleprice,jdbcType=FLOAT},
+        </if>
+        <if test="wMinVipprice != null" >
+          #{wMinVipprice,jdbcType=FLOAT},
+        </if>
+        <if test="wMinSellprice != null" >
+          #{wMinSellprice,jdbcType=FLOAT},
+        </if>
+        <if test="wStandardSaleprice != null" >
+          #{wStandardSaleprice,jdbcType=FLOAT},
+        </if>
+        <if test="wStandardSellprice != null" >
+          #{wStandardSellprice,jdbcType=FLOAT},
+        </if>
+      </trim>
+    </if>
+  </insert>
+
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IMenuSubMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.MenuSub" >
+    <id column="ms_id" property="msId" jdbcType="INTEGER" />
+    <result column="ms_name" property="msName" jdbcType="VARCHAR" />
+    <result column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="ms_state" property="msState" jdbcType="VARCHAR" />
+    <result column="ms_url" property="msUrl" jdbcType="VARCHAR" />
+    <result column="ms_urlname" property="msUrlname" jdbcType="VARCHAR" />
+    <result column="ms_creator" property="msCreator" jdbcType="VARCHAR" />
+    <result column="ms_index" property="msIndex" jdbcType="FLOAT" />
+    <result column="ms_intime" property="msIntime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ms_id, ms_name, m_id, ms_state, ms_url,ms_urlname, ms_intime, ms_creator, ms_index
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tc_memu_sub
+    where ms_id = #{msId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tc_memu_sub
+    where ms_id = #{msId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erp.orm.entity.MenuSub" >
+    insert into tc_memu_sub (ms_id, ms_name, m_id, 
+      ms_state, ms_url, ms_intime, 
+      ms_creator, ms_index)
+    values (#{msId,jdbcType=INTEGER}, #{msName,jdbcType=VARCHAR}, #{mId,jdbcType=INTEGER}, 
+      #{msState,jdbcType=VARCHAR}, #{msUrl,jdbcType=VARCHAR}, #{msIntime,jdbcType=TIMESTAMP}, 
+      #{msCreator,jdbcType=VARCHAR}, #{msIndex,jdbcType=FLOAT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.MenuSub" >
+    insert into tc_memu_sub
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msId != null" >
+        ms_id,
+      </if>
+      <if test="msName != null" >
+        ms_name,
+      </if>
+      <if test="mId != null" >
+        m_id,
+      </if>
+      <if test="msState != null" >
+        ms_state,
+      </if>
+      <if test="msUrl != null" >
+        ms_url,
+      </if>
+      <if test="msIntime != null" >
+        ms_intime,
+      </if>
+      <if test="msCreator != null" >
+        ms_creator,
+      </if>
+      <if test="msIndex != null" >
+        ms_index,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msId != null" >
+        #{msId,jdbcType=INTEGER},
+      </if>
+      <if test="msName != null" >
+        #{msName,jdbcType=VARCHAR},
+      </if>
+      <if test="mId != null" >
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="msState != null" >
+        #{msState,jdbcType=VARCHAR},
+      </if>
+      <if test="msUrl != null" >
+        #{msUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="msIntime != null" >
+        #{msIntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msCreator != null" >
+        #{msCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="msIndex != null" >
+        #{msIndex,jdbcType=FLOAT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.MenuSub" >
+    update tc_memu_sub
+    <set >
+      <if test="msName != null" >
+        ms_name = #{msName,jdbcType=VARCHAR},
+      </if>
+      <if test="mId != null" >
+        m_id = #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="msState != null" >
+        ms_state = #{msState,jdbcType=VARCHAR},
+      </if>
+      <if test="msUrl != null" >
+        ms_url = #{msUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="msIntime != null" >
+        ms_intime = #{msIntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msCreator != null" >
+        ms_creator = #{msCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="msIndex != null" >
+        ms_index = #{msIndex,jdbcType=FLOAT},
+      </if>
+    </set>
+    where ms_id = #{msId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.MenuSub" >
+    update tc_memu_sub
+    set ms_name = #{msName,jdbcType=VARCHAR},
+      m_id = #{mId,jdbcType=INTEGER},
+      ms_state = #{msState,jdbcType=VARCHAR},
+      ms_url = #{msUrl,jdbcType=VARCHAR},
+      ms_intime = #{msIntime,jdbcType=TIMESTAMP},
+      ms_creator = #{msCreator,jdbcType=VARCHAR},
+      ms_index = #{msIndex,jdbcType=FLOAT}
+    where ms_id = #{msId,jdbcType=INTEGER}
+  </update>
+</mapper>

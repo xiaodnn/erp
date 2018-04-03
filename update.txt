@@ -1,0 +1,19 @@
+更新记录,记录更新文件名、改动前是什么，改成什么，原因，时间(yyyy-MM-dd HH:mm:ss)
+
+
+
+
+/*[
+{"tsfFormtype":"text","formtypeName":"文本框"},
+{"tsfFormtype":"combobox","formtypeName":"下拉列表"},
+{"tsfFormtype":"datebox","formtypeName":"日期框"},
+{"tsfFormtype":"checkbox","formtypeName":"复选框"},
+{"tsfFormtype":"radio","formtypeName":"单选"},
+{"tsfFormtype":"multiline","formtypeName":"多行文本"},
+{"tsfFormtype":"password","formtypeName":"密码框"},
+{"tsfFormtype":"link","formtypeName":"超链接"},
+{"tsfFormtype":"buttom","formtypeName":"按钮"},
+{"tsfFormtype":"submit","formtypeName":"提交"},
+{"tsfFormtype":"cancel","formtypeName":"取消"},
+]
+*/

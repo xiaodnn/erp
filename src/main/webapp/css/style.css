@@ -1,0 +1,6 @@
+.div_table_tr{
+	height:30px;
+}
+.div_table_tr:first-child span {
+	width:100px;
+}

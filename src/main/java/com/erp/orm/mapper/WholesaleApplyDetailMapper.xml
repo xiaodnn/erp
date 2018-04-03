@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erp.orm.inter.IWholesaleApplyDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.erp.orm.entity.WholesaleApplyDetail" >
+    <id column="wad_id" property="wadId" jdbcType="INTEGER" />
+    <result column="wa_id" property="waId" jdbcType="VARCHAR" />
+    <result column="w_id" property="wId" jdbcType="VARCHAR" />
+    <result column="w_traname" property="wTraname" jdbcType="VARCHAR" />
+    <result column="w_standard" property="wStandard" jdbcType="VARCHAR" />
+    <result column="w_unit" property="wUnit" jdbcType="VARCHAR" />
+    <result column="w_business" property="wBusiness" jdbcType="VARCHAR" />
+    <result column="w_place" property="wPlace" jdbcType="VARCHAR" />
+    <result column="wd_saleprice" property="wdSaleprice" jdbcType="REAL" />
+    <result column="wd_costprice" property="wdCostprice" jdbcType="REAL" />
+    <result column="wad_apply_amount" property="wadApplyAmount" jdbcType="REAL" />
+    <result column="wad_apply_price" property="wadApplyPrice" jdbcType="REAL" />
+    <result column="wad_amount" property="wadAmount" jdbcType="REAL" />
+    <result column="wad_price" property="wadPrice" jdbcType="REAL" />
+    <result column="wad_money" property="wadMoney" jdbcType="REAL" />
+    <result column="wad_index" property="wadIndex" jdbcType="INTEGER" />
+    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    d.wad_id, d.wa_id, d.w_id, d.wd_saleprice, d.wd_costprice, d.wad_apply_amount, d.wad_apply_price,
+    d.wad_amount, d.wad_price, d.wad_money, d.wad_index, d.intime,b.w_traname,b.w_standard,b.w_unit,b.w_business,b.w_place
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_wholesale_apply_detail d
+    left JOIN tb_wares_base b on d.w_id = b.w_id
+    where d.wad_id = #{wadId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_wholesale_apply_detail d
+    left JOIN tb_wares_base b on d.w_id = b.w_id
+    where d.wad_id = #{wadId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_wholesale_apply_detail d
+    left JOIN tb_wares_base b on d.w_id = b.w_id
+     <if test="waId != null" >
+        where d.wa_id = #{waId,jdbcType=INTEGER}
+      </if>
+    order by d.wad_id
+    limit #{pageStart,jdbcType=INTEGER }, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectCount" resultType="java.lang.Integer"  parameterType="java.util.Map">
+    select count(1) as total
+    from  tb_wholesale_apply_detail
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_wholesale_apply_detail
+    where wad_id = #{wadId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByWaIdAndWid" parameterType="java.util.Map"  >
+    delete from tb_wholesale_apply_detail
+    where wa_id = #{waId,jdbcType=VARCHAR} and w_id=#{wId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.erp.orm.entity.WholesaleApplyDetail" useGeneratedKeys="true" keyProperty="wadId" >
+    insert into tb_wholesale_apply_detail ( wa_id, w_id,
+      wd_saleprice, wd_costprice, wad_apply_amount, 
+      wad_apply_price, wad_amount, wad_price, 
+      wad_money, wad_index, intime
+      )
+    values (#{waId,jdbcType=VARCHAR}, #{wId,jdbcType=VARCHAR},
+      #{wdSaleprice,jdbcType=REAL}, #{wdCostprice,jdbcType=REAL}, #{wadApplyAmount,jdbcType=REAL}, 
+      #{wadApplyPrice,jdbcType=REAL}, #{wadAmount,jdbcType=REAL}, #{wadPrice,jdbcType=REAL}, 
+      #{wadMoney,jdbcType=REAL}, #{wadIndex,jdbcType=INTEGER}, now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erp.orm.entity.WholesaleApplyDetail"  useGeneratedKeys="true" keyProperty="wadId">
+    insert into tb_wholesale_apply_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="waId != null" >
+        wa_id,
+      </if>
+      <if test="wId != null" >
+        w_id,
+      </if>
+      <if test="wdSaleprice != null" >
+        wd_saleprice,
+      </if>
+      <if test="wdCostprice != null" >
+        wd_costprice,
+      </if>
+      <if test="wadApplyAmount != null" >
+        wad_apply_amount,
+      </if>
+      <if test="wadApplyPrice != null" >
+        wad_apply_price,
+      </if>
+      <if test="wadAmount != null" >
+        wad_amount,
+      </if>
+      <if test="wadPrice != null" >
+        wad_price,
+      </if>
+      <if test="wadMoney != null" >
+        wad_money,
+      </if>
+      <if test="wadIndex != null" >
+        wad_index,
+      </if>
+        intime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="waId != null" >
+        #{waId,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="wdSaleprice != null" >
+        #{wdSaleprice,jdbcType=REAL},
+      </if>
+      <if test="wdCostprice != null" >
+        #{wdCostprice,jdbcType=REAL},
+      </if>
+      <if test="wadApplyAmount != null" >
+        #{wadApplyAmount,jdbcType=REAL},
+      </if>
+      <if test="wadApplyPrice != null" >
+        #{wadApplyPrice,jdbcType=REAL},
+      </if>
+      <if test="wadAmount != null" >
+        #{wadAmount,jdbcType=REAL},
+      </if>
+      <if test="wadPrice != null" >
+        #{wadPrice,jdbcType=REAL},
+      </if>
+      <if test="wadMoney != null" >
+        #{wadMoney,jdbcType=REAL},
+      </if>
+      <if test="wadIndex != null" >
+        #{wadIndex,jdbcType=INTEGER},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erp.orm.entity.WholesaleApplyDetail" >
+    update tb_wholesale_apply_detail
+    <set >
+      <if test="waId != null" >
+        wa_id = #{waId,jdbcType=VARCHAR},
+      </if>
+      <if test="wId != null" >
+        w_id = #{wId,jdbcType=VARCHAR},
+      </if>
+      <if test="wdSaleprice != null" >
+        wd_saleprice = #{wdSaleprice,jdbcType=REAL},
+      </if>
+      <if test="wdCostprice != null" >
+        wd_costprice = #{wdCostprice,jdbcType=REAL},
+      </if>
+      <if test="wadApplyAmount != null" >
+        wad_apply_amount = #{wadApplyAmount,jdbcType=REAL},
+      </if>
+      <if test="wadApplyPrice != null" >
+        wad_apply_price = #{wadApplyPrice,jdbcType=REAL},
+      </if>
+      <if test="wadAmount != null" >
+        wad_amount = #{wadAmount,jdbcType=REAL},
+      </if>
+      <if test="wadPrice != null" >
+        wad_price = #{wadPrice,jdbcType=REAL},
+      </if>
+      <if test="wadMoney != null" >
+        wad_money = #{wadMoney,jdbcType=REAL},
+      </if>
+      <if test="wadIndex != null" >
+        wad_index = #{wadIndex,jdbcType=INTEGER},
+      </if>
+        intime = now()
+    </set>
+    where wad_id = #{wadId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erp.orm.entity.WholesaleApplyDetail" >
+    update tb_wholesale_apply_detail
+    set wa_id = #{waId,jdbcType=VARCHAR},
+      w_id = #{wId,jdbcType=VARCHAR},
+      wd_saleprice = #{wdSaleprice,jdbcType=REAL},
+      wd_costprice = #{wdCostprice,jdbcType=REAL},
+      wad_apply_amount = #{wadApplyAmount,jdbcType=REAL},
+      wad_apply_price = #{wadApplyPrice,jdbcType=REAL},
+      wad_amount = #{wadAmount,jdbcType=REAL},
+      wad_price = #{wadPrice,jdbcType=REAL},
+      wad_money = #{wadMoney,jdbcType=REAL},
+      wad_index = #{wadIndex,jdbcType=INTEGER},
+      intime = now()
+    where wad_id = #{wadId,jdbcType=INTEGER}
+  </update>
+</mapper>
